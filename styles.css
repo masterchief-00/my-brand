@@ -2,11 +2,66 @@ body {
     padding: 0;
     margin: 0;
     background-color: #1F212F;
+    font-family: Helvetica, Arial, sans-serif;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+}
+
+html {
+    scroll-behavior: smooth;
+
 }
 
 .wrapper {
-    height: 100vh;
+    height: max-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.nav-bar {
+    position: sticky;
+    top: 0px;
+    height: 80px;
+    background-color: #171822;
     width: 100vw;
+    max-width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: row;
+    z-index: 10;
+}
+
+.links {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-left: 70px;
+}
+
+.links a {
+    text-decoration: none;
+    color: white;
+    padding: 10px;
+    font-size: 27px;
+    font-weight: lighter;
+    transition: all 0.5s;
+}
+
+.links a:hover {
+    color: #F4326C;
+}
+
+.active {
+    color: #5DCCE4 !important;
+}
+
+#landing-page {
+    height: 100vh;
+    max-width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -23,7 +78,6 @@ body {
 
 .greetings label {
     font-size: 3.5rem;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 .greetings .colored {
@@ -40,6 +94,10 @@ body {
     width: 281px;
     margin-top: 20px;
     cursor: pointer;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .btn-view-work:hover {
@@ -49,7 +107,381 @@ body {
     border-color: transparent;
 }
 
-#right-arrow{
+#right-arrow {
     transition: all 0.5s;
 }
 
+
+#about {
+    background-color: white;
+    height: max-content;
+    width: 100vw;
+    max-width: 100%;
+}
+
+.title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 80px;
+}
+
+.page-title {
+    font-size: 56px;
+    font-weight: 800;
+    color: #5B5B5B;
+}
+
+.line {
+    content: "";
+    width: 100px;
+    height: 4px;
+    background-color: #5B5B5B;
+}
+
+.ads-talk {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: max-content;
+    width: 100vw;
+    max-width: 100%;
+    margin-top: 80px;
+}
+
+.pentagon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.talk {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 200px;
+}
+
+.talk p {
+    text-align: center;
+    color: #5B5B5B;
+}
+
+.talk-title {
+    font-size: 25px;
+    font-weight: 600;
+    color: #5B5B5B;
+}
+
+.pentagon img {
+    height: 151px;
+}
+
+.my-details {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: row;
+}
+
+.fella {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.fella img {
+    height: 33rem;
+}
+
+.who-s-the-fella {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 450px;
+}
+
+.who-s-the-fella p {
+    text-align: center;
+    color: #5B5B5B;
+}
+
+.who-s-the-fella label {
+    font-size: 35px;
+    font-weight: 600;
+    color: #5B5B5B;
+}
+
+.skills {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 18px;
+    flex-direction: column;
+}
+
+.skill-bar {
+    background-color: #37A3B1;
+    width: 42.1875rem;
+    height: 3rem;
+}
+
+.skill {
+    background-color: #5DCCE4;
+    width: 12.1875rem;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.skill label {
+    color: white;
+    font-size: 27px;
+    font-weight: 600;
+}
+
+#projects {
+    background-color: white;
+    height: max-content;
+    width: 100vw;
+    max-width: 100%;
+}
+
+.project-contents {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.tabs {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 100px;
+}
+
+.tabs a {
+    text-decoration: none;
+    color: #5B5B5B;
+    padding: 10px 60px;
+    font-size: 25px;
+    font-weight: 600;
+    transition: all 0.5s;
+}
+
+.tabs a:hover {
+    color: white;
+    background-color: #F4326C;
+}
+
+.active-tab {
+    color: white !important;
+    background-color: #37A3B1;
+}
+
+#gallery-3d {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    row-gap: 0rem;
+    column-gap: 0rem;
+    justify-items: center;
+    margin-top: 80px;
+    width: 80vw;
+    overflow: hidden;
+}
+
+.project img {
+    height: 365px;
+}
+
+.project-details {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #F4F4F4;
+    position: absolute;
+    height: 365px;
+    width: 365px;
+    opacity: 0.9;
+}
+
+.project-details .project-title {
+    color: #5B5B5B;
+    font-size: 30px;
+    font-weight: 700;
+}
+
+.project-details .project-sub-title {
+    color: #37A3B1;
+    font-size: 20px;
+}
+
+.project-details a {
+    text-decoration: none;
+    margin-top: 50px;
+    color: #5B5B5B;
+    border: solid 2px #37A3B1;
+    padding: 15px 40px;
+    /* transition: all 0.5s; */
+}
+
+.project-details a:hover {
+    background-color: #37A3B1;
+    color: white !important;
+}
+
+.project-details {
+    visibility: hidden;
+}
+
+.project:hover .project-details {
+    visibility: visible;
+}
+
+/*====================MEDIA QUERIES(MEDIUM DEVICES)==================*/
+@media screen and (max-width:1024px) {
+    .nav-bar {
+        display: none;
+    }
+
+    .greetings label {
+        font-size: 2.5rem;
+    }
+
+    .ads-talk {
+        flex-direction: column;
+    }
+
+    .page-title {
+        font-size: 45px;
+        font-weight: 700;
+    }
+
+    .my-details {
+        flex-direction: column;
+    }
+
+    .skill-bar {
+        width: 30rem;
+    }
+
+    .fella img {
+        height: 27rem;
+    }
+
+    .who-s-the-fella p {
+        font-size: 25px;
+        margin-bottom: 55px;
+    }
+
+    #gallery-3d {
+        grid-template-columns: 1fr;
+
+    }
+
+    .project img {
+        height: 580px;
+    }
+
+    .project-details {
+        height: 580px;
+        width: 580px;
+    }
+
+    .tabs {
+        flex-direction: column;
+    }
+}
+
+
+
+
+
+
+
+/*====================MEDIA QUERIES(SMALL DEVICES)==================*/
+@media screen and (max-width:600px) {
+    .nav-bar {
+        display: none;
+    }
+
+    .greetings label {
+        font-size: 1.2rem;
+    }
+
+    .btn-view-work {
+        height: 40px;
+        width: 130px;
+        font-size: 15px;
+    }
+
+    .ads-talk {
+        flex-direction: column;
+    }
+
+    .page-title {
+        font-size: 45px;
+        font-weight: 700;
+    }
+
+    .my-details {
+        flex-direction: column;
+    }
+
+    .skill-bar {
+        width: 20rem;
+    }
+
+    .fella img {
+        height: 17rem;
+    }
+
+    .who-s-the-fella {
+        width: 300px;
+    }
+
+    .who-s-the-fella p {
+        font-size: 17px;
+        margin-bottom: 55px;
+    }
+
+    .skill {
+        width: 10rem;
+    }
+
+    .skill label {
+        font-size: 24px;
+    }
+
+    #gallery-3d {
+        grid-template-columns: 1fr;
+
+    }
+
+    .project img {
+        height: 300px;
+    }
+
+    .project-details {
+        height: 300px;
+        width: 300px;
+    }
+
+    .tabs {
+        flex-direction: column;
+    }
+
+    .tabs a {
+        font-size: 20px;
+    }
+}
