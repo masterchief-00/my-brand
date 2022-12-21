@@ -18,7 +18,7 @@
   <body>
     <div class="wrapper">
       <!-------------------------LANDING PAGE---------------------------------->
-      <div id="landing-page">
+      <section id="landing-page">
         <div class="greetings">
           <div>
             <label class="normal">Hello, I'm </label
@@ -31,7 +31,7 @@
         <a href="#about" class="btn-view-work">
           View my work <i class="fa-solid fa-arrow-right" id="right-arrow"></i>
         </a>
-      </div>
+      </section>
       <!----------------------------------------------------------------->
 
       <!-------------------------NAVBAR---------------------------------->
@@ -40,13 +40,18 @@
           <a href="#landing-page" class="active">HOME</a>
           <a href="#about">ABOUT</a>
           <a href="#projects">PROJECTS</a>
+          <a href="#blogs">BLOGS</a>
           <a href="#contact">CONTACT</a>
+        </div>
+        <div class="login" onclick="toggleModal()">
+          <img src="/images/login-password-svgrepo-com.png" alt="login" />
+          <label>LOGIN</label>
         </div>
       </div>
       <!----------------------------------------------------------------->
 
       <!-------------------------ABOUT---------------------------------->
-      <div id="about">
+      <section id="about">
         <div class="title">
           <label class="page-title">ABOUT</label>
           <div class="line"></div>
@@ -148,11 +153,11 @@
             </div>
           </div>
         </div>
-      </div>
+      </section>
       <!----------------------------------------------------------------->
 
       <!-------------------------PROJECTS---------------------------------->
-      <div id="projects">
+      <section id="projects">
         <div class="title">
           <label class="page-title">PROJECTS</label>
           <div class="line"></div>
@@ -215,8 +220,195 @@
             </div>
           </div>
         </div>
-      </div>
+      </section>
       <!----------------------------------------------------------------->
+
+      <!-------------------------BLOGS---------------------------------->
+      <section id="blogs">
+        <div class="title">
+          <label class="page-title">BLOGS</label>
+          <div class="line"></div>
+        </div>
+        <div class="blogs-content">
+          <div class="blog">
+            <img src="/images/blog-img-1.jpg" alt="blog-1" />
+            <label class="blog-title">Breaking your coder’s block</label>
+            <div class="blog-tiny-details">
+              <label class="blog-date">MAY 21 2022</label>
+              <div class="blog-reactions">
+                <label><i class="fa-solid fa-comments"></i> 21</label>
+                <label><i class="fa-solid fa-thumbs-up"></i> 234</label>
+              </div>
+            </div>
+            <div class="blue-line"></div>
+            <p>
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quos
+              modi aliquid ipsam quasi earum accusamus, atque sequi hic,
+              praesentium nostrum error ad dolorum iste maiores porro maxime
+              nihil vel odit.
+            </p>
+          </div>
+          <div class="blog">
+            <img src="/images/blog-img-2.jpg" alt="blog-1" />
+            <label class="blog-title">Breaking your coder’s block</label>
+            <div class="blog-tiny-details">
+              <label class="blog-date">MAY 21 2022</label>
+              <div class="blog-reactions">
+                <label><i class="fa-solid fa-comments"></i> 21</label>
+                <label><i class="fa-solid fa-thumbs-up"></i> 234</label>
+              </div>
+            </div>
+            <div class="blue-line"></div>
+            <p>
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quos
+              modi aliquid ipsam quasi earum accusamus, atque sequi hic,
+              praesentium nostrum error ad dolorum iste maiores porro maxime
+              nihil vel odit.
+            </p>
+          </div>
+          <div class="blog">
+            <img src="/images/blog-img-3.jpg" alt="blog-1" />
+            <label class="blog-title">Breaking your coder’s block</label>
+            <div class="blog-tiny-details">
+              <label class="blog-date">MAY 21 2022</label>
+              <div class="blog-reactions">
+                <label><i class="fa-solid fa-comments"></i> 21</label>
+                <label><i class="fa-solid fa-thumbs-up"></i> 234</label>
+              </div>
+            </div>
+            <div class="blue-line"></div>
+            <p>
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quos
+              modi aliquid ipsam quasi earum accusamus, atque sequi hic,
+              praesentium nostrum error ad dolorum iste maiores porro maxime
+              nihil vel odit.
+            </p>
+          </div>
+          <div class="blog">
+            <img src="/images/blog-img-4.jpg" alt="blog-1" />
+            <label class="blog-title">Breaking your coder’s block</label>
+            <div class="blog-tiny-details">
+              <label class="blog-date">MAY 21 2022</label>
+              <div class="blog-reactions">
+                <label><i class="fa-solid fa-comments"></i> 21</label>
+                <label><i class="fa-solid fa-thumbs-up"></i> 234</label>
+              </div>
+            </div>
+            <div class="blue-line"></div>
+            <p>
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quos
+              modi aliquid ipsam quasi earum accusamus, atque sequi hic,
+              praesentium nostrum error ad dolorum iste maiores porro maxime
+              nihil vel odit.
+            </p>
+          </div>
+        </div>
+      </section>
+      <!----------------------------------------------------------------->
+
+      <!-------------------------CONTACT---------------------------------->
+      <section id="contact">
+        <div class="shaped-img">
+          <img src="/images/footer.png" alt="footer-img" />
+        </div>
+        <div class="title">
+          <label class="page-title-white">CONTACT</label>
+          <div class="line-white"></div>
+        </div>
+        <div class="contact-form">
+          <label>Have a question or want to work with us?</label>
+          <form>
+            <input type="text" name="name" id="name" placeholder="Names" />
+            <input type="text" name="email" id="email" placeholder="Email" />
+            <textarea
+              name="message"
+              id="message"
+              placeholder="Message"
+            ></textarea>
+            <button type="submit">SUBMIT</button>
+          </form>
+        </div>
+      </section>
+      <!----------------------------------------------------------------->
+
+      <!-------------------------FOOTER---------------------------------->
+      <section id="footer">
+        <div class="back-to-top">
+          <img src="/images/to-top.png" alt="top" />
+        </div>
+        <div class="socials">
+          <div class="social-card">
+            <img src="/images/in.png" alt="in" />
+          </div>
+          <div class="social-card">
+            <img src="/images/twitter.png" alt="twitter" />
+          </div>
+          <div class="social-card">
+            <img src="/images/insta.png" alt="insta" />
+          </div>
+          <div class="social-card">
+            <img src="/images/github.png" alt="git" />
+          </div>
+        </div>
+      </section>
+      <!----------------------------------------------------------------->
+
+      <!-------------------------MODAL---------------------------------->
+      <div id="modal">
+        <div class="modal-content">
+          <div id="login-section">
+            <div class="avatar">
+              <img src="/images/user-profile.png" alt="profile" />
+            </div>
+            <form>
+              <input type="text" name="email" id="email" placeholder="Email" />
+              <input
+                type="password"
+                name="password"
+                id="password"
+                placeholder="Password"
+              />
+              <div>
+                <button type="submit">Login</button>
+                <button type="button" onclick="toggleModal()">Cancel</button>
+              </div>
+            </form>
+            <div>
+              <label>Don't have an account?</label>
+              <label class="link" onclick="toggleSection()">Sign up</label>
+            </div>
+          </div>
+          <div id="signup-section">
+            <div class="avatar">
+              <img src="/images/add-users.png" alt="profile" />
+            </div>
+            <form>
+              <input type="text" name="name" id="name" placeholder="Names" />
+              <input type="text" name="email" id="email" placeholder="Email" />
+              <input
+                type="password"
+                name="password"
+                id="password"
+                placeholder="Password"
+              />
+              <input
+                type="password"
+                name="confirm_password"
+                id="confirm_password"
+                placeholder="Confirm password"
+              />
+              <div>
+                <button type="submit">Signup</button>
+                <button type="button" onclick="toggleModal()">Cancel</button>
+              </div>
+            </form>
+            <div>
+              <label>Already have an account?</label>
+              <label class="link" onclick="toggleSection()">Login</label>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <script src="script.js"></script>

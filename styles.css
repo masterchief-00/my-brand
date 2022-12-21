@@ -28,7 +28,7 @@ html {
     width: 100vw;
     max-width: 100%;
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: center;
     flex-direction: row;
     z-index: 10;
@@ -133,11 +133,24 @@ html {
     color: #5B5B5B;
 }
 
+.page-title-white {
+    font-size: 56px;
+    font-weight: 800;
+    color: white;
+}
+
 .line {
     content: "";
     width: 100px;
     height: 4px;
     background-color: #5B5B5B;
+}
+
+.line-white {
+    content: "";
+    width: 100px;
+    height: 4px;
+    background-color: white;
 }
 
 .ads-talk {
@@ -348,6 +361,419 @@ html {
     visibility: visible;
 }
 
+#contact {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #1F212F;
+
+}
+
+.contact-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+    flex-direction: column;
+}
+
+.shaped-img img {
+    width: 100%;
+}
+
+.contact-form form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.contact-form form input {
+    width: 300px;
+    height: 40px;
+    background-color: #171822;
+    border: solid 1px transparent;
+    border-radius: 8px;
+    color: #5DCCE4;
+    padding: 5px 15px;
+    font-size: 18px;
+}
+
+.contact-form form input::placeholder {
+    color: #37a3b183;
+}
+
+.contact-form form textarea {
+    width: 300px;
+    height: 100px;
+    background-color: #171822;
+    border: solid 1px transparent;
+    border-radius: 8px;
+    color: #5DCCE4;
+    padding: 5px 15px;
+    font-size: 18px;
+}
+
+.contact-form form textarea::placeholder {
+    color: #37a3b183;
+}
+
+.contact-form form button {
+    align-self: flex-end;
+    background-color: transparent;
+    border: solid 1px white;
+    border-radius: 5px;
+    color: white;
+    padding: 2px;
+    width: 110px;
+    height: 40px;
+    cursor: pointer;
+    transition: all 0.5s;
+}
+
+.contact-form form button:hover {
+    background-color: #5DCCE4;
+    color: #171822 !important;
+    border-color: transparent;
+}
+
+.contact-form label {
+    color: #5DCCE4;
+}
+
+#footer {
+    background-color: #171822;
+    height: 250px;
+    width: 100%;
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.back-to-top {
+    margin-top: -130px;
+    background-color: #37A3B1;
+    width: fit-content;
+    height: fit-content;
+    padding: 10px;
+    cursor: pointer;
+    transition: all 0.5s;
+}
+
+.back-to-top:hover {
+    background-color: #F4326C;
+}
+
+.back-to-top img {
+    height: 40px;
+}
+
+.socials {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap: 12px;
+    height: fit-content;
+    margin-top: 50px;
+}
+
+.social-card {
+    background-color: #252738;
+    padding: 15px;
+    border: solid 1px transparent;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.5s;
+}
+
+.social-card:hover {
+    background-color: #37A3B1;
+}
+
+.social-card img {
+    height: 40px;
+}
+
+#blogs {
+    background-color: white;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding-bottom: 10px;
+}
+
+.blogs-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    row-gap: 0rem;
+    column-gap: 0rem;
+    margin-top: 80px;
+}
+
+.blog {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 10px;
+    max-width: 360px;
+    border: solid 1px transparent;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.5s;
+}
+
+.blog:hover {
+    box-shadow: 1px 1px 10px;
+}
+
+.blog img {
+    max-height: 190px;
+    border-radius: 10px;
+}
+
+.blog-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #5B5B5B;
+    margin-top: 10px;
+}
+
+.blog p {
+    font-size: 13px;
+    color: #5B5B5B;
+}
+
+.blog-date {
+    font-size: 13px;
+    margin-top: 10px;
+    color: #5B5B5B;
+}
+
+.blue-line {
+    content: "";
+    width: 100px;
+    height: 4px;
+    background-color: #37A3B1;
+    margin-top: 30px;
+}
+
+.blog-tiny-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+}
+
+.blog-reactions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.blog-reactions label {
+    color: #5B5B5B;
+    font-size: 10px;
+    text-transform: uppercase;
+}
+
+.login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap: 10px;
+    background-color: transparent;
+    margin-right: 30px;
+    width: fit-content;
+    cursor: pointer;
+}
+
+.login img {
+    height: 50px;
+}
+
+.login label {
+    color: #F4326C;
+    font-size: 30px;
+    font-weight: 700;
+}
+
+#modal {
+    display: none;
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.575);
+    height: 100%;
+    width: 100%;
+    top: 0;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(30px);
+    z-index: 20;
+}
+
+.modal-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+}
+
+#login-section {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 30vw;
+    height: max-content;
+    background-color: #1F212F;
+    border: solid 1px transparent;
+    border-radius: 10px;
+    padding: 15px;
+}
+
+#login-section form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin-top: 20px;
+
+}
+
+#login-section form input {
+    width: 300px;
+    height: 30px;
+    background-color: #171822;
+    border: solid 1px #37A3B1;
+    border-radius: 8px;
+    color: #5DCCE4;
+    padding: 5px 15px;
+    font-size: 18px;
+}
+
+#login-section form button {
+    background-color: #37A3B1;
+    border: solid 1px transparent;
+    border-radius: 5px;
+    font-size: 20px;
+    font-weight: 700;
+    color: white;
+    padding: 2px;
+    width: 110px;
+    height: 40px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: all 0.5s;
+}
+
+#login-section form input::placeholder {
+    color: #37a3b183;
+}
+
+#login-section form button:hover {
+    background-color: #F4326C;
+    border-color: transparent;
+}
+
+.avatar img {
+    height: 120px;
+    margin-top: 20px;
+}
+
+#login-section div label {
+    color: white;
+}
+
+#login-section div .link {
+    color: #5DCCE4;
+    cursor: pointer;
+}
+
+
+#signup-section {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 30vw;
+    height: max-content;
+    background-color: #1F212F;
+    border: solid 1px transparent;
+    border-radius: 10px;
+    padding: 15px;
+}
+
+#signup-section form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin-top: 20px;
+
+}
+
+#signup-section form input {
+    width: 300px;
+    height: 30px;
+    background-color: #171822;
+    border: solid 1px #37A3B1;
+    border-radius: 8px;
+    color: #5DCCE4;
+    padding: 5px 15px;
+    font-size: 18px;
+}
+
+#signup-section form button {
+    background-color: #37A3B1;
+    border: solid 1px transparent;
+    border-radius: 5px;
+    font-size: 20px;
+    font-weight: 700;
+    color: white;
+    padding: 2px;
+    width: 110px;
+    height: 40px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: all 0.5s;
+}
+
+#signup-section form input::placeholder {
+    color: #37a3b183;
+}
+
+#signup-section form button:hover {
+    background-color: #F4326C;
+    border-color: transparent;
+}
+
+#signup-section div {
+    margin-top: 20px;
+}
+
+#signup-section div label {
+    color: white;
+    cursor: pointer;
+}
+
+#signup-section div .link {
+    color: #5DCCE4;
+}
+
 /*====================MEDIA QUERIES(MEDIUM DEVICES)==================*/
 @media screen and (max-width:1024px) {
     .nav-bar {
@@ -401,13 +827,37 @@ html {
     .tabs {
         flex-direction: column;
     }
+
+    .tabs a {
+        width: 200px;
+        text-align: center;
+    }
+
+    .blogs-content {
+        grid-template-columns: 1fr;
+    }
+
+    .blog {
+        max-width: 450px;
+    }
+
+    .blog-title {
+        font-size: 36px;
+    }
+
+    .blog-date {
+        font-size: 15px;
+    }
+
+    .blog-reactions label {
+        font-size: 15px;
+    }
+
+    .blog p {
+        font-size: 24px;
+    }
+
 }
-
-
-
-
-
-
 
 /*====================MEDIA QUERIES(SMALL DEVICES)==================*/
 @media screen and (max-width:600px) {
@@ -430,8 +880,21 @@ html {
     }
 
     .page-title {
-        font-size: 45px;
+        font-size: 30px;
         font-weight: 700;
+    }
+
+    .page-title-white {
+        font-size: 30px;
+
+    }
+
+    .line {
+        width: 50px;
+    }
+
+    .line-white {
+        width: 50px;
     }
 
     .my-details {
@@ -483,5 +946,42 @@ html {
 
     .tabs a {
         font-size: 20px;
+    }
+
+    .blogs-content {
+        grid-template-columns: 1fr;
+    }
+
+    .blog {
+        max-width: 280px;
+    }
+
+    .blog-title {
+        font-size: 25px;
+    }
+
+    .blog-date {
+        font-size: 10px;
+    }
+
+    .blog-reactions label {
+        font-size: 10px;
+    }
+
+    .blog p {
+        font-size: 17px;
+    }
+
+    .social-card {
+        height: 30px;
+        width: 30px;
+    }
+
+    .social-card img {
+        height: 30px;
+    }
+
+    .back-to-top img {
+        height: 30px;
     }
 }
