@@ -9,6 +9,7 @@ body {
 
 html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
 
 }
 
@@ -18,6 +19,7 @@ html {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    overflow-x: hidden;
 }
 
 .nav-bar {
@@ -528,7 +530,6 @@ html {
     max-width: 360px;
     border: solid 1px transparent;
     border-radius: 8px;
-    cursor: pointer;
     transition: all 0.5s;
 }
 
@@ -586,6 +587,13 @@ html {
     color: #5B5B5B;
     font-size: 10px;
     text-transform: uppercase;
+}
+
+.blog-full {
+    text-decoration: none;
+    color: #37A3B1;
+    font-size: 10px;
+    font-weight: 700;
 }
 
 .login {
@@ -774,6 +782,285 @@ html {
     color: #5DCCE4;
 }
 
+#full-blog {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-left: 100px;
+}
+
+#blog-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 50px;
+    width: 55vw;
+}
+
+#extra {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 30vw;
+    height: max-content;
+    margin-top: 165px;
+    margin-right: 30px;
+}
+
+.blog-presentries {
+    display: flex;
+    flex-direction: column;
+}
+
+.blog-presentries div {
+    margin-top: 8px;
+}
+
+.blog-category {
+    color: #a7a7a7;
+    font-size: 13px;
+    font-weight: 100;
+}
+
+.blog-main-title {
+    color: white;
+    font-size: 40px;
+    font-weight: 700;
+    margin-top: 8px;
+}
+
+.mehhh {
+    color: white;
+    color: white;
+    font-size: 13px;
+    font-weight: 100;
+}
+
+.blog-owner {
+    color: #5DCCE4;
+    font-size: 13px;
+    font-weight: 100;
+}
+
+.blog-main-content {
+    margin-top: 15px;
+}
+
+.blog-main-content p {
+    text-align: left;
+    color: white;
+}
+
+.blog-main-image {
+    margin-top: 20px;
+}
+
+.blog-main-image img {
+    border-radius: 15px;
+    height: 500px;
+}
+
+.similar-blogs {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.similar-topic {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.similar-topic img {
+    max-height: 210px;
+    border-radius: 15px;
+}
+
+.title-similar-topic {
+    color: white;
+    text-align: left;
+    font-size: 25px;
+    font-weight: 400;
+    margin-top: 10px;
+}
+
+.link-similar-topic {
+    text-decoration: none;
+    color: #37A3B1;
+    font-size: 10px;
+    font-weight: 700;
+    margin-top: 5px;
+}
+
+.title-extra {
+    color: white;
+    font-size: 25px;
+    font-weight: 700;
+}
+
+.blog-footer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.like-btn {
+    text-decoration: none;
+    color: white;
+    background-color: #37A3B1;
+    width: max-content;
+    padding: 5px 25px;
+    border: solid 1px transparent;
+    border-radius: 7px;
+    margin-top: 20px;
+}
+
+.like-btn:hover {
+    background-color: transparent;
+    color: white;
+    border-color: white;
+}
+
+.comment-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 40px;
+    width: 460px;
+    overflow: hidden;
+}
+
+.title-comment {
+    color: #5DCCE4;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.hint-comment {
+    color: white;
+    font-size: 15px;
+    font-weight: 100;
+    margin-top: 10px;
+}
+
+.comment-section form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.comment-section form div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.comment-section form div label {
+    color: #a7a7a7;
+    margin-top: 10px;
+    font-size: 12px;
+}
+
+.comment-section form textarea {
+    max-width: 100%;
+    height: 100px;
+    background-color: #171822;
+    border: solid 1px #37A3B1;
+    border-radius: 8px;
+    color: #5DCCE4;
+    padding: 5px 15px;
+    font-size: 18px;
+    resize: none;
+}
+
+.comment-section form textarea::placeholder {
+    color: #37a3b183;
+}
+
+.comment-section form button {
+    align-self: flex-end;
+    background-color: #F4326C;
+    border: solid 1px transparent;
+    border-radius: 5px;
+    color: white;
+    padding: 2px;
+    width: 100px;
+    height: 30px;
+    margin-top: 10px;
+    cursor: pointer;
+    transition: all 0.5s;
+}
+
+.all-comments {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.comments-count {
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.comment {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.commenter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap: 5px;
+    align-self: flex-start;
+    margin-top: 20px;
+}
+
+.commenter-name {
+    color: #F4326C;
+    font-size: 22px;
+    font-weight: 500;
+}
+
+.commenter-time {
+    color: #a7a7a7;
+    font-size: 14px;
+    font-weight: 200;
+}
+
+.separator {
+    background-color: #a7a7a7;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+}
+
+.comment-body p {
+    color: #a7a7a7;
+    font-size: 15px;
+    font-weight: 400;
+}
+
+.comment-likes {
+    text-decoration: none;
+    color: #5DCCE4;
+    font-size: 10px;
+}
+
+.line-separator {
+    margin-top: 10px;
+    background-color: #a7a7a786;
+    height: 2px;
+    width: 300px;
+}
+
 /*====================MEDIA QUERIES(MEDIUM DEVICES)==================*/
 @media screen and (max-width:1024px) {
     .nav-bar {
@@ -857,6 +1144,117 @@ html {
         font-size: 24px;
     }
 
+    #full-blog {
+        flex-direction: column;
+        margin-left: 0px;
+        justify-content: center;
+    }
+
+    .blog-main-image img {
+        height: 400px;
+    }
+
+    #blog-body {
+        width: fit-content;
+        max-width: 100%;
+        padding: 0 100px;
+    }
+
+    .blog-main-title {
+        font-size: 45px;
+    }
+
+    .blog-category {
+        font-size: 18px;
+    }
+
+    .mehhh {
+        font-size: 18px;
+    }
+
+    .blog-owner {
+        font-size: 18px;
+    }
+
+    .blog-main-content p {
+        font-size: 30px;
+    }
+
+    .comment-section {
+        width: 500px;
+    }
+
+    .comment-section form div label {
+        font-size: 18px;
+    }
+
+    .comment-section form textarea {
+        font-size: 22px;
+    }
+
+    .comment-section form button {
+        font-size: 25px;
+        padding: 5px;
+        width: 100px;
+        height: 40px;
+    }
+
+    .comments-count {
+        font-size: 22px;
+        font-weight: 300;
+    }
+
+    .commenter-name {
+        font-size: 32px;
+        font-weight: 600;
+    }
+
+    .commenter-time {
+        font-size: 22px;
+    }
+
+    .comment-body p {
+        font-size: 30px;
+    }
+
+    .comment-likes {
+        font-size: 20px;
+    }
+
+    .hint-comment {
+        font-size: 25px;
+        font-weight: lighter;
+    }
+
+    .title-comment {
+        font-size: 30px;
+    }
+
+    .social-card {
+        height: 60px;
+        width: 60px;
+    }
+
+    .social-card img {
+        height: 60px;
+    }
+
+    #extra {
+        width: fit-content;
+        align-self: center;
+    }
+
+    .similar-topic img {
+        max-height: 300px;
+    }
+
+    .title-similar-topic {
+        font-size: 35px;
+    }
+
+    .link-similar-topic {
+        font-size: 20px;
+    }
 }
 
 /*====================MEDIA QUERIES(SMALL DEVICES)==================*/
@@ -983,5 +1381,108 @@ html {
 
     .back-to-top img {
         height: 30px;
+    }
+
+    #full-blog {
+        flex-direction: column;
+        margin-left: 0px;
+        justify-content: center;
+    }
+
+    .blog-main-image img {
+        max-height: 220px;
+    }
+
+    #blog-body {
+        width: 350px;
+        max-width: 100%;
+    }
+
+    .blog-main-title {
+        font-size: 35px;
+    }
+
+    .blog-category {
+        font-size: 13px;
+    }
+
+    .mehhh {
+        font-size: 13px;
+    }
+
+    .blog-owner {
+        font-size: 13px;
+    }
+
+    .blog-main-content p {
+        font-size: 15px;
+    }
+
+    .comment-section {
+        width: 300px;
+    }
+
+    .comment-section form div label {
+        font-size: 12px;
+    }
+
+    .comment-section form textarea {
+        font-size: 16px;
+    }
+
+    .comment-section form button {
+        font-size: 15px;
+        padding: 5px;
+        width: 90px;
+        height: 30px;
+    }
+
+    .comments-count {
+        font-size: 18px;
+        font-weight: 300;
+    }
+
+    .commenter-name {
+        font-size: 20px;
+        font-weight: 600;
+    }
+
+    .commenter-time {
+        font-size: 15px;
+    }
+
+    .comment-body p {
+        font-size: 17px;
+    }
+
+    .comment-likes {
+        font-size: 12px;
+    }
+
+    .hint-comment {
+        font-size: 13px;
+        font-weight: lighter;
+    }
+
+    .title-comment {
+        font-size: 20px;
+    }
+
+    #extra {
+        width: fit-content;
+        align-self: center;
+        width: 300px;
+    }
+
+    .similar-topic img {
+        max-height: 200px;
+    }
+
+    .title-similar-topic {
+        font-size: 20px;
+    }
+
+    .link-similar-topic {
+        font-size: 12px;
     }
 }

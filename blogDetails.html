@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Kwizera | Portfolio</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+      integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="content">
+        <!-------------------------NAVBAR---------------------------------->
+        <div class="nav-bar">
+          <div class="links">
+            <a href="index.html#landing-page">HOME</a>
+            <a href="index.html#about">ABOUT</a>
+            <a href="index.html#projects">PROJECTS</a>
+            <a href="index.html#blogs">BLOGS</a>
+            <a href="index.html#contact">CONTACT</a>
+          </div>
+          <div class="login" onclick="toggleModal()">
+            <img src="/images/login-password-svgrepo-com.png" alt="login" />
+            <label>LOGIN</label>
+          </div>
+        </div>
+
+        <div id="full-blog">
+          <div id="blog-body">
+            <div class="blog-presentries">
+              <label class="blog-category">TECHNOLOGY</label>
+              <label class="blog-main-title">The Blog Title goes here</label>
+              <div>
+                <label class="mehhh">BY</label>
+                <label class="blog-owner">KWIZERA PACIFIQUE</label>
+              </div>
+            </div>
+            <div class="blog-main-image">
+              <img src="/images/blog-img-2.jpg" alt="blog-img" />
+            </div>
+            <div class="blog-main-content">
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero
+                exercitationem, officiis ratione optio aliquid beatae mollitia
+                omnis repellendus eum expedita molestiae, sunt non eligendi quo,
+                dolores a harum accusantium ipsa! Lorem ipsum dolor sit, amet
+                consectetur adipisicing elit. Iusto numquam aperiam, nam amet
+                reprehenderit obcaecati, tenetur ad error, odio itaque eligendi.
+                Aspernatur tempora voluptates earum quae excepturi, autem ipsa
+                nam.
+              </p>
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero
+                exercitationem, officiis ratione optio aliquid beatae mollitia
+                omnis repellendus eum expedita molestiae, sunt non eligendi quo,
+                dolores a harum accusantium ipsa! Lorem ipsum, dolor sit amet
+                consectetur adipisicing elit. Dolores perspiciatis officia, sunt
+                exercitationem laborum obcaecati? Vero, atque doloribus. Eos
+                expedita voluptas eveniet, ipsa debitis totam tempore inventore
+                ratione nostrum perspiciatis.
+              </p>
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero
+                exercitationem, officiis ratione optio aliquid beatae mollitia
+                omnis repellendus eum expedita molestiae, sunt non eligendi quo,
+                dolores a harum accusantium ipsa! Lorem ipsum dolor sit amet
+                consectetur adipisicing elit. Vitae aliquam nisi, totam sit enim
+                consequuntur quasi tempora quisquam rem sed provident beatae
+                inventore nostrum mollitia accusamus fugiat ad nihil quas!
+              </p>
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero
+                exercitationem, officiis ratione optio aliquid beatae mollitia
+                omnis repellendus eum expedita molestiae, sunt non eligendi quo,
+                dolores a harum accusantium ipsa! Lorem ipsum dolor sit amet
+                consectetur adipisicing elit. Vitae eveniet ipsum culpa
+                perferendis ad eaque soluta tenetur voluptatem porro et,
+                quisquam sunt nihil quam earum modi, quibusdam iusto doloribus
+                quas.
+              </p>
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero
+                exercitationem, officiis ratione optio aliquid beatae mollitia
+                omnis repellendus eum expedita molestiae, sunt non eligendi quo,
+                dolores a harum accusantium ipsa! Lorem ipsum dolor sit amet
+                consectetur adipisicing elit. Vitae eveniet ipsum culpa
+                perferendis ad eaque soluta tenetur voluptatem porro et,
+                quisquam sunt nihil quam earum modi, quibusdam iusto doloribus
+                quas.
+              </p>
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero
+                exercitationem, officiis ratione optio aliquid beatae mollitia
+                omnis repellendus eum expedita molestiae, sunt non eligendi quo,
+                dolores a harum accusantium ipsa! Lorem ipsum dolor sit amet
+                consectetur adipisicing elit. Vitae eveniet ipsum culpa
+                perferendis ad eaque soluta tenetur voluptatem porro et,
+                quisquam sunt nihil quam earum modi, quibusdam iusto doloribus
+                quas.
+              </p>
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero
+                exercitationem, officiis ratione optio aliquid beatae mollitia
+                omnis repellendus eum expedita molestiae, sunt non eligendi quo,
+                dolores a harum accusantium ipsa! Lorem ipsum dolor sit amet
+                consectetur adipisicing elit. Vitae eveniet ipsum culpa
+                perferendis ad eaque soluta tenetur voluptatem porro et,
+                quisquam sunt nihil quam earum modi, quibusdam iusto doloribus
+                quas.
+              </p>
+            </div>
+            <div class="blog-footer">
+              <label class="blog-owner">PUBLISHED ON MAY 21 2022</label>
+              <a href="#" class="like-btn">Like</a>
+            </div>
+            <div class="comment-section">
+              <label class="title-comment">JOIN THE DISCUSSION</label>
+              <label class="hint-comment">
+                After writing your comment click post. If you’re not logged in,
+                please do it first
+              </label>
+              <form>
+                <textarea
+                  name="comment"
+                  id="comment"
+                  placeholder="Your comment..."
+                ></textarea>
+                <div>
+                  <label>Commenting as John Doe</label>
+                  <button type="submit">POST</button>
+                </div>
+              </form>
+              <div class="all-comments">
+                <label class="comments-count">234 COMMENTS</label>
+                <div class="comment">
+                  <div class="commenter">
+                    <label class="commenter-name">Patrick Wang</label>
+                    <div class="separator"></div>
+                    <label class="commenter-time">15 hours ago</label>
+                  </div>
+                  <div class="comment-body">
+                    <p>
+                      Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                      Dolorum inventore laboriosam unde perspiciatis officia
+                      nulla beatae laudantium totam! Hic delectus ducimus
+                      consectetur magnam assumenda aspernatur laboriosam maiores
+                      distinctio consequuntur id.
+                    </p>
+                  </div>
+                  <a href="#" class="comment-likes">12 Likes</a>
+                </div>
+                <div class="line-separator"></div>
+
+                <div class="comment">
+                  <div class="commenter">
+                    <label class="commenter-name">Jane Doe</label>
+                    <div class="separator"></div>
+                    <label class="commenter-time">2 hours ago</label>
+                  </div>
+                  <div class="comment-body">
+                    <p>
+                      Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                      Dolorum inventore laboriosam unde perspiciatis officia
+                      nulla beatae laudantium totam! Hic delectus ducimus
+                      consectetur magnam assumenda aspernatur laboriosam maiores
+                      distinctio consequuntur id.
+                    </p>
+                  </div>
+                  <a href="#" class="comment-likes">18 Likes</a>
+                </div>
+                <div class="line-separator"></div>
+
+                <div class="comment">
+                  <div class="commenter">
+                    <label class="commenter-name">John Doe</label>
+                    <div class="separator"></div>
+                    <label class="commenter-time">5 days ago</label>
+                  </div>
+                  <div class="comment-body">
+                    <p>
+                      Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                      Dolorum inventore laboriosam unde perspiciatis officia
+                      nulla beatae laudantium totam! Hic delectus ducimus
+                      consectetur magnam assumenda aspernatur laboriosam maiores
+                      distinctio consequuntur id.
+                    </p>
+                  </div>
+                  <a href="#" class="comment-likes">24 Likes</a>
+                </div>
+                <div class="line-separator"></div>
+              </div>
+            </div>
+          </div>
+          <div id="extra">
+            <label class="title-extra">Similar topics</label>
+            <div class="similar-blogs">
+              <div class="similar-topic">
+                <img src="/images/blog-img-1.jpg" alt="blog-img" />
+                <label class="title-similar-topic"
+                  >The blog title goes here</label
+                >
+                <a href="#" class="link-similar-topic">READ MORE</a>
+              </div>
+              <div class="similar-topic">
+                <img src="/images/blog-img-1.jpg" alt="blog-img" />
+                <label class="title-similar-topic"
+                  >The blog title goes here</label
+                >
+                <a href="#" class="link-similar-topic">READ MORE</a>
+              </div>
+              <div class="similar-topic">
+                <img src="/images/blog-img-1.jpg" alt="blog-img" />
+                <label class="title-similar-topic"
+                  >The blog title goes here</label
+                >
+                <a href="#" class="link-similar-topic">READ MORE</a>
+              </div>
+              <div class="similar-topic">
+                <img src="/images/blog-img-1.jpg" alt="blog-img" />
+                <label class="title-similar-topic"
+                  >The blog title goes here</label
+                >
+                <a href="#" class="link-similar-topic">READ MORE</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!----------------------------------------------------------------->
+      </div>
+      <!-------------------------FOOTER---------------------------------->
+      <section id="footer">
+        <div class="socials">
+          <div class="social-card">
+            <img src="/images/in.png" alt="in" />
+          </div>
+          <div class="social-card">
+            <img src="/images/twitter.png" alt="twitter" />
+          </div>
+          <div class="social-card">
+            <img src="/images/insta.png" alt="insta" />
+          </div>
+          <div class="social-card">
+            <img src="/images/github.png" alt="git" />
+          </div>
+        </div>
+      </section>
+      <!----------------------------------------------------------------->
+      <!-------------------------MODAL---------------------------------->
+      <div id="modal">
+        <div class="modal-content">
+          <div id="login-section">
+            <div class="avatar">
+              <img src="/images/user-profile.png" alt="profile" />
+            </div>
+            <form>
+              <input type="text" name="email" id="email" placeholder="Email" />
+              <input
+                type="password"
+                name="password"
+                id="password"
+                placeholder="Password"
+              />
+              <div>
+                <button type="submit">Login</button>
+                <button type="button" onclick="toggleModal()">Cancel</button>
+              </div>
+            </form>
+            <div>
+              <label>Don't have an account?</label>
+              <label class="link" onclick="toggleSection()">Sign up</label>
+            </div>
+          </div>
+          <div id="signup-section">
+            <div class="avatar">
+              <img src="/images/add-users.png" alt="profile" />
+            </div>
+            <form>
+              <input type="text" name="name" id="name" placeholder="Names" />
+              <input type="text" name="email" id="email" placeholder="Email" />
+              <input
+                type="password"
+                name="password"
+                id="password"
+                placeholder="Password"
+              />
+              <input
+                type="password"
+                name="confirm_password"
+                id="confirm_password"
+                placeholder="Confirm password"
+              />
+              <div>
+                <button type="submit">Signup</button>
+                <button type="button" onclick="toggleModal()">Cancel</button>
+              </div>
+            </form>
+            <div>
+              <label>Already have an account?</label>
+              <label class="link" onclick="toggleSection()">Login</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!----------------------------------------------------------------->
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
