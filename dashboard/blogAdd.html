@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="/dashboard/styles_dashboard.css" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+      integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="sidebar">
+        <div class="admin-tab">
+          <img src="/images/pirate.png" alt="img" />
+          <label>ADMIN</label>
+          <div class="line-separator"></div>
+        </div>
+        <div class="tabs">
+          <div class="tab">
+            <img src="/images/speedometer-svgrepo-com.png" alt="img" />
+            <a href="./adminPanel.html">All</a>
+            <div class="line-separator"></div>
+          </div>
+          <div class="tab active-tab">
+            <img src="/images/blog-svgrepo-com.png" alt="img" />
+            <a class="active" href="./blogAdd.html">Blogs</a>
+            <div class="line-separator"></div>
+          </div>
+          <div class="tab">
+            <img src="/images/message-svgrepo-com.png" alt="img" />
+            <a href="./messages.html">Messages</a>
+            <div class="line-separator"></div>
+          </div>
+          <div class="tab">
+            <img src="/images/settings-svgrepo-com.png" alt="img" />
+            <a href="./settings.html">Settings</a>
+            <div class="line-separator"></div>
+          </div>
+          <div class="logout-tab">
+            <img src="/images/exit-logout-svgrepo-com.png" alt="img" />
+            <a href="../index.html">Log out</a>
+          </div>
+        </div>
+      </div>
+      <div class="content">
+        <label class="title-main"> Dashboard </label>
+        <div class="new-blog">
+          <form>
+            <div class="form-elements">
+              <input
+                type="text"
+                name="title"
+                id="title"
+                placeholder="Blog title"
+              />
+              <textarea name="body" id="body"></textarea>
+              <input type="date" name="date" id="date" />
+              <input type="file" name="image" id="image" />
+            </div>
+            <div class="buttons-div">
+              <button type="submit">ADD BLOG</button>
+              <button type="reset">CLEAR</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script src="/dashboard/scripts.js"></script>
+  </body>
+</html>

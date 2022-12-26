@@ -32,6 +32,7 @@ html {
     width: 10vw;
     margin-left: 13px;
     margin-top: 18px;
+    overflow-x: hidden;
 }
 
 .admin-tab {
@@ -73,16 +74,31 @@ html {
     margin-top: 20px;
     flex-direction: column;
     gap: 2px;
-    cursor: pointer;
+    width: 100%;
+    border: none;
+}
+
+.active-tab {
+    border-right: solid 10px white;
+}
+
+.active {
+    color: white !important;
 }
 
 .tab img {
     height: 30px;
 }
 
-.tab label {
+.tab a {
+    text-decoration: none;
     color: #5DCCE4;
     font-size: 17px;
+    transition: all 0.5s;
+}
+
+.tab a:hover {
+    color: white;
 }
 
 .logout-tab {
@@ -100,9 +116,15 @@ html {
     height: 30px;
 }
 
-.logout-tab label {
+.logout-tab a {
+    text-decoration: none;
     color: #5DCCE4;
     font-size: 17px;
+    transition: all 0.5s;
+}
+
+.logout-tab a:hover {
+    color: white;
 }
 
 .content {
@@ -110,6 +132,7 @@ html {
     flex-direction: column;
     width: 100%;
     height: 100vh;
+    /* overflow-y: scroll; */
 }
 
 .title-main {
@@ -222,4 +245,389 @@ html {
     padding: 5px;
     border: solid 1px transparent;
     border-radius: 5px;
+}
+
+.new-blog {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    padding-bottom: 30px;
+}
+
+.new-blog form {
+    display: flex;
+    flex-direction: row;
+    gap: 60px;
+    margin-top: 20px;
+}
+
+.buttons-div {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.new-blog form input {
+    width: 600px;
+    height: 40px;
+    background-color: #171822;
+    border: solid 1px transparent;
+    border-radius: 8px;
+    color: #5DCCE4;
+    padding: 5px 15px;
+    font-size: 18px;
+}
+
+.new-blog form input[type=date] {
+    width: 300px;
+}
+
+.new-blog form input[type=file] {
+    width: 300px;
+}
+
+.new-blog form input::placeholder {
+    color: #37a3b183;
+}
+
+.new-blog form textarea {
+    width: 600px;
+    height: 320px;
+    background-color: #171822;
+    border: solid 1px transparent;
+    border-radius: 8px;
+    color: #5DCCE4;
+    padding: 5px 15px;
+    font-size: 18px;
+    resize: none;
+}
+
+.new-blog form button[type=submit] {
+    background-color: #1C97BD;
+    border: solid 1px transparent;
+    border-radius: 10px;
+    color: white;
+    font-weight: 100;
+    padding: 2px;
+    width: 210px;
+    height: 40px;
+    cursor: pointer;
+    transition: all 0.5s;
+}
+
+.new-blog form button[type=reset] {
+    background-color: transparent;
+    border: solid 1px #37A3B1;
+    border-radius: 10px;
+    color: white;
+    font-weight: 100;
+    padding: 2px;
+    width: 210px;
+    height: 40px;
+    cursor: pointer;
+    transition: all 0.5s;
+}
+
+.new-blog form button:hover {
+    background-color: transparent;
+    color: #5DCCE4;
+    border-color: #5DCCE4;
+}
+
+.messages {
+    display: flex;
+    flex-direction: column;
+    height: fit-content;
+    max-height: 95vh;
+    overflow-y: auto;
+    padding-bottom: 20px;
+}
+
+.title-messages {
+    color: white;
+    font-size: 25px;
+    font-weight: 500;
+    margin-top: 20px;
+}
+
+.message {
+    display: flex;
+    flex-direction: column;
+    background-color: #171822;
+    width: 60vw;
+    margin-top: 10px;
+    padding: 20px;
+    border: solid 1px transparent;
+    border-radius: 15px;
+}
+
+.from {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+.from label {
+    color: #5DCCE4;
+    font-size: 10px;
+}
+
+.from .name {
+    color: #5DCCE4;
+    font-size: 18px;
+}
+
+.separator {
+    background-color: #5DCCE4;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+}
+
+.message-body p {
+    color: white;
+}
+
+.message-body div {
+    margin-top: 30px;
+}
+
+.message-body a {
+    text-decoration: none;
+    color: white;
+    background-color: #1C97BD;
+    padding: 5px;
+    border: solid 1px transparent;
+    border-radius: 4px;
+    transition: all 0.5s;
+}
+
+.message-body a:hover {
+    background-color: transparent;
+    border-color: #5DCCE4;
+}
+
+.settings {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    gap: 10px
+}
+
+.settings form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.settings form input {
+    width: 600px;
+    height: 40px;
+    background-color: #171822;
+    border: solid 1px #37A3B1;
+    border-radius: 8px;
+    color: #5DCCE4;
+    padding: 5px 15px;
+    font-size: 18px;
+}
+
+.settings form input::placeholder {
+    color: #37A3B1;
+    font-size: 16px;
+    font-weight: 100;
+}
+
+.title-settings {
+    color: white;
+    font-weight: 500;
+    font-size: 30px;
+    margin-top: 30px;
+}
+
+.settings form button[type=reset] {
+    background-color: transparent;
+    border: solid 1px #37A3B1;
+    border-radius: 10px;
+    color: white;
+    font-weight: 100;
+    padding: 2px;
+    width: 110px;
+    height: 40px;
+    cursor: pointer;
+    transition: all 0.5s;
+}
+
+.settings form button[type=submit] {
+    background-color: #1C97BD;
+    border: solid 1px transparent;
+    border-radius: 10px;
+    color: white;
+    font-weight: 100;
+    padding: 2px;
+    width: 110px;
+    height: 40px;
+    cursor: pointer;
+    transition: all 0.5s;
+}
+
+.settings form button:hover {
+    background-color: transparent;
+    color: #5DCCE4;
+    border-color: #5DCCE4;
+}
+
+.settings form div {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+/*====================MEDIA QUERIES(MEDIUM DEVICES)==================*/
+@media screen and (max-width:1024px) {
+
+    .blogs-table {
+        width: 70vw;
+    }
+
+    #blogs th:nth-of-type(3),
+    td:nth-of-type(3) {
+        display: none;
+    }
+
+    .sidebar {
+        width: 16vw;
+    }
+
+    .content {
+        width: 70vw;
+    }
+
+    .card {
+        padding: 15px;
+    }
+
+    .card img {
+        height: 50px;
+    }
+
+    .line-separator {
+        width: 40px;
+    }
+
+    .tab {
+        margin-top: 40px;
+    }
+
+    .tab img {
+        height: 50px;
+    }
+
+    .tab a {
+        font-size: 20px;
+    }
+
+    .logout-tab {
+        margin-top: 150%;
+    }
+
+    .logout-tab a {
+        font-size: 20px;
+    }
+
+    .logout-tab img {
+        height: 60px;
+    }
+
+    .new-blog form {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .new-blog form input {
+        width: 480px;
+        font-size: 20px;
+        height: 60px;
+    }
+
+    .new-blog form textarea {
+        width: 480px;
+        font-size: 20px;
+        height: 500px;
+    }
+
+    .new-blog form button[type=submit] {
+        padding: 5px;
+        font-size: 25px;
+    }
+
+    .new-blog form button[type=reset] {
+        padding: 5px;
+        font-size: 25px;
+    }
+
+    .buttons-div {
+        flex-direction: row;
+        gap: 10px;
+    }
+    .form-elements{
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .title-messages {
+        font-size: 30px;
+    }
+
+    .message-body p {
+        font-size: 25px;
+        font-weight: 100;
+    }
+
+    .from label {
+        font-size: 18px;
+    }
+
+    .from .name {
+        font-size: 22px;
+    }
+
+    .separator {
+        width: 10px;
+        height: 10px;
+    }
+
+    .message-body a {
+        font-size: 25px;
+    }
+
+    .settings {
+        width: 370px;
+    }
+
+    .settings form input {
+        width: 450px;
+        height: 50px;
+        font-size: 22px;
+    }
+
+    .settings form input::placeholder {
+        font-size: 22px;
+    }
+
+    .settings form button[type=submit] {
+        padding: 5px 10px;
+        width: 160px;
+        height: 50px;
+        font-size: 25px;
+    }
+
+    .settings form button[type=reset] {
+        padding: 5px 10px;
+        width: 160px;
+        height: 50px;
+        font-size: 25px;
+    }
 }
