@@ -5,6 +5,10 @@ const toTop = document.getElementsByClassName("back-to-top");
 const modal = document.getElementById("modal");
 const loginSection = document.getElementById("login-section");
 const signupSection = document.getElementById("signup-section");
+const openMenu = document.getElementsByClassName("open-menu");
+const closeMenu = document.getElementsByClassName("close-menu");
+const horizontalMenu = document.getElementsByClassName("horizontal-menu");
+let horizontalMenuActive = false;
 
 // Get all sections that have an ID defined
 const sections = document.querySelectorAll("section[id]");
@@ -39,13 +43,21 @@ function navHighlighter() {
       - To know which link needs an active class, we use sectionId variable we are getting while looping through sections as an selector
       */
     if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
-      document
-        .querySelector(".links a[href*=" + sectionId + "]")
-        .classList.add("active");
+      !horizontalMenuActive
+        ? document
+            .querySelector(".links a[href*=" + sectionId + "]")
+            .classList.add("active")
+        : document
+            .querySelector(".horizontal-menu a[href*=" + sectionId + "]")
+            .classList.add("active");
     } else {
-      document
-        .querySelector(".links a[href*=" + sectionId + "]")
-        .classList.remove("active");
+      !horizontalMenuActive
+        ? document
+            .querySelector(".links a[href*=" + sectionId + "]")
+            .classList.remove("active")
+        : document
+            .querySelector(".horizontal-menu a[href*=" + sectionId + "]")
+            .classList.remove("active");
     }
   });
 }
@@ -68,5 +80,21 @@ function toggleSection() {
   } else {
     loginSection.style.display = "flex";
     signupSection.style.display = "none";
+  }
+}
+
+function toggleMenu(e) {
+  e.preventDefault();
+  console.log(openMenu[0]);
+  if (openMenu[0].style.display !== "none") {
+    openMenu[0].style.display = "none";
+    closeMenu[0].style.display = "flex";
+    horizontalMenu[0].style.height = "300px";
+    horizontalMenuActive = true;
+  } else {
+    openMenu[0].style.display = "flex";
+    closeMenu[0].style.display = "none";
+    horizontalMenu[0].style.height = 0;
+    horizontalMenuActive = false;
   }
 }

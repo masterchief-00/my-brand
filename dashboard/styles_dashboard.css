@@ -334,6 +334,12 @@ html {
     border-color: #5DCCE4;
 }
 
+.form-elements {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
 .messages {
     display: flex;
     flex-direction: column;
@@ -571,7 +577,8 @@ html {
         flex-direction: row;
         gap: 10px;
     }
-    .form-elements{
+
+    .form-elements {
         display: flex;
         flex-direction: column;
         gap: 10px;
