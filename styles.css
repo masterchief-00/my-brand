@@ -202,6 +202,7 @@ html {
 }
 
 .my-details {
+    width: 100%;
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -241,7 +242,7 @@ html {
 .skills {
     display: flex;
     justify-content: center;
-    align-items: center;
+    /* align-items: center; */
     gap: 18px;
     flex-direction: column;
 }
@@ -252,6 +253,30 @@ html {
     height: 3rem;
 }
 
+.w-1{
+    width: 17rem !important;
+}
+.w-2{
+    width: 18rem !important;
+}
+.w-3{
+    width: 17rem !important;
+}
+.w-4{
+    width: 15rem !important;
+}
+.w-5{
+    width: 19rem !important;
+}
+.w-6{
+    width: 20rem !important;
+}
+.w-7{
+    width: 14rem !important;
+}
+.w-8{
+    width: 16rem !important;
+}
 .skill {
     background-color: #5DCCE4;
     width: 12.1875rem;
@@ -1082,6 +1107,13 @@ html {
     width: 300px;
 }
 
+.line-separator-thick {
+    margin-top: 10px;
+    background-color: #a7a7a786;
+    height: 4px;
+    width: 200px;
+}
+
 .hamburger {
     display: none;
     margin-right: 20px;
@@ -1106,7 +1138,7 @@ html {
     align-items: center;
     position: absolute;
     background-color: #171822;
-    top: 80px;
+    top: 50px;
     height: 0;
     width: 100%;
     transition: all 0.3s ease-in-out;
@@ -1327,20 +1359,54 @@ html {
     .link-similar-topic {
         font-size: 20px;
     }
+
+    #login-section {
+        width: 60vw;
+    }
+
+    #login-section form input {
+        width: 350px;
+    }
+
+    #login-section div {
+        margin-top: 20px;
+    }
+    #login-section div label{
+        font-size: 25px;
+    }
+
+    #signup-section {
+        width: 85vw;
+    }
+
+    #signup-section form input {
+        width: 350px;
+
+    }
+
+    #signup-section div {
+        margin-top: 20px;
+    }
+    #signup-section div label{
+        font-size: 25px;
+    }
 }
 
 /*====================MEDIA QUERIES(SMALL DEVICES)==================*/
 @media screen and (max-width:600px) {
     .nav-bar {
         justify-content: flex-end;
+        height: 50px;
     }
 
     .hamburger {
         display: flex;
     }
+
     .hamburger img {
-        height: 50px;
+        height: 40px;
     }
+
     .links {
         display: none;
     }
@@ -1571,5 +1637,30 @@ html {
 
     .link-similar-topic {
         font-size: 12px;
+    }
+
+    #login-section {
+        width: 85vw;
+    }
+
+    #login-section form input {
+        width: 200px;
+    }
+
+    #login-section div {
+        margin-top: 20px;
+    }
+
+    #signup-section {
+        width: 85vw;
+    }
+
+    #signup-section form input {
+        width: 200px;
+
+    }
+
+    #signup-section div {
+        margin-top: 20px;
     }
 }

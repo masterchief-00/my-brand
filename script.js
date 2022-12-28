@@ -88,7 +88,7 @@ function toggleMenu(e) {
   if (openMenu[0].style.display !== "none") {
     openMenu[0].style.display = "none";
     closeMenu[0].style.display = "flex";
-    horizontalMenu[0].style.height = "300px";
+    horizontalMenu[0].style.height = "330px";
     horizontalMenuActive = true;
   } else {
     openMenu[0].style.display = "flex";
