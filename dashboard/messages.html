@@ -17,6 +17,29 @@
   </head>
   <body>
     <div class="wrapper">
+      <!-------------------------NAVBAR---------------------------------->
+      <div class="nav-bar">
+        <div class="login" onclick="toggleModal()">
+          <img src="../images/login-password-svgrepo-com.png" alt="login" />
+          <label>LOGIN</label>
+        </div>
+        <div class="hamburger">
+          <a href="#" class="open-menu" onclick="toggleMenu(event)">
+            <img src="../images/hamburger-svgrepo-com.png" alt="img" />
+          </a>
+          <a href="#" class="close-menu" onclick="toggleMenu(event)">
+            <img src="../images/x-svgrepo-com.png" alt="img" />
+          </a>
+        </div>
+        <div class="horizontal-menu">
+          <a href="adminPanel.html">All</a>
+          <a href="blogAdd.html">Blogs</a>
+          <a href="messages.html" class="active">Messages</a>
+          <a href="settings.html">Settings</a>
+          <a href="../index.html">Log out</a>
+        </div>
+      </div>
+      <!----------------------------------------------------------------->
       <div class="sidebar">
         <div class="admin-tab">
           <img src="/images/pirate.png" alt="img" />
@@ -122,6 +145,6 @@
         </div>
     </div>
 
-    <script src="/dashboard/scripts.js"></script>
+    <script src="/dashboard/script_dashboard.js"></script>
   </body>
 </html>

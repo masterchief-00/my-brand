@@ -85,7 +85,6 @@ function toggleSection() {
 
 function toggleMenu(e) {
   e.preventDefault();
-  console.log(openMenu[0]);
   if (openMenu[0].style.display !== "none") {
     openMenu[0].style.display = "none";
     closeMenu[0].style.display = "flex";

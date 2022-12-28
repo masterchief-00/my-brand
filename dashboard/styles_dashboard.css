@@ -3,14 +3,11 @@ body {
     margin: 0;
     background-color: #1F212F;
     font-family: Helvetica, Arial, sans-serif;
-    overflow-x: hidden;
     scroll-behavior: smooth;
 }
 
 html {
     scroll-behavior: smooth;
-    overflow-x: hidden;
-
 }
 
 .wrapper {
@@ -18,9 +15,22 @@ html {
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    overflow-x: hidden;
     flex-direction: row;
     gap: 40px;
+}
+
+.nav-bar {
+    display: none;
+    position: sticky;
+    top: 0px;
+    height: 60px;
+    background-color: #171822;
+    width: 100vw;
+    max-width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    z-index: 10;
 }
 
 .sidebar {
@@ -132,7 +142,6 @@ html {
     flex-direction: column;
     width: 100%;
     height: 100vh;
-    /* overflow-y: scroll; */
 }
 
 .title-main {
@@ -250,7 +259,7 @@ html {
 .new-blog {
     display: flex;
     flex-direction: column;
-    overflow-y: auto;
+    /* overflow-y: auto; */
     padding-bottom: 30px;
 }
 
@@ -490,8 +499,52 @@ html {
     gap: 10px;
 }
 
+.hamburger {
+    display: none;
+    margin-right: 20px;
+}
+
+.hamburger img {
+    height: 50px;
+}
+
+.close-menu {
+    display: none;
+}
+
+.open-menu {
+    display: flex;
+}
+
+.horizontal-menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    background-color: #171822;
+    top: 80px;
+    height: 0;
+    width: 100%;
+    transition: all 0.3s ease-in-out;
+    overflow-y: hidden;
+}
+
+.horizontal-menu a {
+    text-decoration: none;
+    color: white;
+    padding: 10px;
+    font-size: 27px;
+    font-weight: lighter;
+    transition: all 0.5s;
+}
+
+
 /*====================MEDIA QUERIES(MEDIUM DEVICES)==================*/
 @media screen and (max-width:1024px) {
+    .active {
+        color: #37A3B1 !important;
+    }
 
     .blogs-table {
         width: 70vw;
@@ -636,5 +689,206 @@ html {
         width: 160px;
         height: 50px;
         font-size: 25px;
+    }
+}
+
+/*====================MEDIA QUERIES(SMALL DEVICES)==================*/
+@media screen and (max-width:600px) {
+    .active {
+        color: #37A3B1 !important;
+    }
+
+    .wrapper {
+        justify-content: center;
+    }
+
+    .wrapper {
+        flex-direction: column;
+    }
+
+    .nav-bar {
+        display: flex;
+    }
+
+    .nav-bar {
+        justify-content: flex-end;
+    }
+
+    .hamburger {
+        display: flex;
+    }
+
+    .login {
+        display: none;
+    }
+
+    .sidebar {
+        display: none;
+    }
+
+    .top-cards {
+        flex-direction: column;
+    }
+
+    .content {
+        width: 100%;
+    }
+
+    .title-main {
+        align-self: flex-start;
+        margin-left: 15px;
+        margin-top: 5px;
+
+    }
+
+    .top-cards {
+        margin-left: 15px;
+    }
+
+    .blogs-table {
+        width: 85vw;
+        align-self: center;
+    }
+    #blogs td div{
+        display: flex;
+        flex-direction: row;
+        gap: 3px;
+    }
+    .new-blog {
+        height: max-content;
+    }
+
+    .new-blog form {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .new-blog form input {
+        width: 300px;
+        height: 35px;
+        font-size: 20px;
+    }
+    .new-blog form input[type=date]{
+        width: 250px;
+    }
+    .new-blog form input[type=file]{
+        width: 250px;
+    }
+    .new-blog form textarea {
+        width: 300px;
+        font-size: 20px;
+        height: 500px;
+    }
+
+    .new-blog form button[type=submit] {
+        padding: 5px;
+        font-size: 25px;
+    }
+
+    .new-blog form button[type=reset] {
+        padding: 5px;
+        font-size: 25px;
+    }
+
+    .buttons-div {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .form-elements {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .title-messages {
+        font-size: 30px;
+        margin-left: 20px;
+    }
+
+    .messages {
+        width: 100%;
+        align-items: center;
+        padding-bottom: 50px;
+    }
+
+    .message {
+        width: 300px;
+        max-width: 100%;
+    }
+
+    .message-body p {
+        font-size: 25px;
+        font-weight: 100;
+    }
+
+    .from {
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        gap: 5px;
+    }
+
+    .from label {
+        font-size: 18px;
+    }
+
+    .from .name {
+        font-size: 18px;
+    }
+
+    .separator {
+        width: 36px;
+        height: 5px;
+        border-radius: 0%;
+    }
+
+    .message-body div {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .message-body a {
+        font-size: 18px;
+    }
+
+    .settings {
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .title-settings {
+        margin-left: 30px;
+    }
+    .settings form{
+        justify-content: center;
+        align-items: center;
+    }
+    .settings form input {
+        width: 300px;
+        height: 50px;
+        font-size: 22px;
+    }
+
+    .settings form input::placeholder {
+        font-size: 22px;
+    }
+
+    .settings form button[type=submit] {
+        padding: 5px;
+        width: 150px;
+        height: 40px;
+        font-size: 18px;
+    }
+
+    .settings form button[type=reset] {
+        padding: 5px;
+        width: 150px;
+        height: 40px;
+        font-size: 18px;
     }
 }
