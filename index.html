@@ -19,6 +19,10 @@
     <div class="wrapper">
       <!-------------------------LANDING PAGE---------------------------------->
       <section id="landing-page">
+        <!-- -------------------- ANIMATED BACKGROUND ------------------------------- -->
+        <canvas id="canv"></canvas>
+        <!------------------------------------------------------------------------------>
+
         <div class="greetings">
           <div>
             <label class="normal">Hello, I'm </label
@@ -27,10 +31,11 @@
           <div>
             <label>I'm a web developer and a 3D artist.</label>
           </div>
+          <a href="#about" class="btn-view-work">
+            View my work
+            <i class="fa-solid fa-arrow-right" id="right-arrow"></i>
+          </a>
         </div>
-        <a href="#about" class="btn-view-work">
-          View my work <i class="fa-solid fa-arrow-right" id="right-arrow"></i>
-        </a>
       </section>
       <!----------------------------------------------------------------->
 
@@ -434,5 +439,6 @@
     </div>
 
     <script src="script.js"></script>
+    <script src="bg-script.js"></script>
   </body>
 </html>
