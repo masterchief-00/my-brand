@@ -34,8 +34,8 @@
         <div class="horizontal-menu">
           <a href="adminPanel.html">All</a>
           <a href="blogAdd.html">Blogs</a>
+          <a href="settings.html" class="active">Projects</a>
           <a href="messages.html">Messages</a>
-          <a href="settings.html" class="active">Settings</a>
           <a href="../index.html">Log out</a>
         </div>
       </div>
@@ -57,16 +57,16 @@
             <a href="./blogAdd.html">Blogs</a>
             <div class="line-separator"></div>
           </div>
+          <div class="tab active-tab">
+            <img src="/images/settings-svgrepo-com.png" alt="img" />
+            <a class="active" href="./settings.html">Projects</a>
+            <div class="line-separator"></div>
+          </div>
           <div class="tab">
             <img src="/images/message-svgrepo-com.png" alt="img" />
             <a href="./messages.html">Messages</a>
             <div class="line-separator"></div>
-          </div>
-          <div class="tab active-tab">
-            <img src="/images/settings-svgrepo-com.png" alt="img" />
-            <a class="active" href="./settings.html">Settings</a>
-            <div class="line-separator"></div>
-          </div>
+          </div>          
           <div class="logout-tab">
             <img src="/images/exit-logout-svgrepo-com.png" alt="img" />
             <a href="../index.html">Log out</a>
@@ -75,17 +75,22 @@
       </div>
       <div class="content">
         <label class="title-main"> Dashboard </label>
-        <label class="title-settings"> Update user details </label>
+        <label class="title-settings"> Add Project </label>
         <div class="settings">
             <form>
-                <input type="text" name="names" id="names" placeholder="New names" />
-                <input type="text" name="email" id="email" placeholder="Email" />
-                <input type="password" name="password_old" id="pwd_old" placeholder="Current password" />
-                <input type="password" name="password_new" id="pwd_old" placeholder="New password" />
+              <div class="a">
+                <input type="text" name="title" id="title" placeholder="Project title" />
+                <input type="text" name="tools" id="tools" placeholder="Tools used (separate with a comma)" />
+                <textarea name="description" id="description" placeholder="Project description"></textarea>
+              </div>                
+              <div class="b">
+                <input type="file" name="image" id="image" />
                 <div>
-                    <button type="submit">UPDATE</button>
-                    <button type="reset">RESET</button>
-                  </div>
+                  <button type="submit">SUBMIT</button>  
+                  <button type="reset">RESET</button>
+                </div>
+                   
+              </div>
             </form>
         </div>
     </div>
