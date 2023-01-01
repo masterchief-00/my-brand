@@ -1,7 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 body {
     padding: 0;
     margin: 0;
-    font-family: Helvetica, Arial, sans-serif;
+    font-family: 'Raleway', sans-serif;
     scroll-behavior: smooth;
 }
 
@@ -31,8 +33,9 @@ html {
 .nav-bar {
     position: sticky;
     top: 0px;
-    height: 80px;
+    height: 60px;
     background-color: #171822;
+    border-bottom: solid 4px #5DCCE4;
     width: 100vw;
     max-width: 100%;
     display: flex;
@@ -54,8 +57,8 @@ html {
     text-decoration: none;
     color: white;
     padding: 10px;
-    font-size: 27px;
-    font-weight: lighter;
+    font-size: 20px;
+    font-weight: 400;
     transition: all 0.5s;
 }
 
@@ -85,7 +88,7 @@ html {
 }
 
 .greetings label {
-    font-size: 3.5rem;
+    font-size: 2rem;
 }
 
 .greetings .colored {
@@ -97,9 +100,9 @@ html {
     border: solid 2px white;
     border-radius: 5px;
     color: white;
-    font-size: 1.875rem;
-    height: 70px;
-    width: 281px;
+    font-size: 1.2rem;
+    height: 50px;
+    width: 181px;
     margin-top: 20px;
     cursor: pointer;
     text-decoration: none;
@@ -136,29 +139,31 @@ html {
 }
 
 .page-title {
-    font-size: 56px;
-    font-weight: 800;
+    font-size: 40px;
+    font-weight: 600;
     color: #5B5B5B;
 }
 
 .page-title-white {
-    font-size: 56px;
-    font-weight: 800;
+    font-size: 40px;
+    font-weight: 600;
     color: white;
 }
 
 .line {
     content: "";
-    width: 100px;
+    width: 70px;
     height: 4px;
     background-color: #5B5B5B;
+    margin-top: 20px;
 }
 
 .line-white {
     content: "";
-    width: 100px;
+    width: 70px;
     height: 4px;
     background-color: white;
+    margin-top: 20px;
 }
 
 .ads-talk {
@@ -253,30 +258,38 @@ html {
     height: 3rem;
 }
 
-.w-1{
+.w-1 {
     width: 17rem !important;
 }
-.w-2{
+
+.w-2 {
     width: 18rem !important;
 }
-.w-3{
+
+.w-3 {
     width: 17rem !important;
 }
-.w-4{
+
+.w-4 {
     width: 15rem !important;
 }
-.w-5{
+
+.w-5 {
     width: 19rem !important;
 }
-.w-6{
+
+.w-6 {
     width: 20rem !important;
 }
-.w-7{
+
+.w-7 {
     width: 14rem !important;
 }
-.w-8{
+
+.w-8 {
     width: 16rem !important;
 }
+
 .skill {
     background-color: #5DCCE4;
     width: 12.1875rem;
@@ -1154,10 +1167,93 @@ html {
     transition: all 0.5s;
 }
 
+.project-details-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 100%;
+    background-color: white;
+    padding: 10px 60px;
+}
+
+.title-project-details {
+    font-size: 45px;
+    font-weight: 600;
+    color: #5B5B5B;
+    margin-top: 20px;
+}
+
+.project-details-content p {
+    font-size: 18px;
+    font-weight: 400;
+    color: #5B5B5B;
+    text-align: center;
+}
+
+.title-project-gallery {
+    font-size: 15px;
+    font-weight: 700;
+    color: #5B5B5B;
+}
+
+.project-gallery {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    row-gap: 0rem;
+    margin-top: 20px;
+}
+
+.project-gallery img {
+    height: 400px;
+}
+
+.tools-used {
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+}
+
+.tools-used label {
+    font-size: 15px;
+    font-weight: 300;
+    background-color: #37A3B1;
+    color: white;
+    border: solid 1px transparent;
+    border-radius: 20px;
+    padding: 8px 20px;
+    transition: all 0.5s;
+}
+
+.tools-used label:hover {
+    background-color: transparent;
+    color: #5B5B5B;
+    border-color: #37A3B1;
+}
+
 /*====================MEDIA QUERIES(MEDIUM DEVICES)==================*/
 @media screen and (max-width:1024px) {
     .nav-bar {
         justify-content: flex-end;
+    }
+
+    .project-details-content p {
+        font-size: 22px;
+    }
+
+    .title-project-gallery {
+        font-size: 22px;
+    }
+
+    .project-gallery img {
+        height: 550px;
+    }
+
+    .project-gallery {
+        grid-template-columns: 1fr;
     }
 
     .hamburger {
@@ -1371,7 +1467,8 @@ html {
     #login-section div {
         margin-top: 20px;
     }
-    #login-section div label{
+
+    #login-section div label {
         font-size: 25px;
     }
 
@@ -1387,7 +1484,8 @@ html {
     #signup-section div {
         margin-top: 20px;
     }
-    #signup-section div label{
+
+    #signup-section div label {
         font-size: 25px;
     }
 }
@@ -1397,6 +1495,32 @@ html {
     .nav-bar {
         justify-content: flex-end;
         height: 50px;
+    }
+    .tools-used {
+        gap: 10px
+    }
+    .project-details-content{
+        padding: 0 20px;
+    }
+    .project-details-content p {
+        font-size: 20px;
+        text-align: left;
+    }
+
+    .title-project-details {
+        font-size: 30px;
+    }
+
+    .title-project-gallery {
+        font-size: 20px;
+    }
+
+    .project-gallery img {
+        height: 320px;
+    }
+
+    .project-gallery {
+        grid-template-columns: 1fr;
     }
 
     .hamburger {

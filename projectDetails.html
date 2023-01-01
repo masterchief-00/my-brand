@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Kwizera | Portfolio</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+      integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <div class="wrapper">
+      <!-------------------------NAVBAR---------------------------------->
+      <div class="nav-bar">
+        <div class="links">
+          <a href="/index.html#landing-page">HOME</a>
+          <a href="/index.html#about">ABOUT</a>
+          <a href="/index.html#projects">PROJECTS</a>
+          <a href="/index.html#blogs">BLOGS</a>
+          <a href="/index.html#contact">CONTACT</a>
+        </div>
+        <div class="login" onclick="toggleModal()">
+          <img src="/images/login-password-svgrepo-com.png" alt="login" />
+          <label>LOGIN</label>
+        </div>
+        <div class="hamburger">
+          <a href="#" class="open-menu" onclick="toggleMenu(event)">
+            <img src="./images/hamburger-svgrepo-com.png" alt="img" />
+          </a>
+          <a href="#" class="close-menu" onclick="toggleMenu(event)">
+            <img src="./images/x-svgrepo-com.png" alt="img" />
+          </a>
+        </div>
+        <div class="horizontal-menu">
+          <a href="#landing-page">HOME</a>
+          <a href="#about">ABOUT</a>
+          <a href="#projects">PROJECTS</a>
+          <a href="#blogs">BLOGS</a>
+          <a href="#contact">CONTACT</a>
+          <div class="line-separator-thick"></div>
+          <a href="#" onclick="toggleModal()">LOGIN</a>
+        </div>
+      </div>
+      <!----------------------------------------------------------------->
+      <div class="project-details-content">
+        <label class="title-project-details">The Astronaut</label>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo
+          itaque rem neque, provident doloremque, dolorem, tempore soluta eaque
+          est delectus vitae cum officiis molestias quibusdam architecto
+          expedita alias cumque nihil. Lorem ipsum dolor sit amet consectetur
+          adipisicing elit. Explicabo itaque rem neque, provident doloremque,
+          dolorem, tempore soluta eaque est delectus vitae cum officiis
+          molestias quibusdam architecto expedita alias cumque nihil.
+        </p>
+        <label class="title-project-gallery"
+          >And here comes the gallery...</label
+        >
+        <div class="tools-used">
+          <label>Blender</label>
+          <label>ZBrush</label>
+          <label>GIMP</label>
+        </div>
+        <div class="project-gallery">
+          <img src="/images/astronaut03.png" alt="img" />
+          <img src="/images/astronaut04.png" alt="img" />
+          <img src="/images/astronaut05.png" alt="img" />
+          <img src="/images/astronaut06.png" alt="img" />
+          <img src="/images/astronaut07.png" alt="img" />
+          <img src="/images/astronaut08.png" alt="img" />
+        </div>
+      </div>
+    </div>
+
+    <!-------------------------FOOTER---------------------------------->
+    <section id="footer">
+      <div class="socials">
+        <div class="social-card">
+          <img src="/images/in.png" alt="in" />
+        </div>
+        <div class="social-card">
+          <img src="/images/twitter.png" alt="twitter" />
+        </div>
+        <div class="social-card">
+          <img src="/images/insta.png" alt="insta" />
+        </div>
+        <div class="social-card">
+          <img src="/images/github.png" alt="git" />
+        </div>
+      </div>
+    </section>
+    <!----------------------------------------------------------------->
+
+    <script src="script.js"></script>
+  </body>
+</html>
