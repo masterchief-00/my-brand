@@ -1523,6 +1523,38 @@ html {
     #signup-section div label {
         font-size: 25px;
     }
+
+    .w-1 {
+        width: 10rem !important;
+    }
+    
+    .w-2 {
+        width: 11rem !important;
+    }
+    
+    .w-3 {
+        width: 10rem !important;
+    }
+    
+    .w-4 {
+        width: 8rem !important;
+    }
+    
+    .w-5 {
+        width: 12rem !important;
+    }
+    
+    .w-6 {
+        width: 13rem !important;
+    }
+    
+    .w-7 {
+        width: 7rem !important;
+    }
+    
+    .w-8 {
+        width: 9rem !important;
+    }
 }
 
 /*====================MEDIA QUERIES(SMALL DEVICES)==================*/
@@ -1828,5 +1860,38 @@ html {
 
     #signup-section div {
         margin-top: 20px;
+    }
+
+
+    .w-1 {
+        width: 5rem !important;
+    }
+    
+    .w-2 {
+        width: 6rem !important;
+    }
+    
+    .w-3 {
+        width: 5rem !important;
+    }
+    
+    .w-4 {
+        width: 3rem !important;
+    }
+    
+    .w-5 {
+        width: 7rem !important;
+    }
+    
+    .w-6 {
+        width: 8rem !important;
+    }
+    
+    .w-7 {
+        width: 2rem !important;
+    }
+    
+    .w-8 {
+        width: 4rem !important;
     }
 }
