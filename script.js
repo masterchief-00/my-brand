@@ -97,3 +97,98 @@ function toggleMenu(e) {
     horizontalMenuActive = false;
   }
 }
+
+/**-------------------------------- ANIMATION ------------------------------------ */
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      if (
+        entry.target.className === "page-title-about" ||
+        entry.target.className === "page-title-projects" ||
+        entry.target.className === "page-title-contact" ||
+        entry.target.className === "page-title-blogs"
+      ) {
+        entry.target.classList.add("page-title-animation");
+      }
+
+      if (
+        entry.target.className === "line-about" ||
+        entry.target.className === "line-projects" ||
+        entry.target.className === "line-blogs" ||
+        entry.target.className === "line-contact"
+      ) {
+        entry.target.classList.add("line-animation");
+      }
+
+      if (
+        entry.target.className === "pentagon-1" ||
+        entry.target.className === "pentagon-2" ||
+        entry.target.className === "pentagon-3" ||
+        entry.target.className === "pentagon-4"
+      ) {
+        entry.target.classList.add("pentagon-animation");
+      }
+
+      if (
+        entry.target.className === "talk-1" ||
+        entry.target.className === "talk-2" ||
+        entry.target.className === "talk-2" ||
+        entry.target.className === "talk-3" ||
+        entry.target.className === "talk-4"
+      ) {
+        entry.target.classList.add("talk-animation");
+      }
+
+      if (entry.target.className === "fella") {
+        entry.target.classList.add("fella-animation");
+      }
+
+      if (entry.target.className === "skills") {
+        entry.target.classList.add("skills-animation");
+      }
+
+      if (entry.target.classList[0] === "bar") {
+        console.log(entry.target.classList[0]);
+        entry.target.classList.add("skill-1-animation");
+      }
+    }
+  });
+});
+
+observer.observe(document.querySelector(".page-title-about"));
+observer.observe(document.querySelector(".line-about"));
+
+observer.observe(document.querySelector(".page-title-projects"));
+observer.observe(document.querySelector(".line-projects"));
+
+observer.observe(document.querySelector(".page-title-blogs"));
+observer.observe(document.querySelector(".line-blogs"));
+
+observer.observe(document.querySelector(".page-title-contact"));
+observer.observe(document.querySelector(".line-contact"));
+
+observer.observe(document.querySelector(".pentagon-1"));
+observer.observe(document.querySelector(".pentagon-2"));
+observer.observe(document.querySelector(".pentagon-3"));
+observer.observe(document.querySelector(".pentagon-4"));
+
+observer.observe(document.querySelector(".talk-1"));
+observer.observe(document.querySelector(".talk-2"));
+observer.observe(document.querySelector(".talk-3"));
+observer.observe(document.querySelector(".talk-4"));
+
+observer.observe(document.querySelector(".fella"));
+observer.observe(document.querySelector(".skills"));
+
+observer.observe(document.querySelector(".w-1"));
+observer.observe(document.querySelector(".w-2"));
+observer.observe(document.querySelector(".w-3"));
+observer.observe(document.querySelector(".w-4"));
+observer.observe(document.querySelector(".w-5"));
+observer.observe(document.querySelector(".w-6"));
+observer.observe(document.querySelector(".w-7"));
+observer.observe(document.querySelector(".w-8"));
+
+
+// console.log(document.querySelector(".w-1").classList);
