@@ -149,8 +149,18 @@ const observer = new IntersectionObserver((entries) => {
       }
 
       if (entry.target.classList[0] === "bar") {
-        console.log(entry.target.classList[0]);
         entry.target.classList.add("skill-1-animation");
+      }
+
+      if (
+        entry.target.className === "project-1" ||
+        entry.target.className === "project-2" ||
+        entry.target.className === "project-3" ||
+        entry.target.className === "project-4" ||
+        entry.target.className === "project-5" ||
+        entry.target.className === "project-6"
+      ) {
+        entry.target.classList.add("project-animation");
       }
     }
   });
@@ -190,5 +200,9 @@ observer.observe(document.querySelector(".w-6"));
 observer.observe(document.querySelector(".w-7"));
 observer.observe(document.querySelector(".w-8"));
 
-
-// console.log(document.querySelector(".w-1").classList);
+observer.observe(document.querySelector(".project-1"));
+observer.observe(document.querySelector(".project-2"));
+observer.observe(document.querySelector(".project-3"));
+observer.observe(document.querySelector(".project-4"));
+observer.observe(document.querySelector(".project-5"));
+observer.observe(document.querySelector(".project-6"));

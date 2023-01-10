@@ -380,7 +380,6 @@ html {
 #gallery-3d {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    row-gap: 0rem;
     column-gap: 0rem;
     justify-items: center;
     margin-top: 80px;
@@ -388,7 +387,12 @@ html {
     overflow: hidden;
 }
 
-.project img {
+.project-1 img,
+.project-2 img,
+.project-3 img,
+.project-4 img,
+.project-5 img,
+.project-6 img {
     height: 365px;
 }
 
@@ -433,7 +437,12 @@ html {
     visibility: hidden;
 }
 
-.project:hover .project-details {
+.project-1:hover .project-details,
+.project-2:hover .project-details,
+.project-3:hover .project-details,
+.project-4:hover .project-details,
+.project-5:hover .project-details,
+.project-6:hover .project-details {
     visibility: visible;
 }
 
@@ -1338,7 +1347,12 @@ html {
 
     }
 
-    .project img {
+    .project-1 img,
+    .project-2 img,
+    .project-3 img,
+    .project-4 img,
+    .project-5 img,
+    .project-6 img {
         height: 580px;
     }
 
@@ -1527,31 +1541,31 @@ html {
     .w-1 {
         width: 10rem !important;
     }
-    
+
     .w-2 {
         width: 11rem !important;
     }
-    
+
     .w-3 {
         width: 10rem !important;
     }
-    
+
     .w-4 {
         width: 8rem !important;
     }
-    
+
     .w-5 {
         width: 12rem !important;
     }
-    
+
     .w-6 {
         width: 13rem !important;
     }
-    
+
     .w-7 {
         width: 7rem !important;
     }
-    
+
     .w-8 {
         width: 9rem !important;
     }
@@ -1679,7 +1693,12 @@ html {
 
     }
 
-    .project img {
+    .project-1 img,
+    .project-2 img,
+    .project-3 img,
+    .project-4 img,
+    .project-5 img,
+    .project-6 img {
         height: 300px;
     }
 
@@ -1866,31 +1885,31 @@ html {
     .w-1 {
         width: 5rem !important;
     }
-    
+
     .w-2 {
         width: 6rem !important;
     }
-    
+
     .w-3 {
         width: 5rem !important;
     }
-    
+
     .w-4 {
         width: 3rem !important;
     }
-    
+
     .w-5 {
         width: 7rem !important;
     }
-    
+
     .w-6 {
         width: 8rem !important;
     }
-    
+
     .w-7 {
         width: 2rem !important;
     }
-    
+
     .w-8 {
         width: 4rem !important;
     }
