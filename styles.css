@@ -244,7 +244,7 @@ html {
 }
 
 .fella img {
-    height: 33rem;
+    height: 25rem;
 }
 
 .who-s-the-fella {
@@ -258,10 +258,11 @@ html {
 .who-s-the-fella p {
     text-align: center;
     color: #5B5B5B;
+    font-size: 18px;
 }
 
 .who-s-the-fella label {
-    font-size: 35px;
+    font-size: 30px;
     font-weight: 600;
     color: #5B5B5B;
 }
@@ -279,7 +280,7 @@ html {
     flex-direction: row;
     background-color: #a7a7a767;
     width: 42.1875rem;
-    height: 3rem;
+    height: 1.8rem;
 }
 
 .bar {
@@ -332,7 +333,7 @@ html {
 
 .skill label {
     color: white;
-    font-size: 27px;
+    font-size: 20px;
     font-weight: 600;
 }
 
@@ -1320,8 +1321,11 @@ html {
         flex-direction: column;
     }
 
-    .page-title {
-        font-size: 45px;
+    .page-title-about,
+    .page-title-projects,
+    .page-title-blogs,
+    .page-title-contact {
+        font-size: 49px;
         font-weight: 700;
     }
 
@@ -1331,6 +1335,10 @@ html {
 
     .skill-bar {
         width: 30rem;
+    }
+
+    .skill label {
+        font-size: 20px;
     }
 
     .fella img {
@@ -1641,7 +1649,10 @@ html {
         flex-direction: column;
     }
 
-    .page-title {
+    .page-title-about,
+    .page-title-projects,
+    .page-title-blogs,
+    .page-title-contact {
         font-size: 30px;
         font-weight: 700;
     }
@@ -1665,6 +1676,7 @@ html {
 
     .skill-bar {
         width: 20rem;
+        height: 1.5rem;
     }
 
     .fella img {
@@ -1685,7 +1697,7 @@ html {
     }
 
     .skill label {
-        font-size: 24px;
+        font-size: 18px;
     }
 
     #gallery-3d {
