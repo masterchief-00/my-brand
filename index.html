@@ -353,14 +353,20 @@
         </div>
         <div class="contact-form">
           <label>Have a question or want to work with us?</label>
-          <form>
+          <form name="contactForm" onsubmit="return(validateContactForm(event))">
             <input type="text" name="name" id="name" placeholder="Names" />
+            <label class="error-bag" id="name">ERROR: Invalid Name</label>
+
             <input type="text" name="email" id="email" placeholder="Email" />
+            <label class="error-bag" id="email">ERROR: Invalid Email</label>
+
             <textarea
               name="message"
               id="message"
               placeholder="Message"
             ></textarea>
+            <label class="error-bag" id="message">ERROR: Invalid message</label>
+
             <button type="submit">SUBMIT</button>
           </form>
         </div>
@@ -396,14 +402,16 @@
             <div class="avatar">
               <img src="/images/user-profile.png" alt="profile" />
             </div>
-            <form>
+            <form name="loginForm" onsubmit="return(validateLoginForm(event))">
               <input type="text" name="email" id="email" placeholder="Email" />
+              <label class="error-bag" id="email">ERROR: Invalid email</label>
               <input
                 type="password"
                 name="password"
                 id="password"
                 placeholder="Password"
               />
+              <label class="error-bag" id="pwd">ERROR: Invalid password</label>
               <div>
                 <button type="submit">Login</button>
                 <button type="button" onclick="toggleModal()">Cancel</button>
@@ -418,21 +426,36 @@
             <div class="avatar">
               <img src="/images/add-users.png" alt="profile" />
             </div>
-            <form>
+            <form
+              name="signupForm"
+              onsubmit="return(validateSignupForm(event))"
+            >
               <input type="text" name="name" id="name" placeholder="Names" />
+              <label class="error-bag" id="name">ERROR: Invalid Name</label>
+
               <input type="text" name="email" id="email" placeholder="Email" />
+              <label class="error-bag" id="email"
+                >ERROR: Invalid email address</label
+              >
+
               <input
                 type="password"
                 name="password"
                 id="password"
                 placeholder="Password"
               />
+              <label class="error-bag" id="pwd">ERROR: Invalid password</label>
+
               <input
                 type="password"
                 name="confirm_password"
                 id="confirm_password"
                 placeholder="Confirm password"
               />
+              <label class="error-bag" id="confpwd"
+                >ERROR: Please confirm the password</label
+              >
+
               <div>
                 <button type="submit">Signup</button>
                 <button type="button" onclick="toggleModal()">Cancel</button>

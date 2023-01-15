@@ -10,6 +10,8 @@ const closeMenu = document.getElementsByClassName("close-menu");
 const horizontalMenu = document.getElementsByClassName("horizontal-menu");
 let horizontalMenuActive = false;
 
+const errorBags = document.getElementsByClassName("error-bag");
+
 // Get all sections that have an ID defined
 const sections = document.querySelectorAll("section[id]");
 
@@ -206,3 +208,334 @@ observer.observe(document.querySelector(".project-3"));
 observer.observe(document.querySelector(".project-4"));
 observer.observe(document.querySelector(".project-5"));
 observer.observe(document.querySelector(".project-6"));
+
+/**------------------------------------------------------------------------------------------------- */
+
+function validateLoginForm(e) {
+  e.preventDefault();
+  let errors_detected = 0;
+
+  for (let element of errorBags) {
+    element.style.display = "none";
+  }
+
+  if (!checkEmail(document.loginForm.email)) {
+    for (let element of errorBags) {
+      if (element.id === "email") {
+        element.textContent = "Invalid email format!";
+        element.style.display = "flex";
+      }
+    }
+    errors_detected++;
+  }
+
+  if (document.loginForm.email.value === "") {
+    for (let element of errorBags) {
+      if (element.id === "email") {
+        element.textContent = "The Email field can't be left blank!";
+        element.style.display = "flex";
+      }
+    }
+    errors_detected++;
+  }
+
+  if (document.loginForm.password.value.length < 8) {
+    for (let element of errorBags) {
+      if (element.id === "pwd") {
+        element.textContent = "The Password can't be less than 8 characters!";
+        element.style.display = "flex";
+      }
+    }
+    errors_detected++;
+  }
+
+  if (document.loginForm.password.value === "") {
+    for (let element of errorBags) {
+      if (element.id === "pwd") {
+        element.textContent = "The Password field can't be left blank!";
+        element.style.display = "flex";
+      }
+    }
+    errors_detected++;
+  }
+
+  if (errors_detected > 0) {
+    return false;
+  } else {
+    console.log("all good");
+    return true;
+  }
+}
+
+function validateSignupForm(e) {
+  e.preventDefault();
+  let errors_detected = 0;
+
+  for (let element of errorBags) {
+    element.style.display = "none";
+  }
+
+  if (document.signupForm.name.value.length < 3) {
+    for (let element of errorBags) {
+      if (element.id === "name") {
+        element.textContent = "The name field can't be less than 3 characters!";
+        element.style.display = "flex";
+      }
+    }
+    errors_detected++;
+  }
+
+  if (!checkName(document.signupForm.name)) {
+    for (let element of errorBags) {
+      if (element.id === "name") {
+        element.textContent = "That's not a valid name!";
+        element.style.display = "flex";
+      }
+    }
+    errors_detected++;
+  }
+  if (document.signupForm.name.value === "") {
+    for (let element of errorBags) {
+      if (element.id === "name") {
+        element.textContent = "The name field can't be left blank!";
+        element.style.display = "flex";
+      }
+    }
+    errors_detected++;
+  }
+
+  if (!checkEmail(document.signupForm.email)) {
+    for (let element of errorBags) {
+      if (element.id === "email") {
+        element.textContent = "Invalid email format!";
+        element.style.display = "flex";
+      }
+    }
+    errors_detected++;
+  }
+
+  if (document.signupForm.email.value === "") {
+    for (let element of errorBags) {
+      if (element.id === "email") {
+        element.textContent = "The Email field can't be left blank!";
+        element.style.display = "flex";
+      }
+    }
+    errors_detected++;
+  }
+
+  if (document.signupForm.password.value.length < 8) {
+    for (let element of errorBags) {
+      if (element.id === "pwd") {
+        element.textContent = "The Password can't be less than 8 characters!";
+        element.style.display = "flex";
+      }
+    }
+    errors_detected++;
+  }
+
+  if (document.signupForm.password.value === "") {
+    for (let element of errorBags) {
+      if (element.id === "pwd") {
+        element.textContent = "The Password field can't be left blank!";
+        element.style.display = "flex";
+      }
+    }
+    errors_detected++;
+  }
+
+  if (
+    document.signupForm.confirm_password.value !==
+    document.signupForm.password.value
+  ) {
+    for (let element of errorBags) {
+      if (element.id === "confpwd") {
+        element.textContent = "You need to confirm the password!";
+        element.style.display = "flex";
+      }
+    }
+    errors_detected++;
+  }
+
+  if (errors_detected > 0) {
+    return false;
+  } else {
+    console.log("all good");
+    return true;
+  }
+}
+
+function validateContactForm(e) {
+  e.preventDefault();
+  let errors_detected = 0;
+
+  for (let element of errorBags) {
+    element.style.display = "none";
+  }
+
+  if (!checkName(document.contactForm.name)) {
+    for (let element of errorBags) {
+      if (element.id === "name") {
+        element.textContent = "That's not a valid name!";
+        element.style.display = "flex";
+      }
+    }
+    errors_detected++;
+  }
+
+  if (document.contactForm.name.value === "") {
+    for (let element of errorBags) {
+      if (element.id === "name") {
+        element.textContent = "The name field can't be left blank!";
+        element.style.display = "flex";
+      }
+    }
+    errors_detected++;
+  }
+
+  if (!checkEmail(document.contactForm.email)) {
+    for (let element of errorBags) {
+      if (element.id === "email") {
+        element.textContent = "Invalid email format!";
+        element.style.display = "flex";
+      }
+    }
+    errors_detected++;
+  }
+
+  if (document.contactForm.email.value === "") {
+    for (let element of errorBags) {
+      if (element.id === "email") {
+        element.textContent = "The Email field can't be left blank!";
+        element.style.display = "flex";
+      }
+    }
+    errors_detected++;
+  }
+
+  if (!checkText(document.contactForm.message)) {
+    for (let element of errorBags) {
+      if (element.id === "message") {
+        element.textContent = "The message is invalid!";
+        element.style.display = "flex";
+      }
+    }
+    errors_detected++;
+  }
+
+  if (
+    document.contactForm.message.value === "" ||
+    document.contactForm.message.value.length < 5
+  ) {
+    for (let element of errorBags) {
+      if (element.id === "message") {
+        element.textContent =
+          "The message field can't be less than 5 characters!";
+        element.style.display = "flex";
+      }
+    }
+    errors_detected++;
+  }
+
+  if (errors_detected > 0) {
+    return false;
+  } else {
+    console.log("all good");
+    return true;
+  }
+}
+
+function validateBlogComment(e) {
+  e.preventDefault();
+  let errors_detected = 0;
+
+  for (let element of errorBags) {
+    element.style.display = "none";
+  }
+
+  if (!checkText(document.commentForm.comment)) {
+    for (let element of errorBags) {
+      if (element.id === "comment") {
+        element.textContent = "Invalid comment!";
+        element.style.display = "flex";
+      }
+    }
+
+    errors_detected++;
+  }
+
+  if (document.commentForm.comment.value === "") {
+    for (let element of errorBags) {
+      if (element.id === "comment") {
+        element.textContent =
+          "The comment field can't be less than 5 characters!";
+        element.style.display = "flex";
+      }
+    }
+    errors_detected++;
+  }
+
+  if (errors_detected > 0) {
+    return false;
+  } else {
+    console.log("all good");
+    return true;
+  }
+}
+
+function validateReplyForm(e) {
+  e.preventDefault();
+  let errors_detected = 0;
+
+  for (let element of errorBags) {
+    element.style.display = "none";
+  }
+
+  if (!checkText(document.replyForm.reply)) {
+    for (let element of errorBags) {
+      if (element.id === "reply") {
+        element.textContent = "Invalid reply!";
+        element.style.display = "flex";
+      }
+    }
+
+    errors_detected++;
+  }
+
+  if (document.replyForm.reply.value === "") {
+    for (let element of errorBags) {
+      if (element.id === "reply") {
+        element.textContent =
+          "The reply field can't be less than 5 characters!";
+        element.style.display = "flex";
+      }
+    }
+    errors_detected++;
+  }
+
+  if (errors_detected > 0) {
+    return false;
+  } else {
+    console.log("all good");
+    return true;
+  }
+}
+
+function checkEmail(input) {
+  const re =
+    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+  return re.test(input.value.trim());
+}
+
+function checkName(input) {
+  const re = /^[A-Za-z]+$/;
+
+  return re.test(input.value.trim());
+}
+
+function checkText(input) {
+  const re = /^[A-Za-z 0-9]+$/;
+
+  return re.test(input.value.trim());
+}

@@ -144,12 +144,19 @@
                 After writing your comment click post. If you’re not logged in,
                 please do it first
               </label>
-              <form>
+              <form
+                name="commentForm"
+                onsubmit="return(validateBlogComment(event))"
+              >
                 <textarea
                   name="comment"
                   id="comment"
                   placeholder="Your comment..."
                 ></textarea>
+                <label class="error-bag" id="comment"
+                  >ERROR: Invalid comment</label
+                >
+
                 <div>
                   <label>Commenting as John Doe</label>
                   <button type="submit">POST</button>
@@ -178,8 +185,18 @@
                     <a href="#" class="comment-likes">2 Replies</a>
                   </div>
                   <div class="replies">
-                    <form>
-                      <textarea name="reply" placeholder="Your reply..."></textarea>
+                    <form
+                      name="replyForm"
+                      onsubmit="return(validateReplyForm(event))"
+                    >
+                      <textarea
+                        name="reply"
+                        placeholder="Your reply..."
+                      ></textarea>
+                      <label class="error-bag" id="reply"
+                        >ERROR: Invalid reply</label
+                      >
+
                       <button type="submit">Reply</button>
                     </form>
                     <div class="reply">

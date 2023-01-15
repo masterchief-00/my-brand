@@ -742,7 +742,7 @@ html {
     align-items: center;
     gap: 12px;
     margin-top: 20px;
-
+    margin-bottom: 20px;
 }
 
 #login-section form input {
@@ -813,7 +813,7 @@ html {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
     margin-top: 20px;
 
 }
@@ -864,6 +864,14 @@ html {
 
 #signup-section div .link {
     color: #5DCCE4;
+}
+
+.error-bag{
+    display: none;
+    color: #F4326C !important;
+    text-align: left;
+    font-size: 13px;
+    margin-top: -8px;
 }
 
 .content {
@@ -1043,6 +1051,7 @@ html {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    gap: 10px;
     margin-top: 10px;
 }
 
@@ -1069,6 +1078,7 @@ html {
     padding: 5px 15px;
     font-size: 18px;
     resize: none;
+    /* margin-bottom: 15px; */
 }
 
 .comment-section form textarea::placeholder {
@@ -1165,7 +1175,7 @@ html {
 .replies form{
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 9px;
 }
 .replies form textarea{
     height: auto;
