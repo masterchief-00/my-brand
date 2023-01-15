@@ -77,14 +77,26 @@
         <label class="title-main"> Dashboard </label>
         <label class="title-settings"> Add Project </label>
         <div class="settings">
-            <form>
+            <form name="projectAddForm" onsubmit="return(validateprojectAddForm(event))">
               <div class="a">
                 <input type="text" name="title" id="title" placeholder="Project title" />
+                <label class="error-bag" id="title"
+                >ERROR: Invalid title</label
+              >
                 <input type="text" name="tools" id="tools" placeholder="Tools used (separate with a comma)" />
+                <label class="error-bag" id="tools"
+                >ERROR: Invalid tools</label
+              >
                 <textarea name="description" id="description" placeholder="Project description"></textarea>
+                <label class="error-bag" id="description"
+                >ERROR: Invalid description</label
+              >
               </div>                
               <div class="b">
                 <input type="file" name="image" id="image" />
+                <label class="error-bag" id="image"
+                >ERROR: Invalid image</label
+              >
                 <div>
                   <button type="submit">SUBMIT</button>  
                   <button type="reset">RESET</button>

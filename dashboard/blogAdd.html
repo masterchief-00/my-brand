@@ -76,7 +76,11 @@
       <div class="content">
         <label class="title-main"> Dashboard </label>
         <div class="new-blog">
-          <form>
+          <form
+            name="blogAddForm"
+            onsubmit="return(validateBlogAddForm(event))"
+            onreset="clearBlogAdd()"
+          >
             <div class="form-elements">
               <input
                 type="text"
@@ -84,13 +88,25 @@
                 id="title"
                 placeholder="Blog title"
               />
+              <label class="error-bag" id="title"
+                >ERROR: Invalid title</label
+              >
               <textarea name="body" id="body"></textarea>
-              <input type="date" name="date" id="date" />
-              <input type="file" name="image" id="image" />
+              <label class="error-bag" id="body">ERROR: Invalid body</label>
             </div>
-            <div class="buttons-div">
-              <button type="submit">ADD BLOG</button>
-              <button type="reset">CLEAR</button>
+            <div class="quick-fix1">
+              <div class="extra-inputs">
+                <input type="date" name="date" id="date" />
+                <label class="error-bag" id="date">ERROR: Invalid date</label>
+                <input type="file" name="image" id="image" />
+                <label class="error-bag" id="image"
+                  >ERROR: Invalid file type</label
+                >
+              </div>
+              <div class="buttons-div">
+                <button type="submit">ADD BLOG</button>
+                <button type="reset">CLEAR</button>
+              </div>
             </div>
           </form>
         </div>
