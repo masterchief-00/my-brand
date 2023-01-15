@@ -14,6 +14,12 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+
+    <link
+      href="../node_modules/froala-editor/css/froala_editor.pkgd.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
   </head>
   <body>
     <div class="wrapper">
@@ -74,7 +80,6 @@
         </div>
       </div>
       <div class="content">
-        <label class="title-main"> Dashboard </label>
         <label class="title-settings"> Add Project </label>
         <div class="settings">
             <form name="projectAddForm" onsubmit="return(validateprojectAddForm(event))">
@@ -87,7 +92,18 @@
                 <label class="error-bag" id="tools"
                 >ERROR: Invalid tools</label
               >
-                <textarea name="description" id="description" placeholder="Project description"></textarea>
+              <textarea name="description" id="froala"></textarea>
+              <script
+                type="text/javascript"
+                src="../node_modules/froala-editor/js/froala_editor.pkgd.min.js"
+              >
+            </script>
+              <script>
+                var editor = new FroalaEditor("#froala", {
+                  toolbarInline: false,
+                  width: 30,
+                });
+              </script>
                 <label class="error-bag" id="description"
                 >ERROR: Invalid description</label
               >

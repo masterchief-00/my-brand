@@ -46,17 +46,17 @@ function validateBlogAddForm(e) {
     errors_detected++;
   }
 
-  if (!checkText(document.blogAddForm.body)) {
-    for (let element of errorBags) {
-      if (element.id === "body") {
-        element.textContent = "Invalid body!";
-        element.style.display = "flex";
-      }
-    }
-    errors_detected++;
-  }
+  // if (!checkText(document.blogAddForm.body)) {
+  //   for (let element of errorBags) {
+  //     if (element.id === "body") {
+  //       element.textContent = "Invalid body!";
+  //       element.style.display = "flex";
+  //     }
+  //   }
+  //   errors_detected++;
+  // }
 
-  if (document.blogAddForm.body.value.length < 10) {
+  if (document.blogAddForm.body.value.length < 17) {
     for (let element of errorBags) {
       if (element.id === "body") {
         element.textContent =
@@ -128,16 +128,6 @@ function validateBlogUpdateForm(e) {
       if (element.id === "title") {
         element.textContent =
           "The title field can't be less than 10 characters!";
-        element.style.display = "flex";
-      }
-    }
-    errors_detected++;
-  }
-
-  if (!checkText(document.blogUpdateForm.body)) {
-    for (let element of errorBags) {
-      if (element.id === "body") {
-        element.textContent = "Invalid body!";
         element.style.display = "flex";
       }
     }

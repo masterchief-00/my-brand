@@ -14,6 +14,11 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+    <link
+      href="../node_modules/froala-editor/css/froala_editor.pkgd.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
   </head>
   <body>
     <div class="wrapper">
@@ -89,7 +94,18 @@
                 placeholder="Blog title"
               />
               <label class="error-bag" id="title">ERROR: Invalid title</label>
-              <textarea name="body" id="body"></textarea>
+
+              <textarea name="body" id="froala"></textarea>
+              <script
+                type="text/javascript"
+                src="../node_modules/froala-editor/js/froala_editor.pkgd.min.js"
+              ></script>
+              <script>
+                var editor = new FroalaEditor("#froala", {
+                  toolbarInline: false,
+                  width: 630,
+                });
+              </script>
               <label class="error-bag" id="body">ERROR: Invalid body</label>
             </div>
             <div class="quick-fix1">
