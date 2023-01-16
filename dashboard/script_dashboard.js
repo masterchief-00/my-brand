@@ -200,7 +200,7 @@ function validateprojectAddForm(e) {
     errors_detected++;
   }
 
-  if (document.projectAddForm.title.value === "") {
+  if (document.projectAddForm.title.value.length < 8) {
     for (let element of errorBags) {
       if (element.id === "title") {
         element.textContent = "Invalid project title!";
@@ -234,17 +234,17 @@ function validateprojectAddForm(e) {
     errors_detected++;
   }
 
-  if (!checkText(document.projectAddForm.description)) {
-    for (let element of errorBags) {
-      if (element.id === "description") {
-        element.textContent = "Invalid body!";
-        element.style.display = "flex";
-      }
-    }
-    errors_detected++;
-  }
+  // if (!checkText(document.projectAddForm.description)) {
+  //   for (let element of errorBags) {
+  //     if (element.id === "description") {
+  //       element.textContent = "Invalid body!";
+  //       element.style.display = "flex";
+  //     }
+  //   }
+  //   errors_detected++;
+  // }
 
-  if (document.projectAddForm.description.value.length < 10) {
+  if (document.projectAddForm.description.value.length < 17) {
     for (let element of errorBags) {
       if (element.id === "description") {
         element.textContent =
@@ -267,6 +267,20 @@ function validateprojectAddForm(e) {
     }
     errors_detected++;
   }
+
+  if (errors_detected > 0) {
+    return false;
+  } else {
+    console.log("all good");
+    return true;
+  }
+}
+
+function clearProjectUpdate() {
+  document.projectAddForm.title.value = "";
+  document.projectAddForm.description.value = "";
+  document.projectAddForm.image.value = "";
+  document.projectAddForm.tools.value = "";
 }
 
 function checkText(input) {

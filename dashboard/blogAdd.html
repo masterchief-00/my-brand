@@ -95,15 +95,14 @@
               />
               <label class="error-bag" id="title">ERROR: Invalid title</label>
               <textarea name="body" id="froala"></textarea>
-
               <script
                 type="text/javascript"
                 src="../node_modules/froala-editor/js/froala_editor.pkgd.min.js"
               ></script>
               <script>
-                var editor = new FroalaEditor("#froala", {
+                const editor = new FroalaEditor("#froala", {
                   toolbarInline: false,
-                  width: 630,
+                  // width: 630,
                 });
               </script>
               <label class="error-bag" id="body">ERROR: Invalid body</label>

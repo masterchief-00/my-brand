@@ -81,8 +81,86 @@
       </div>
       <div class="content">
         <label class="title-settings"> Add Project </label>
-        <div class="settings">
-            <form name="projectAddForm" onsubmit="return(validateprojectAddForm(event))">
+        <div class="new-project">
+          <form
+          name="projectAddForm" onsubmit="return(validateprojectAddForm(event))"
+          >
+            <div class="form-elements">
+              <input type="text" name="title" id="title" placeholder="Project title" />
+                <label class="error-bag" id="title"
+                >ERROR: Invalid title</label
+              >
+                <input type="text" name="tools" id="tools" placeholder="Tools used (separate with a comma)" />
+                <label class="error-bag" id="tools"
+                >ERROR: Invalid tools</label
+              >
+              <div class="large-device">
+                <textarea name="description" id="froala"></textarea>
+              
+              <script
+                type="text/javascript"
+                src="../node_modules/froala-editor/js/froala_editor.pkgd.min.js"
+              ></script>
+              <script>
+                const editor_large = new FroalaEditor("#froala", {
+                  toolbarInline: false,
+                  width: 630,
+                });               
+              </script>
+              </div>
+              
+              <div class="medium-device">
+                <textarea name="description" id="froala-medium"></textarea>
+              
+              <script
+                type="text/javascript"
+                src="../node_modules/froala-editor/js/froala_editor.pkgd.min.js"
+              ></script>
+              <script>
+                const editor_medium = new FroalaEditor("#froala-medium", {
+                  toolbarInline: false,
+                  width: 530,
+                });               
+              </script>
+              </div>
+
+              <div class="small-device">
+                <textarea name="description" id="froala-small"></textarea>
+              
+              <script
+                type="text/javascript"
+                src="../node_modules/froala-editor/js/froala_editor.pkgd.min.js"
+              ></script>
+              <script>
+                const editor_small = new FroalaEditor("#froala-small", {
+                  toolbarInline: false,
+                  width: 330,
+                });               
+              </script>
+              </div>
+
+              <label class="error-bag" id="description">ERROR: Invalid body</label>
+            </div>
+            <div class="quick-fix1">
+              <div class="extra-inputs">
+                <label class="error-bag" id="date">ERROR: Invalid date</label>
+                <input type="file" name="image" id="image" />
+                <label class="error-bag" id="image"
+                  >ERROR: Invalid file type</label
+                >
+              </div>
+              <div class="buttons-div">
+                <button type="submit">DONE</button>
+                <button type="reset">RESET</button>
+
+              </div>
+            </div>
+          </form>
+        </div>
+        <!-- <div class="settings">
+
+                    
+             <form name="projectAddForm" onsubmit="return(validateprojectAddForm(event))">
               <div class="a">
                 <input type="text" name="title" id="title" placeholder="Project title" />
                 <label class="error-bag" id="title"
@@ -96,16 +174,14 @@
               <script
                 type="text/javascript"
                 src="../node_modules/froala-editor/js/froala_editor.pkgd.min.js"
-              >
-            </script>
+              ></script>
               <script>
-                var editor = new FroalaEditor("#froala", {
+                const editor = new FroalaEditor("#froala", {
                   toolbarInline: false,
-                  width: 30,
+                  width: 630,
                 });
               </script>
-                <label class="error-bag" id="description"
-                >ERROR: Invalid description</label
+              <label class="error-bag" id="description">ERROR: Invalid description</label
               >
               </div>                
               <div class="b">
@@ -120,7 +196,7 @@
                    
               </div>
             </form>
-        </div>
+        </div> -->
     </div>
 
     <script src="/dashboard/script_dashboard.js"></script>
