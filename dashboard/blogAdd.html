@@ -94,17 +94,50 @@
                 placeholder="Blog title"
               />
               <label class="error-bag" id="title">ERROR: Invalid title</label>
-              <textarea name="body" id="froala"></textarea>
-              <script
-                type="text/javascript"
-                src="../node_modules/froala-editor/js/froala_editor.pkgd.min.js"
-              ></script>
-              <script>
-                const editor = new FroalaEditor("#froala", {
-                  toolbarInline: false,
-                  // width: 630,
-                });
-              </script>
+              <div class="large-device">
+                <textarea name="description" id="froala"></textarea>
+
+                <script
+                  type="text/javascript"
+                  src="../node_modules/froala-editor/js/froala_editor.pkgd.min.js"
+                ></script>
+                <script>
+                  const editor_large = new FroalaEditor("#froala", {
+                    toolbarInline: false,
+                    width: 630,
+                  });
+                </script>
+              </div>
+
+              <div class="medium-device">
+                <textarea name="description" id="froala-medium"></textarea>
+
+                <script
+                  type="text/javascript"
+                  src="../node_modules/froala-editor/js/froala_editor.pkgd.min.js"
+                ></script>
+                <script>
+                  const editor_medium = new FroalaEditor("#froala-medium", {
+                    toolbarInline: false,
+                    width: 530,
+                  });
+                </script>
+              </div>
+
+              <div class="small-device">
+                <textarea name="description" id="froala-small"></textarea>
+
+                <script
+                  type="text/javascript"
+                  src="../node_modules/froala-editor/js/froala_editor.pkgd.min.js"
+                ></script>
+                <script>
+                  const editor_small = new FroalaEditor("#froala-small", {
+                    toolbarInline: false,
+                    width: 330,
+                  });
+                </script>
+              </div>
               <label class="error-bag" id="body">ERROR: Invalid body</label>
             </div>
             <div class="quick-fix1">

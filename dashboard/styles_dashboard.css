@@ -494,7 +494,7 @@ html {
 
 .new-project form textarea {
     height: 320px;
-    max-width: 600px;
+    width: 550px;
     background-color: #171822;
     border: solid 1px transparent;
     border-radius: 8px;
@@ -768,6 +768,8 @@ html {
 
     .buttons-div {
         flex-direction: row;
+        justify-content: center;
+        align-items: center;
         gap: 10px;
     }
 
