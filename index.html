@@ -404,14 +404,14 @@
             </div>
             <form name="loginForm" onsubmit="return(validateLoginForm(event))">
               <input type="text" name="email" id="email" placeholder="Email" />
-              <label class="error-bag" id="email">ERROR: Invalid email</label>
+              <label class="error-bag" id="email-login">ERROR: Invalid email</label>
               <input
                 type="password"
                 name="password"
                 id="password"
                 placeholder="Password"
               />
-              <label class="error-bag" id="pwd">ERROR: Invalid password</label>
+              <label class="error-bag" id="pwd-login">ERROR: Invalid password</label>
               <div>
                 <button type="submit">Login</button>
                 <button type="button" onclick="toggleModal()">Cancel</button>
@@ -431,10 +431,10 @@
               onsubmit="return(validateSignupForm(event))"
             >
               <input type="text" name="name" id="name" placeholder="Names" />
-              <label class="error-bag" id="name">ERROR: Invalid Name</label>
+              <label class="error-bag" id="name-signup">ERROR: Invalid Name</label>
 
               <input type="text" name="email" id="email" placeholder="Email" />
-              <label class="error-bag" id="email"
+              <label class="error-bag" id="email-signup"
                 >ERROR: Invalid email address</label
               >
 
@@ -444,7 +444,7 @@
                 id="password"
                 placeholder="Password"
               />
-              <label class="error-bag" id="pwd">ERROR: Invalid password</label>
+              <label class="error-bag" id="pwd-signup">ERROR: Invalid password</label>
 
               <input
                 type="password"

@@ -221,7 +221,7 @@ function validateLoginForm(e) {
 
   if (!checkEmail(document.loginForm.email)) {
     for (let element of errorBags) {
-      if (element.id === "email") {
+      if (element.id === "email-login") {
         element.textContent = "Invalid email format!";
         element.style.display = "flex";
       }
@@ -231,7 +231,7 @@ function validateLoginForm(e) {
 
   if (document.loginForm.email.value === "") {
     for (let element of errorBags) {
-      if (element.id === "email") {
+      if (element.id === "email-login") {
         element.textContent = "The Email field can't be left blank!";
         element.style.display = "flex";
       }
@@ -241,7 +241,7 @@ function validateLoginForm(e) {
 
   if (document.loginForm.password.value.length < 8) {
     for (let element of errorBags) {
-      if (element.id === "pwd") {
+      if (element.id === "pwd-login") {
         element.textContent = "The Password can't be less than 8 characters!";
         element.style.display = "flex";
       }
@@ -251,7 +251,7 @@ function validateLoginForm(e) {
 
   if (document.loginForm.password.value === "") {
     for (let element of errorBags) {
-      if (element.id === "pwd") {
+      if (element.id === "pwd-login") {
         element.textContent = "The Password field can't be left blank!";
         element.style.display = "flex";
       }
@@ -277,7 +277,7 @@ function validateSignupForm(e) {
 
   if (document.signupForm.name.value.length < 3) {
     for (let element of errorBags) {
-      if (element.id === "name") {
+      if (element.id === "name-signup") {
         element.textContent = "The name field can't be less than 3 characters!";
         element.style.display = "flex";
       }
@@ -287,7 +287,7 @@ function validateSignupForm(e) {
 
   if (!checkName(document.signupForm.name)) {
     for (let element of errorBags) {
-      if (element.id === "name") {
+      if (element.id === "name-signup") {
         element.textContent = "That's not a valid name!";
         element.style.display = "flex";
       }
@@ -296,7 +296,7 @@ function validateSignupForm(e) {
   }
   if (document.signupForm.name.value === "") {
     for (let element of errorBags) {
-      if (element.id === "name") {
+      if (element.id === "name-signup") {
         element.textContent = "The name field can't be left blank!";
         element.style.display = "flex";
       }
@@ -306,7 +306,7 @@ function validateSignupForm(e) {
 
   if (!checkEmail(document.signupForm.email)) {
     for (let element of errorBags) {
-      if (element.id === "email") {
+      if (element.id === "email-signup") {
         element.textContent = "Invalid email format!";
         element.style.display = "flex";
       }
@@ -316,7 +316,7 @@ function validateSignupForm(e) {
 
   if (document.signupForm.email.value === "") {
     for (let element of errorBags) {
-      if (element.id === "email") {
+      if (element.id === "email-signup") {
         element.textContent = "The Email field can't be left blank!";
         element.style.display = "flex";
       }
@@ -326,7 +326,7 @@ function validateSignupForm(e) {
 
   if (document.signupForm.password.value.length < 8) {
     for (let element of errorBags) {
-      if (element.id === "pwd") {
+      if (element.id === "pwd-signup") {
         element.textContent = "The Password can't be less than 8 characters!";
         element.style.display = "flex";
       }
@@ -336,7 +336,7 @@ function validateSignupForm(e) {
 
   if (document.signupForm.password.value === "") {
     for (let element of errorBags) {
-      if (element.id === "pwd") {
+      if (element.id === "pwd-signup") {
         element.textContent = "The Password field can't be left blank!";
         element.style.display = "flex";
       }

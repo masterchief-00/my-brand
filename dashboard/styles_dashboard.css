@@ -281,7 +281,7 @@ html {
 
 .new-blog form {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     gap: 60px;
     margin-top: 20px;
 }
@@ -314,6 +314,7 @@ html {
 .new-blog form input::placeholder {
     color: #37a3b183;
 }
+
 
 .new-blog form textarea {
     height: 320px;
@@ -456,15 +457,18 @@ html {
     padding-bottom: 30px;
     max-height: 100vh;
 }
-.medium-device{
+
+.medium-device {
     display: none;
 }
-.small-device{
+
+.small-device {
     display: none;
 }
+
 .new-project form {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     gap: 60px;
     margin-top: 20px;
 }
@@ -809,19 +813,23 @@ html {
         width: 100%;
     }
 
-    .medium-device{
+    .medium-device {
         display: flex;
     }
-    .large-device{
+
+    .large-device {
         display: none;
     }
-    .small-device{
+
+    .small-device {
         display: none;
     }
+
     .new-project form {
         flex-direction: column;
         gap: 20px;
     }
+
     .new-project form input {
         width: 500px;
     }
@@ -1039,20 +1047,24 @@ html {
         width: 100%;
     }
 
-    .medium-device{
+    .medium-device {
         display: none;
     }
-    .large-device{
+
+    .large-device {
         display: none;
     }
-    .small-device{
+
+    .small-device {
         display: flex;
     }
+
     .new-project form {
         flex-direction: column;
         align-items: center;
         gap: 20px;
     }
+
     .new-project form input {
         width: 300px;
     }

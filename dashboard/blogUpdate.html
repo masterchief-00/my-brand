@@ -14,11 +14,10 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-    <link
-      href="../node_modules/froala-editor/css/froala_editor.pkgd.min.css"
-      rel="stylesheet"
-      type="text/css"
-    />
+    <script
+      src="https://cdn.tiny.cloud/1/ro3pj7xihah5x4216x272fbbp1g7p52eoko5ii1kqskr2c0f/tinymce/5/tinymce.min.js"
+      referrerpolicy="origin"
+    ></script>
   </head>
   <body>
     <div class="wrapper">
@@ -94,51 +93,20 @@
                 placeholder="Blog title"
               />
               <label class="error-bag" id="title">ERROR: Invalid title</label>
+              <textarea name="body"></textarea>
 
-              <div class="large-device">
-                <textarea name="description" id="froala"></textarea>
+              <script>
+                tinymce.init({
+                  selector: "textarea",
+                  width: "85vw",
 
-                <script
-                  type="text/javascript"
-                  src="../node_modules/froala-editor/js/froala_editor.pkgd.min.js"
-                ></script>
-                <script>
-                  const editor_large = new FroalaEditor("#froala", {
-                    toolbarInline: false,
-                    width: 630,
-                  });
-                </script>
-              </div>
+                  plugins:
+                    "anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount",
+                  toolbar:
+                    "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat",
+                });
+              </script>
 
-              <div class="medium-device">
-                <textarea name="description" id="froala-medium"></textarea>
-
-                <script
-                  type="text/javascript"
-                  src="../node_modules/froala-editor/js/froala_editor.pkgd.min.js"
-                ></script>
-                <script>
-                  const editor_medium = new FroalaEditor("#froala-medium", {
-                    toolbarInline: false,
-                    width: 530,
-                  });
-                </script>
-              </div>
-
-              <div class="small-device">
-                <textarea name="description" id="froala-small"></textarea>
-
-                <script
-                  type="text/javascript"
-                  src="../node_modules/froala-editor/js/froala_editor.pkgd.min.js"
-                ></script>
-                <script>
-                  const editor_small = new FroalaEditor("#froala-small", {
-                    toolbarInline: false,
-                    width: 330,
-                  });
-                </script>
-              </div>
               <label class="error-bag" id="body">ERROR: Invalid body</label>
             </div>
             <div class="quick-fix1">

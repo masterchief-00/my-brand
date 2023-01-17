@@ -18,7 +18,7 @@ function toggleMenu(e) {
 }
 
 function validateBlogAddForm(e) {
-  e.preventDefault();
+  // e.preventDefault();
   let errors_detected = 0;
 
   for (let element of errorBags) {
@@ -46,16 +46,9 @@ function validateBlogAddForm(e) {
     errors_detected++;
   }
 
-  // if (!checkText(document.blogAddForm.body)) {
-  //   for (let element of errorBags) {
-  //     if (element.id === "body") {
-  //       element.textContent = "Invalid body!";
-  //       element.style.display = "flex";
-  //     }
-  //   }
-  //   errors_detected++;
-  // }
+  tinyMCE.triggerSave();
 
+  console.log(document.blogAddForm.body.value);
   if (document.blogAddForm.body.value.length < 17) {
     for (let element of errorBags) {
       if (element.id === "body") {
@@ -123,7 +116,9 @@ function validateBlogUpdateForm(e) {
     errors_detected++;
   }
 
-  if (document.blogUpdateForm.title.value.length < 10) {
+  tinyMCE.triggerSave();
+
+  if (document.blogUpdateForm.title.value.length < 17) {
     for (let element of errorBags) {
       if (element.id === "title") {
         element.textContent =
@@ -213,7 +208,6 @@ function validateprojectAddForm(e) {
   let allTools = document.projectAddForm.tools.value.replace(/\s/g, "");
   let tools = allTools.split(",");
 
-
   if (tools.length < 1) {
     for (let element of errorBags) {
       if (element.id === "tools") {
@@ -234,15 +228,7 @@ function validateprojectAddForm(e) {
     errors_detected++;
   }
 
-  // if (!checkText(document.projectAddForm.description)) {
-  //   for (let element of errorBags) {
-  //     if (element.id === "description") {
-  //       element.textContent = "Invalid body!";
-  //       element.style.display = "flex";
-  //     }
-  //   }
-  //   errors_detected++;
-  // }
+  tinyMCE.triggerSave();
 
   if (document.projectAddForm.description.value.length < 17) {
     for (let element of errorBags) {
