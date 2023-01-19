@@ -361,6 +361,7 @@ function validateSignupForm(e) {
     return false;
   } else {
     console.log("all good");
+    saveUser();
     return true;
   }
 }
@@ -529,7 +530,7 @@ function checkEmail(input) {
 }
 
 function checkName(input) {
-  const re = /^[A-Za-z]+$/;
+  const re = /^[A-Za-z ]+$/;
 
   return re.test(input.value.trim());
 }
@@ -538,4 +539,35 @@ function checkText(input) {
   const re = /^[A-Za-z 0-9]+$/;
 
   return re.test(input.value.trim());
+}
+function clearSignupForm() {
+  document.signupForm.name.value = "";
+  document.signupForm.email.value = "";
+  document.signupForm.password.value = "";
+  document.signupForm.confirm_password.value = "";
+}
+/**---------------------------------LOCALSTORAGE---------------------------------- */
+
+function saveUser() {
+  let newUser = {
+    name: document.signupForm.name.value,
+    email: document.signupForm.email.value,
+    password: document.signupForm.password.value,
+  };
+
+  if (localStorage.getItem("users") === null) {
+    let all_users = [];
+    all_users.push(newUser);
+
+    localStorage.setItem("users", JSON.stringify(all_users));
+
+    clearSignupForm();
+  } else {
+    let all_users = [...JSON.parse(localStorage["users"])];
+    all_users.push(newUser);
+
+    localStorage.setItem("users", JSON.stringify(all_users));
+
+    clearSignupForm();
+  }
 }
