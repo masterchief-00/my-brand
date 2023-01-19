@@ -4,6 +4,8 @@ const horizontalMenu = document.getElementsByClassName("horizontal-menu");
 
 const errorBags = document.getElementsByClassName("error-bag");
 
+let current_user = JSON.parse(localStorage["current_user"]);
+
 function toggleMenu(e) {
   e.preventDefault();
   if (openMenu[0].style.display !== "none") {
@@ -87,6 +89,7 @@ function validateBlogAddForm(e) {
     return false;
   } else {
     console.log("all good");
+    saveBlog();
     return true;
   }
 }
@@ -273,4 +276,37 @@ function checkText(input) {
   const re = /^[A-Za-z 0-9]+$/;
 
   return re.test(input.value.trim());
+}
+
+function slugify(str) {
+  return str
+    .toLowerCase()
+    .trim()
+    .replace(/[^\w\s-]/g, "")
+    .replace(/[\s_-]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+/**-------------------------LOCALSTORAGE--------------------------- */
+function saveBlog() {
+  let newBlog = {
+    id: slugify(document.blogAddForm.title.value),
+    title: document.blogAddForm.title.value,
+    body: document.blogAddForm.body.value,
+    date: document.blogAddForm.date.value,
+    author: current_user.name,
+  };
+
+  if (localStorage.getItem("blogs") === null) {
+    let all_blogs = [];
+    all_blogs.push(newBlog);
+
+    localStorage.setItem("blogs", JSON.stringify(all_blogs));
+    clearBlogAdd();
+  } else {
+    let all_blogs = [...JSON.parse(localStorage["blogs"])];
+    all_blogs.push(newBlog);
+
+    localStorage.setItem("blogs", JSON.stringify(all_blogs));
+    clearBlogAdd();
+  }
 }

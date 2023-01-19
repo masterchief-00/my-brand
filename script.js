@@ -8,9 +8,25 @@ const signupSection = document.getElementById("signup-section");
 const openMenu = document.getElementsByClassName("open-menu");
 const closeMenu = document.getElementsByClassName("close-menu");
 const horizontalMenu = document.getElementsByClassName("horizontal-menu");
+const loginLinkDiv = document.getElementById("login-link");
+const blogsContainer = document.getElementById("blogsContainer");
+
 let horizontalMenuActive = false;
+let auth_status = false;
+let currentUser = {
+  name: "",
+  email: "",
+};
 
 const errorBags = document.getElementsByClassName("error-bag");
+
+document.addEventListener(
+  "DOMContentLoaded",
+  function () {
+    loadBlogs();
+  },
+  false
+);
 
 // Get all sections that have an ID defined
 const sections = document.querySelectorAll("section[id]");
@@ -262,7 +278,16 @@ function validateLoginForm(e) {
   if (errors_detected > 0) {
     return false;
   } else {
-    console.log("all good");
+    if (
+      authenticateUser(
+        document.loginForm.email.value,
+        document.loginForm.password.value
+      )
+    ) {
+      auth_status = true;
+    } else {
+      auth_status = false;
+    }
     return true;
   }
 }
@@ -569,5 +594,51 @@ function saveUser() {
     localStorage.setItem("users", JSON.stringify(all_users));
 
     clearSignupForm();
+  }
+}
+
+function authenticateUser(email, password) {
+  let all_users = [...JSON.parse(localStorage["users"])];
+  for (const user of all_users) {
+    if (user.email === email && user.password === password) {
+      console.log("LOGGED IN!");
+      currentUser.name = user.name;
+      currentUser.email = user.email;
+
+      localStorage.setItem("current_user", JSON.stringify(currentUser));
+
+      loginLinkDiv.innerHTML = `
+        <label>Hello, ${currentUser.name}</label>
+      `;
+      return true;
+    }
+  }
+
+  return false;
+}
+
+function loadBlogs() {
+  let all_blogs = [...JSON.parse(localStorage["blogs"])];
+  blogsContainer.innerHTML = "";
+
+  for (const blog of all_blogs) {
+    blogsContainer.innerHTML += `
+    <div class="blog">
+    <img src="/images/blog-img-1.jpg" alt="blog" />
+    <label class="blog-title">${blog.title}</label>
+    <div class="blog-tiny-details">
+      <label class="blog-date">${blog.date}</label>
+      <div class="blog-reactions">
+        <label><i class="fa-solid fa-comments"></i> 21</label>
+        <label><i class="fa-solid fa-thumbs-up"></i> 234</label>
+      </div>
+    </div>
+    <div class="blue-line"></div>
+    <p>
+      ${blog.body.substring(0, 115)}...\n
+    </p>
+    <a href="blogDetails.html?id=${blog.id}" class="blog-full">READ MORE</a>
+  </div>
+    `;
   }
 }
