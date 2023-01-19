@@ -624,7 +624,7 @@ function loadBlogs() {
   for (const blog of all_blogs) {
     blogsContainer.innerHTML += `
     <div class="blog">
-    <img src="/images/blog-img-1.jpg" alt="blog" />
+    <img src="data:image/jpg;base64,${blog.image}" alt="blog" />
     <label class="blog-title">${blog.title}</label>
     <div class="blog-tiny-details">
       <label class="blog-date">${blog.date}</label>

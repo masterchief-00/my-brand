@@ -606,6 +606,12 @@ html {
     margin-top: 80px;
 }
 
+.nothing-yet {
+    margin-left: 50%;
+    border-left: solid 2px #1F212F;
+    padding-left: 10px;
+}
+
 .blog {
     display: flex;
     flex-direction: column;
@@ -866,7 +872,7 @@ html {
     color: #5DCCE4;
 }
 
-.error-bag{
+.error-bag {
     display: none;
     color: #F4326C !important;
     text-align: left;
@@ -1172,41 +1178,48 @@ html {
     margin-left: 32px;
     padding-left: 8px;
 }
-.replies form{
+
+.replies form {
     display: flex;
     flex-direction: column;
     gap: 9px;
 }
-.replies form textarea{
+
+.replies form textarea {
     height: auto;
 }
 
-.replies form textarea::placeholder{
+.replies form textarea::placeholder {
     font-size: 13px;
 }
+
 .reply {
     display: flex;
     flex-direction: column;
     border-left: solid 2px #a1a1a1;
     padding: 10px;
 }
-.replier{
+
+.replier {
     display: flex;
     flex-direction: row;
     align-items: center;
     gap: 5px;
 }
-.replier-name{
+
+.replier-name {
     font-size: 13px;
 }
 
-.replier-time{
+.replier-time {
     font-size: 13px;
 }
-.replier-body{
+
+.replier-body {
     font-size: 14px;
 }
-.reply-to{
+
+.reply-to {
     color: #37A3B1;
     font-weight: 500;
 }

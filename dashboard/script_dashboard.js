@@ -1,10 +1,22 @@
 const openMenu = document.getElementsByClassName("open-menu");
 const closeMenu = document.getElementsByClassName("close-menu");
 const horizontalMenu = document.getElementsByClassName("horizontal-menu");
+let base64String = "";
 
 const errorBags = document.getElementsByClassName("error-bag");
 
 let current_user = JSON.parse(localStorage["current_user"]);
+
+document.getElementById("blog-image").addEventListener("change", (e) => {
+  const file = e.target.files[0];
+  const reader = new FileReader();
+
+  reader.onloadend = () => {
+    // convert file to base64 String
+    base64String = reader.result.replace("data:", "").replace(/^.+,/, "");
+  };
+  reader.readAsDataURL(file);
+});
 
 function toggleMenu(e) {
   e.preventDefault();
@@ -50,7 +62,6 @@ function validateBlogAddForm(e) {
 
   tinyMCE.triggerSave();
 
-  console.log(document.blogAddForm.body.value);
   if (document.blogAddForm.body.value.length < 17) {
     for (let element of errorBags) {
       if (element.id === "body") {
@@ -88,7 +99,6 @@ function validateBlogAddForm(e) {
   if (errors_detected > 0) {
     return false;
   } else {
-    console.log("all good");
     saveBlog();
     return true;
   }
@@ -287,12 +297,14 @@ function slugify(str) {
     .replace(/^-+|-+$/g, "");
 }
 /**-------------------------LOCALSTORAGE--------------------------- */
+
 function saveBlog() {
   let newBlog = {
     id: slugify(document.blogAddForm.title.value),
     title: document.blogAddForm.title.value,
     body: document.blogAddForm.body.value,
     date: document.blogAddForm.date.value,
+    image: base64String,
     author: current_user.name,
   };
 
