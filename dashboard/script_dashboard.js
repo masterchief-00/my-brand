@@ -2,6 +2,7 @@ const openMenu = document.getElementsByClassName("open-menu");
 const closeMenu = document.getElementsByClassName("close-menu");
 const horizontalMenu = document.getElementsByClassName("horizontal-menu");
 const blogsTable = document.getElementById("blogs");
+const messagesCard = document.getElementById("messages-card");
 const blogsCard = document.getElementById("blogs-card");
 const messagesContainer = document.querySelector(".messages");
 
@@ -396,8 +397,22 @@ function deleteBlog(id) {
 }
 
 function loadCards() {
-  let all_blogs = [...JSON.parse(localStorage["blogs"])];
-  blogsCard.innerHTML = all_blogs.length;
+  let all_blogs = localStorage["blogs"]
+    ? [...JSON.parse(localStorage["blogs"])]
+    : [];
+  let all_messages = localStorage["messages"]
+    ? [...JSON.parse(localStorage["messages"])]
+    : [];
+
+  let unread_messages = 0;
+  for (const message of all_messages) {
+    if (message.status === "UNREAD") {
+      unread_messages++;
+    }
+  }
+
+  messagesCard.innerHTML = unread_messages;
+  blogsCard.innerHTML = all_blogs.length ? all_blogs.length : 0;
 }
 
 function loadMessages() {
@@ -416,12 +431,14 @@ function loadMessages() {
             ).fromNow()}</label>
             <div class="separator"></div>
             <label>${message.email}</label>
+            <div class="separator"></div>
+            <label>${message.status}</label>
         </div>
         <div class="message-body">
             <p>${message.body}</p>
             <div>
                 <a href="#" onclick="deleteMessage(${message.id})">Delete</a>
-                <a href="#">Mark as read</a>
+                <a href="#" onclick="markRead(${message.id})" ${message.status==='READ' ? 'class="button-disabled"':""}>Mark as read</a>
             </div>
         </div>
       </div>
@@ -443,4 +460,16 @@ function deleteMessage(id) {
     localStorage.setItem("messages", JSON.stringify(filtered_messages));
     location.reload();
   }
+}
+
+function markRead(id) {
+  let all_messages = [...JSON.parse(localStorage["messages"])];
+
+  for (const message of all_messages) {
+    if (message.id === id) {
+      message.status = "READ";
+    }
+  }
+  localStorage.setItem("messages", JSON.stringify(all_messages));
+  location.reload();
 }

@@ -439,6 +439,13 @@ html {
     border-color: #5DCCE4;
 }
 
+.button-disabled {
+    background-color: transparent;
+    border-color: #5DCCE4;
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
 .settings {
     display: flex;
     flex-direction: column;

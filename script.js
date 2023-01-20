@@ -681,7 +681,8 @@ function sendMessage() {
     name: document.contactForm.name.value,
     email: document.contactForm.email.value,
     body: document.contactForm.message.value,
-    date:new Date().toLocaleString('en-GB', { timeZone: 'UTC' })
+    date: new Date().toLocaleString("en-GB", { timeZone: "UTC" }),
+    status: "UNREAD",
   };
 
   if (localStorage.getItem("messages") === null) {
