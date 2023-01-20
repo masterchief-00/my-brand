@@ -14,9 +14,16 @@ let current_user = JSON.parse(localStorage["current_user"]);
 document.addEventListener(
   "DOMContentLoaded",
   function () {
-    loadMessages();
-    // loadBlogTitles();
-    // loadCards();
+    let path = window.location.pathname;
+    let page = path.split("/").pop();
+
+    if (page === "adminPanel.html") {
+      loadBlogTitles();
+      loadCards();
+    }
+    if (page === "messages.html") {
+      loadMessages();
+    }
   },
   false
 );
@@ -394,8 +401,7 @@ function loadCards() {
 }
 
 function loadMessages() {
-
-  if (localStorage.getItem('messages') !== null) {
+  if (localStorage.getItem("messages") !== null) {
     let all_messages = [...JSON.parse(localStorage["messages"])];
     messagesContainer.innerHTML = "";
     for (const message of all_messages) {
@@ -404,19 +410,37 @@ function loadMessages() {
         <div class="from">
             <label class="name">${message.name}</label>
             <div class="separator"></div>
-            <label>${moment(message.date, "DD/MM/YYYY, hh:mm:ss").fromNow()}</label>
+            <label>${moment(
+              message.date,
+              "DD/MM/YYYY, hh:mm:ss"
+            ).fromNow()}</label>
             <div class="separator"></div>
             <label>${message.email}</label>
         </div>
         <div class="message-body">
             <p>${message.body}</p>
             <div>
-                <a href="#">Delete</a>
+                <a href="#" onclick="deleteMessage(${message.id})">Delete</a>
                 <a href="#">Mark as read</a>
             </div>
         </div>
       </div>
       `;
     }
+  }
+}
+function deleteMessage(id) {
+  let all_messages = [...JSON.parse(localStorage["messages"])];
+  let filtered_messages = [];
+
+  if (window.confirm("You're about to delete this blog, proceed?")) {
+    for (const message of all_messages) {
+      if (message.id === id) {
+        filtered_messages = [...all_messages.filter((item) => item.id !== id)];
+      }
+    }
+
+    localStorage.setItem("messages", JSON.stringify(filtered_messages));
+    location.reload();
   }
 }
