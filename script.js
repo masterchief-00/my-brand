@@ -36,7 +36,6 @@ document.addEventListener(
     if (params.id) {
       loadSingleBlog(params.id);
     }
-
     loadBlogs();
   },
   false
@@ -480,7 +479,7 @@ function validateContactForm(e) {
   if (errors_detected > 0) {
     return false;
   } else {
-    console.log("all good");
+    sendMessage();
     return true;
   }
 }
@@ -660,10 +659,6 @@ function loadBlogs() {
 function loadSingleBlog(id) {
   let all_blogs = [...JSON.parse(localStorage["blogs"])];
 
-  // console.log(params);
-
-  // let id = params.id;
-
   for (const blog of all_blogs) {
     if (blog.id === id.trim()) {
       single_blog_title.innerHTML = blog.title;
@@ -672,5 +667,36 @@ function loadSingleBlog(id) {
       single_blog_body.innerHTML = blog.body;
       single_blog_date.innerHTML = `PUBLISHED ON ${blog.date}`;
     }
+  }
+}
+
+function cleanContactForm() {
+  document.contactForm.name.value = "";
+  document.contactForm.email.value = "";
+  document.contactForm.message.value = "";
+}
+function sendMessage() {
+  let message = {
+    id: Date.now(),
+    name: document.contactForm.name.value,
+    email: document.contactForm.email.value,
+    body: document.contactForm.message.value,
+    date:new Date().toLocaleString('en-GB', { timeZone: 'UTC' })
+  };
+
+  if (localStorage.getItem("messages") === null) {
+    let all_messages = [];
+    all_messages.push(message);
+
+    localStorage.setItem("messages", JSON.stringify(all_messages));
+
+    cleanContactForm();
+  } else {
+    let all_messages = [...JSON.parse(localStorage["messages"])];
+    all_messages.push(message);
+
+    localStorage.setItem("messages", JSON.stringify(all_messages));
+
+    cleanContactForm();
   }
 }

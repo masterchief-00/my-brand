@@ -3,6 +3,8 @@ const closeMenu = document.getElementsByClassName("close-menu");
 const horizontalMenu = document.getElementsByClassName("horizontal-menu");
 const blogsTable = document.getElementById("blogs");
 const blogsCard = document.getElementById("blogs-card");
+const messagesContainer = document.querySelector(".messages");
+
 let base64String = "";
 
 const errorBags = document.getElementsByClassName("error-bag");
@@ -12,8 +14,9 @@ let current_user = JSON.parse(localStorage["current_user"]);
 document.addEventListener(
   "DOMContentLoaded",
   function () {
-    loadBlogTitles();
-    loadCards();
+    loadMessages();
+    // loadBlogTitles();
+    // loadCards();
   },
   false
 );
@@ -388,4 +391,32 @@ function deleteBlog(id) {
 function loadCards() {
   let all_blogs = [...JSON.parse(localStorage["blogs"])];
   blogsCard.innerHTML = all_blogs.length;
+}
+
+function loadMessages() {
+
+  if (localStorage.getItem('messages') !== null) {
+    let all_messages = [...JSON.parse(localStorage["messages"])];
+    messagesContainer.innerHTML = "";
+    for (const message of all_messages) {
+      messagesContainer.innerHTML += `
+      <div class="message">
+        <div class="from">
+            <label class="name">${message.name}</label>
+            <div class="separator"></div>
+            <label>${moment(message.date, "DD/MM/YYYY, hh:mm:ss").fromNow()}</label>
+            <div class="separator"></div>
+            <label>${message.email}</label>
+        </div>
+        <div class="message-body">
+            <p>${message.body}</p>
+            <div>
+                <a href="#">Delete</a>
+                <a href="#">Mark as read</a>
+            </div>
+        </div>
+      </div>
+      `;
+    }
+  }
 }
