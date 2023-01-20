@@ -948,6 +948,12 @@ html {
     font-weight: 500;
 }
 
+.blog-publish-date {
+    color: #5DCCE4;
+    font-size: 13px;
+    font-weight: 500;
+}
+
 .blog-main-content {
     margin-top: 15px;
 }
@@ -963,7 +969,7 @@ html {
 
 .blog-main-image img {
     border-radius: 15px;
-    height: 500px;
+    max-width: 750px;
 }
 
 .similar-blogs {

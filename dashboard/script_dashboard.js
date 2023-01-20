@@ -1,11 +1,22 @@
 const openMenu = document.getElementsByClassName("open-menu");
 const closeMenu = document.getElementsByClassName("close-menu");
 const horizontalMenu = document.getElementsByClassName("horizontal-menu");
+const blogsTable = document.getElementById("blogs");
+const blogsCard = document.getElementById("blogs-card");
 let base64String = "";
 
 const errorBags = document.getElementsByClassName("error-bag");
 
 let current_user = JSON.parse(localStorage["current_user"]);
+
+document.addEventListener(
+  "DOMContentLoaded",
+  function () {
+    loadBlogTitles();
+    loadCards();
+  },
+  false
+);
 
 document.getElementById("blog-image").addEventListener("change", (e) => {
   const file = e.target.files[0];
@@ -321,4 +332,60 @@ function saveBlog() {
     localStorage.setItem("blogs", JSON.stringify(all_blogs));
     clearBlogAdd();
   }
+}
+
+function loadBlogTitles() {
+  if (localStorage["blogs"] !== null) {
+    let all_blogs = [...JSON.parse(localStorage["blogs"])];
+    blogsTable.innerHTML = `
+    <tr>
+      <th>#</th>
+      <th>TITLE</th>
+      <th>DATE ADDED</th>
+      <th>ACTION</th>
+    </tr>
+    `;
+    let counter = 1;
+    for (const blog of all_blogs) {
+      blogsTable.innerHTML += `
+      <tr>
+        <td>${counter++}</td>
+        <td>${blog.title}</td>
+        <td>${blog.date}</td>
+        <td>
+          <div>
+            <a href="./blogUpdate.html?id=${
+              blog.id
+            }" class="update-btn">Update</a>
+            <a href="#" class="delete-btn" onclick="deleteBlog('${
+              blog.id
+            }')">Delete</a>
+          </div>
+        </td>
+      </tr>
+      `;
+    }
+  }
+}
+
+function deleteBlog(id) {
+  let all_blogs = [...JSON.parse(localStorage["blogs"])];
+  let filtered_blogs = [];
+  let title = id.trim();
+
+  if (window.confirm("You're about to delete this blog, proceed?")) {
+    for (const blog of all_blogs) {
+      if (blog.id === title) {
+        filtered_blogs = [...all_blogs.filter((item) => item.id !== title)];
+      }
+    }
+
+    localStorage.setItem("blogs", JSON.stringify(filtered_blogs));
+    location.reload();
+  }
+}
+
+function loadCards() {
+  let all_blogs = [...JSON.parse(localStorage["blogs"])];
+  blogsCard.innerHTML = all_blogs.length;
 }

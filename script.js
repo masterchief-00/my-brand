@@ -11,6 +11,12 @@ const horizontalMenu = document.getElementsByClassName("horizontal-menu");
 const loginLinkDiv = document.getElementById("login-link");
 const blogsContainer = document.getElementById("blogsContainer");
 
+const single_blog_title = document.querySelector(".blog-main-title");
+const single_blog_owner = document.querySelector(".blog-owner");
+const single_blog_image = document.getElementById("single-blog-image");
+const single_blog_body = document.querySelector(".blog-main-content");
+const single_blog_date = document.querySelector(".blog-publish-date");
+
 let horizontalMenuActive = false;
 let auth_status = false;
 let currentUser = {
@@ -23,6 +29,14 @@ const errorBags = document.getElementsByClassName("error-bag");
 document.addEventListener(
   "DOMContentLoaded",
   function () {
+    const params = new Proxy(new URLSearchParams(window.location.search), {
+      get: (searchParams, prop) => searchParams.get(prop),
+    });
+
+    if (params.id) {
+      loadSingleBlog(params.id);
+    }
+
     loadBlogs();
   },
   false
@@ -635,10 +649,28 @@ function loadBlogs() {
     </div>
     <div class="blue-line"></div>
     <p>
-      ${blog.body.substring(0, 115)}...\n
+      ${blog.body.substring(0, 135)}...\n
     </p>
     <a href="blogDetails.html?id=${blog.id}" class="blog-full">READ MORE</a>
   </div>
     `;
+  }
+}
+
+function loadSingleBlog(id) {
+  let all_blogs = [...JSON.parse(localStorage["blogs"])];
+
+  // console.log(params);
+
+  // let id = params.id;
+
+  for (const blog of all_blogs) {
+    if (blog.id === id.trim()) {
+      single_blog_title.innerHTML = blog.title;
+      single_blog_image.src = `data:image/jpg;base64,${blog.image}`;
+      single_blog_owner.innerHTML = blog.author;
+      single_blog_body.innerHTML = blog.body;
+      single_blog_date.innerHTML = `PUBLISHED ON ${blog.date}`;
+    }
   }
 }
