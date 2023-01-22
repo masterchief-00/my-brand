@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="animations.css" />
+    <title>Kwizera | Portfolio</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+      integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <div class="wrapper">
+      <!-------------------------LANDING PAGE---------------------------------->
+      <section id="landing-page">
+        <!-- -------------------- ANIMATED BACKGROUND ------------------------------- -->
+        <canvas id="canv"></canvas>
+        <!------------------------------------------------------------------------------>
+
+        <div class="greetings">
+          <div>
+            <label class="normal">Hello, I'm </label
+            ><label class="colored">Kwizera Pacifique</label>
+          </div>
+          <div>
+            <label>I'm a web developer and a 3D artist.</label>
+          </div>
+          <a href="#about" class="btn-view-work">
+            View my work
+            <i class="fa-solid fa-arrow-right" id="right-arrow"></i>
+          </a>
+        </div>
+      </section>
+      <!----------------------------------------------------------------->
+
+      <!-------------------------NAVBAR---------------------------------->
+      <div class="nav-bar">
+        <div class="links">
+          <a href="#landing-page" class="active">HOME</a>
+          <a href="#about">ABOUT</a>
+          <a href="#projects">PROJECTS</a>
+          <a href="#blogs">BLOGS</a>
+          <a href="#contact">CONTACT</a>
+        </div>
+        <div class="login" id="login-link" onclick="toggleModal()">
+          <img src="/images/login-password-svgrepo-com.png" alt="login" />
+          <label>LOGIN</label>
+        </div>
+        <div class="hamburger">
+          <a href="#" class="open-menu" onclick="toggleMenu(event)">
+            <img src="./images/hamburger-svgrepo-com.png" alt="img" />
+          </a>
+          <a href="#" class="close-menu" onclick="toggleMenu(event)">
+            <img src="./images/x-svgrepo-com.png" alt="img" />
+          </a>
+        </div>
+        <div class="horizontal-menu">
+          <a href="#landing-page" class="active">HOME</a>
+          <a href="#about">ABOUT</a>
+          <a href="#projects">PROJECTS</a>
+          <a href="#blogs">BLOGS</a>
+          <a href="#contact">CONTACT</a>
+          <div class="line-separator-thick"></div>
+          <a href="#" onclick="toggleModal()">LOGIN</a>
+        </div>
+      </div>
+      <!----------------------------------------------------------------->
+
+      <!-------------------------ABOUT---------------------------------->
+      <section id="about">
+        <div class="title">
+          <label class="page-title-about">ABOUT</label>
+          <div class="line-about"></div>
+        </div>
+        <div class="content">
+          <div class="ads-talk">
+            <div class="pentagon-1">
+              <img src="images/pentagon - speed.png" alt="pentagon-shape" />
+              <div class="talk-1">
+                <label class="talk-title">Fast</label>
+                <p>
+                  Fast load times and lag free interaction. my highest priority
+                </p>
+              </div>
+            </div>
+            <div class="pentagon-2">
+              <img src="images/pentagon - devices.png" alt="pentagon-shape" />
+              <div class="talk-2">
+                <label class="talk-title">Responsive</label>
+                <p>My layouts will work on any device big or small</p>
+              </div>
+            </div>
+            <div class="pentagon-3">
+              <img src="images/pentagon - bulb.png" alt="pentagon-shape" />
+              <div class="talk-3">
+                <label class="talk-title">Intuitive</label>
+                <p>Strong preference for easy to use intuitive UX/UI</p>
+              </div>
+            </div>
+            <div class="pentagon-4">
+              <img src="images/pentagon - rocket.png" alt="pentagon-shape" />
+              <div class="talk-4">
+                <label class="talk-title">Dynamic</label>
+                <p>
+                  Websites don’t have to be static, I love making pages come to
+                  life
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="my-details">
+            <div class="fella">
+              <img src="/images/me.png" alt="me" />
+              <div class="who-s-the-fella">
+                <label>Who is this fella?</label>
+                <p>
+                  I’m a highly motivated 3D artist and developer based in Kigali
+                  city, I love doing stuff in 3D and seeing a code compiling and
+                  running error free :)
+                </p>
+              </div>
+            </div>
+            <div class="skills">
+              <div class="skill-bar">
+                <div class="skill">
+                  <label>CSS</label>
+                </div>
+                <div class="bar w-1"></div>
+              </div>
+              <div class="skill-bar">
+                <div class="skill">
+                  <label>HTML</label>
+                </div>
+                <div class="bar w-2"></div>
+              </div>
+              <div class="skill-bar">
+                <div class="skill">
+                  <label>Javascript</label>
+                </div>
+                <div class="bar w-3"></div>
+              </div>
+              <div class="skill-bar">
+                <div class="skill">
+                  <label>React</label>
+                </div>
+                <div class="bar w-4"></div>
+              </div>
+              <div class="skill-bar">
+                <div class="skill">
+                  <label>PHP</label>
+                </div>
+                <div class="bar w-5"></div>
+              </div>
+              <div class="skill-bar">
+                <div class="skill">
+                  <label>Laravel</label>
+                </div>
+                <div class="bar w-5"></div>
+              </div>
+              <div class="skill-bar">
+                <div class="skill">
+                  <label>Blender</label>
+                </div>
+                <div class="bar w-6"></div>
+              </div>
+              <div class="skill-bar">
+                <div class="skill">
+                  <label>ZBrush</label>
+                </div>
+                <div class="bar w-7"></div>
+              </div>
+              <div class="skill-bar">
+                <div class="skill">
+                  <label>GIMP</label>
+                </div>
+                <div class="bar w-8"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!----------------------------------------------------------------->
+
+      <!-------------------------PROJECTS---------------------------------->
+      <section id="projects">
+        <div class="title">
+          <label class="page-title-projects">PROJECTS</label>
+          <div class="line-projects"></div>
+        </div>
+
+        <div class="project-contents">
+          <div class="tabs">
+            <a href="#">ALL</a>
+            <a href="#" class="active-tab">3D DESIGN</a>
+            <a href="#">WEB DEVELOPMENT</a>
+          </div>
+          <div id="gallery-3d">
+            <div class="project-1">
+              <div class="project-details">
+                <label class="project-title">Astronaut</label>
+                <label class="project-sub-title">Blender/ZBrush</label>
+                <a href="projectDetails.html">LEARN MORE</a>
+              </div>
+              <img src="/images/astronaut03.png" alt="img1" />
+            </div>
+            <div class="project-2">
+              <div class="project-details">
+                <label class="project-title">Astronaut</label>
+                <label class="project-sub-title">Blender/ZBrush</label>
+                <a href="projectDetails.html">LEARN MORE</a>
+              </div>
+              <img src="/images/astronaut04.png" alt="img1" />
+            </div>
+            <div class="project-3">
+              <div class="project-details">
+                <label class="project-title">Astronaut</label>
+                <label class="project-sub-title">Blender/ZBrush</label>
+                <a href="projectDetails.html">LEARN MORE</a>
+              </div>
+              <img src="/images/astronaut05.png" alt="img1" />
+            </div>
+            <div class="project-4">
+              <div class="project-details">
+                <label class="project-title">Astronaut</label>
+                <label class="project-sub-title">Blender/ZBrush</label>
+                <a href="projectDetails.html">LEARN MORE</a>
+              </div>
+              <img src="/images/astronaut06.png" alt="img1" />
+            </div>
+            <div class="project-5">
+              <div class="project-details">
+                <label class="project-title">Astronaut</label>
+                <label class="project-sub-title">Blender/ZBrush</label>
+                <a href="projectDetails.html">LEARN MORE</a>
+              </div>
+              <img src="/images/astronaut07.png" alt="img1" />
+            </div>
+            <div class="project-6">
+              <div class="project-details">
+                <label class="project-title">Astronaut</label>
+                <label class="project-sub-title">Blender/ZBrush</label>
+                <a href="projectDetails.html">LEARN MORE</a>
+              </div>
+              <img src="/images/astronaut08.png" alt="img1" />
+            </div>
+          </div>
+        </div>
+      </section>
+      <!----------------------------------------------------------------->
+
+      <!-------------------------BLOGS---------------------------------->
+      <section id="blogs">
+        <div class="title">
+          <label class="page-title-blogs">BLOGS</label>
+          <div class="line-blogs"></div>
+        </div>
+        <div class="blogs-content" id="blogsContainer">
+          <label class="nothing-yet">Sorry, no blogs uploaded yet!</label>
+          <label class="nothing-yet">Sorry, no blogs uploaded yet!</label>
+          <label class="nothing-yet">Sorry, no blogs uploaded yet!</label>
+
+        </div>
+      </section>
+      <!----------------------------------------------------------------->
+
+      <!-------------------------CONTACT---------------------------------->
+      <section id="contact">
+        <div class="shaped-img">
+          <img src="/images/footer.png" alt="footer-img" />
+        </div>
+        <div class="title">
+          <label class="page-title-contact">CONTACT</label>
+          <div class="line-contact"></div>
+        </div>
+        <div class="contact-form">
+          <label>Have a question or want to work with us?</label>
+          <form
+            name="contactForm"
+            onsubmit="return(validateContactForm(event))"
+          >
+            <input type="text" name="name" id="name" placeholder="Names" />
+            <label class="error-bag" id="name">ERROR: Invalid Name</label>
+
+            <input type="text" name="email" id="email" placeholder="Email" />
+            <label class="error-bag" id="email">ERROR: Invalid Email</label>
+
+            <textarea
+              name="message"
+              id="message"
+              placeholder="Message"
+            ></textarea>
+            <label class="error-bag" id="message">ERROR: Invalid message</label>
+
+            <button type="submit">SUBMIT</button>
+          </form>
+        </div>
+      </section>
+      <!----------------------------------------------------------------->
+
+      <!-------------------------FOOTER---------------------------------->
+      <section id="footer">
+        <div class="back-to-top">
+          <img src="/images/to-top.png" alt="top" />
+        </div>
+        <div class="socials">
+          <div class="social-card">
+            <img src="/images/in.png" alt="in" />
+          </div>
+          <div class="social-card">
+            <img src="/images/twitter.png" alt="twitter" />
+          </div>
+          <div class="social-card">
+            <img src="/images/insta.png" alt="insta" />
+          </div>
+          <div class="social-card">
+            <img src="/images/github.png" alt="git" />
+          </div>
+        </div>
+      </section>
+      <!----------------------------------------------------------------->
+
+      <!-------------------------MODAL---------------------------------->
+      <div id="modal">
+        <div class="modal-content">
+          <div id="login-section">
+            <div class="avatar">
+              <img src="/images/user-profile.png" alt="profile" />
+            </div>
+            <form name="loginForm" onsubmit="return(validateLoginForm(event))">
+              <input type="text" name="email" id="email" placeholder="Email" />
+              <label class="error-bag" id="email-login"
+                >ERROR: Invalid email</label
+              >
+              <input
+                type="password"
+                name="password"
+                id="password"
+                placeholder="Password"
+              />
+              <label class="error-bag" id="pwd-login"
+                >ERROR: Invalid password</label
+              >
+              <div>
+                <button type="submit">Login</button>
+                <button type="button" onclick="toggleModal()">Cancel</button>
+              </div>
+            </form>
+            <div>
+              <label>Don't have an account?</label>
+              <label class="link" onclick="toggleSection()">Sign up</label>
+            </div>
+          </div>
+          <div id="signup-section">
+            <div class="avatar">
+              <img src="/images/add-users.png" alt="profile" />
+            </div>
+            <form
+              name="signupForm"
+              onsubmit="return(validateSignupForm(event))"
+            >
+              <input type="text" name="name" id="name" placeholder="Names" />
+              <label class="error-bag" id="name-signup"
+                >ERROR: Invalid Name</label
+              >
+
+              <input type="text" name="email" id="email" placeholder="Email" />
+              <label class="error-bag" id="email-signup"
+                >ERROR: Invalid email address</label
+              >
+
+              <input
+                type="password"
+                name="password"
+                id="password"
+                placeholder="Password"
+              />
+              <label class="error-bag" id="pwd-signup"
+                >ERROR: Invalid password</label
+              >
+
+              <input
+                type="password"
+                name="confirm_password"
+                id="confirm_password"
+                placeholder="Confirm password"
+              />
+              <label class="error-bag" id="confpwd"
+                >ERROR: Please confirm the password</label
+              >
+
+              <div>
+                <button type="submit">Signup</button>
+                <button type="button" onclick="toggleModal()">Cancel</button>
+              </div>
+            </form>
+            <div>
+              <label>Already have an account?</label>
+              <label class="link" onclick="toggleSection()">Login</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!----------------------------------------------------------------->
+    </div>
+
+    <script src="script.js"></script>
+    <script src="bg-script.js"></script>
+  </body>
+</html>

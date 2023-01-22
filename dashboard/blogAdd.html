@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="/dashboard/styles_dashboard.css" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+      integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <script
+      src="https://cdn.tiny.cloud/1/ro3pj7xihah5x4216x272fbbp1g7p52eoko5ii1kqskr2c0f/tinymce/5/tinymce.min.js"
+      referrerpolicy="origin"
+    ></script>
+  </head>
+  <body>
+    <div class="wrapper">
+      <!-------------------------NAVBAR---------------------------------->
+      <div class="nav-bar">
+        <div class="login" onclick="toggleModal()">
+          <img src="../images/login-password-svgrepo-com.png" alt="login" />
+          <label>LOGIN</label>
+        </div>
+        <div class="hamburger">
+          <a href="#" class="open-menu" onclick="toggleMenu(event)">
+            <img src="../images/hamburger-svgrepo-com.png" alt="img" />
+          </a>
+          <a href="#" class="close-menu" onclick="toggleMenu(event)">
+            <img src="../images/x-svgrepo-com.png" alt="img" />
+          </a>
+        </div>
+        <div class="horizontal-menu">
+          <a href="adminPanel.html">All</a>
+          <a href="blogAdd.html" class="active">Blogs</a>
+          <a href="settings.html">Projects</a>
+          <a href="messages.html">Messages</a>
+          <a href="../index.html">Log out</a>
+        </div>
+      </div>
+      <!----------------------------------------------------------------->
+      <div class="sidebar">
+        <div class="admin-tab">
+          <img src="/images/pirate.png" alt="img" />
+          <label>ADMIN</label>
+          <div class="line-separator"></div>
+        </div>
+        <div class="tabs">
+          <div class="tab">
+            <img src="/images/speedometer-svgrepo-com.png" alt="img" />
+            <a href="./adminPanel.html">All</a>
+            <div class="line-separator"></div>
+          </div>
+          <div class="tab active-tab">
+            <img src="/images/blog-svgrepo-com.png" alt="img" />
+            <a class="active" href="./blogAdd.html">Blogs</a>
+            <div class="line-separator"></div>
+          </div>
+          <div class="tab">
+            <img src="/images/settings-svgrepo-com.png" alt="img" />
+            <a href="./settings.html">Projects</a>
+            <div class="line-separator"></div>
+          </div>
+          <div class="tab">
+            <img src="/images/message-svgrepo-com.png" alt="img" />
+            <a href="./messages.html">Messages</a>
+            <div class="line-separator"></div>
+          </div>
+          <div class="logout-tab">
+            <img src="/images/exit-logout-svgrepo-com.png" alt="img" />
+            <a href="../index.html">Log out</a>
+          </div>
+        </div>
+      </div>
+      <div class="content">
+        <label class="title-main"> Add new blog </label>
+        <div class="new-blog">
+          <form
+            name="blogAddForm"
+            onsubmit="return(validateBlogAddForm(event))"
+            onreset="clearBlogAdd()"
+          >
+            <div class="form-elements">
+              <input
+                type="text"
+                name="title"
+                id="title"
+                placeholder="Blog title"
+              />
+              <label class="error-bag" id="title">ERROR: Invalid title</label>
+              <textarea name="body"></textarea>
+
+              <script>
+                tinymce.init({
+                  selector: "textarea",
+                  width: "85vw",
+
+                  plugins:
+                    "anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount",
+                  toolbar:
+                    "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat",
+                });
+              </script>
+
+              <label class="error-bag" id="body">ERROR: Invalid body</label>
+            </div>
+            <div class="quick-fix1">
+              <div class="extra-inputs">
+                <input type="date" name="date" id="date" />
+                <label class="error-bag" id="date">ERROR: Invalid date</label>
+                <input type="file" name="image" id="blog-image" />
+                <label class="error-bag" id="image"
+                  >ERROR: Invalid file type</label
+                >
+              </div>
+              <div class="buttons-div">
+                <button type="submit">ADD BLOG</button>
+                <button type="reset">CLEAR</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script src="/dashboard/script_dashboard.js"></script>
+  </body>
+</html>

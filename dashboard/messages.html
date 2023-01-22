@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="/dashboard/styles_dashboard.css" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+      integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <!-------------------------NAVBAR---------------------------------->
+      <div class="nav-bar">
+        <div class="login" onclick="toggleModal()">
+          <img src="../images/login-password-svgrepo-com.png" alt="login" />
+          <label>LOGIN</label>
+        </div>
+        <div class="hamburger">
+          <a href="#" class="open-menu" onclick="toggleMenu(event)">
+            <img src="../images/hamburger-svgrepo-com.png" alt="img" />
+          </a>
+          <a href="#" class="close-menu" onclick="toggleMenu(event)">
+            <img src="../images/x-svgrepo-com.png" alt="img" />
+          </a>
+        </div>
+        <div class="horizontal-menu">
+          <a href="adminPanel.html">All</a>
+          <a href="blogAdd.html">Blogs</a>
+          <a href="settings.html">Projects</a>
+          <a href="messages.html" class="active">Messages</a>
+          <a href="../index.html">Log out</a>
+        </div>
+      </div>
+      <!----------------------------------------------------------------->
+      <div class="sidebar">
+        <div class="admin-tab">
+          <img src="/images/pirate.png" alt="img" />
+          <label>ADMIN</label>
+          <div class="line-separator"></div>
+        </div>
+        <div class="tabs">
+          <div class="tab">
+            <img src="/images/speedometer-svgrepo-com.png" alt="img" />
+            <a href="./adminPanel.html">All</a>
+            <div class="line-separator"></div>
+          </div>
+          <div class="tab">
+            <img src="/images/blog-svgrepo-com.png" alt="img" />
+            <a href="./blogAdd.html">Blogs</a>
+            <div class="line-separator"></div>
+          </div>
+          <div class="tab">
+            <img src="/images/settings-svgrepo-com.png" alt="img" />
+            <a href="./settings.html">Projects</a>
+            <div class="line-separator"></div>
+          </div>
+          <div class="tab active-tab">
+            <img src="/images/message-svgrepo-com.png" alt="img" />
+            <a class="active" href="./messages.html">Messages</a>
+            <div class="line-separator"></div>
+          </div>
+          
+          <div class="logout-tab">
+            <img src="/images/exit-logout-svgrepo-com.png" alt="img" />
+            <a href="../index.html">Log out</a>
+          </div>
+        </div>
+      </div>
+      <div class="content">
+        <label class="title-main"> Dashboard </label>
+        <label class="title-messages">All Messages</label>
+
+        <div class="messages">
+            <div class="message">
+                <div class="from">
+                    <label class="name">John Doe</label>
+                    <div class="separator"></div>
+                    <label>2 Days ago</label>
+                    <div class="separator"></div>
+                    <label>johndoe@gmail.com</label>
+                </div>
+                <div class="message-body">
+                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Optio atque sed quod fugiat, consequuntur dignissimos quae perspiciatis culpa reprehenderit odit laborum minima reiciendis provident dolorum saepe et vitae placeat ad?</p>
+                    <div>
+                        <a href="#">Delete</a>
+                        <a href="#">Mark as read</a>
+                    </div>
+                </div>
+            </div>
+            <div class="message">
+                <div class="from">
+                    <label class="name">John Doe</label>
+                    <div class="separator"></div>
+                    <label>2 Days ago</label>
+                    <div class="separator"></div>
+                    <label>johndoe@gmail.com</label>
+                </div>
+                <div class="message-body">
+                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Optio atque sed quod fugiat, consequuntur dignissimos quae perspiciatis culpa reprehenderit odit laborum minima reiciendis provident dolorum saepe et vitae placeat ad?</p>
+                    <div>
+                        <a href="#">Delete</a>
+                        <a href="#">Mark as read</a>
+                    </div>
+                </div>
+            </div>
+            <div class="message">
+                <div class="from">
+                    <label class="name">John Doe</label>
+                    <div class="separator"></div>
+                    <label>2 Days ago</label>
+                    <div class="separator"></div>
+                    <label>johndoe@gmail.com</label>
+                </div>
+                <div class="message-body">
+                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Optio atque sed quod fugiat, consequuntur dignissimos quae perspiciatis culpa reprehenderit odit laborum minima reiciendis provident dolorum saepe et vitae placeat ad?</p>
+                    <div>
+                        <a href="#">Delete</a>
+                        <a href="#">Mark as read</a>
+                    </div>
+                </div>
+            </div>
+            <div class="message">
+                <div class="from">
+                    <label class="name">John Doe</label>
+                    <div class="separator"></div>
+                    <label>2 Days ago</label>
+                    <div class="separator"></div>
+                    <label>johndoe@gmail.com</label>
+                </div>
+                <div class="message-body">
+                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Optio atque sed quod fugiat, consequuntur dignissimos quae perspiciatis culpa reprehenderit odit laborum minima reiciendis provident dolorum saepe et vitae placeat ad?</p>
+                    <div>
+                        <a href="#">Delete</a>
+                        <a href="#">Mark as read</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../node_modules/moment/moment.js"></script>
+    <script>
+        moment().format();
+    </script>
+    <script src="/dashboard/script_dashboard.js"></script>
+  </body>
+</html>
