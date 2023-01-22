@@ -17,8 +17,12 @@ const single_blog_image = document.getElementById("single-blog-image");
 const single_blog_body = document.querySelector(".blog-main-content");
 const single_blog_date = document.querySelector(".blog-publish-date");
 
+const commentsContainer = document.querySelector(".all-comments");
+const commentsCounter = document.querySelector(".comments-count");
 let horizontalMenuActive = false;
 let auth_status = false;
+
+let current_blog_id = "";
 let currentUser = {
   name: "",
   email: "",
@@ -34,7 +38,9 @@ document.addEventListener(
     });
 
     if (params.id) {
-      loadSingleBlog(params.id);
+      current_blog_id = params.id;
+      loadSingleBlog(current_blog_id);
+      loadComments(current_blog_id);
     }
     loadBlogs();
   },
@@ -515,15 +521,17 @@ function validateBlogComment(e) {
   }
 
   if (errors_detected > 0) {
+    console.log("error");
     return false;
   } else {
-    console.log("all good");
+    saveComment();
     return true;
   }
 }
 
-function validateReplyForm(e) {
+function validateReplyForm(e, comment_id, commenter) {
   e.preventDefault();
+
   let errors_detected = 0;
 
   for (let element of errorBags) {
@@ -555,7 +563,7 @@ function validateReplyForm(e) {
   if (errors_detected > 0) {
     return false;
   } else {
-    console.log("all good");
+    saveReply(comment_id, commenter);
     return true;
   }
 }
@@ -598,14 +606,12 @@ function saveUser() {
     all_users.push(newUser);
 
     localStorage.setItem("users", JSON.stringify(all_users));
-
     clearSignupForm();
   } else {
     let all_users = [...JSON.parse(localStorage["users"])];
     all_users.push(newUser);
 
     localStorage.setItem("users", JSON.stringify(all_users));
-
     clearSignupForm();
   }
 }
@@ -699,5 +705,164 @@ function sendMessage() {
     localStorage.setItem("messages", JSON.stringify(all_messages));
 
     cleanContactForm();
+  }
+}
+function cleanCommentForm() {
+  document.commentForm.comment.value = "";
+}
+function saveComment() {
+  let user = JSON.parse(localStorage["current_user"]);
+  let newComment = {
+    id: user.email + "_" + current_blog_id + "_" + Date.now(),
+    blog_id: current_blog_id,
+    name: user.name,
+    body: document.commentForm.comment.value,
+    date: new Date().toLocaleString("en-GB", { timeZone: "CAT" }),
+  };
+
+  if (localStorage.getItem("comments") === null) {
+    let all_comments = [];
+    all_comments.push(newComment);
+
+    localStorage.setItem("comments", JSON.stringify(all_comments));
+
+    cleanCommentForm();
+    location.reload();
+  } else {
+    let all_comments = [...JSON.parse(localStorage["comments"])];
+    all_comments.push(newComment);
+
+    localStorage.setItem("comments", JSON.stringify(all_comments));
+    cleanCommentForm();
+    location.reload();
+  }
+}
+
+function loadComments(blog_id) {
+  let all_comments = localStorage["comments"]
+    ? [...JSON.parse(localStorage["comments"])].reverse()
+    : [];
+  // let all_replies = localStorage["replies"]
+  //   ? [...JSON.parse(localStorage["replies"])]
+  //   : [];
+
+  let filtered_comments = all_comments.filter(
+    (item) => item.blog_id === blog_id
+  );
+
+  commentsContainer.innerHTML = `
+    <label class="comments-count">${filtered_comments.length} Comment(s)</label>
+  `;
+  commentsCounter.innerHTML = `${filtered_comments.length} COMMENT(S)`;
+  for (const comment of filtered_comments) {
+    commentsContainer.innerHTML += `
+      <div class="comment">
+        <div class="commenter">
+          <label class="commenter-name">${comment.name}</label>
+          <div class="separator"></div>
+          <label class="commenter-time">${moment(
+            comment.date,
+            "DD/MM/YYYY, hh:mm:ss"
+          ).fromNow()}</label>
+        </div>
+        <div class="comment-body">
+          <p>${comment.body}</p>
+        </div>
+        <div>
+          <a href="#" class="comment-likes">12 Likes</a>
+          <label> | </label>
+          <a href="#" class="comment-likes">Reply</a>
+        </div>
+        
+        <div class="replies">
+            <form
+            name="replyForm"
+            onsubmit="return(validateReplyForm(event,'${comment.id}','${
+      comment.name
+    }'))"
+            >
+            <textarea
+              name="reply"
+              placeholder="Your reply..."
+            ></textarea>
+            <label class="error-bag" id="reply"
+              >ERROR: Invalid reply</label
+            >
+
+            <button type="submit">Reply</button>
+            </form>
+            <div class="the-replies">
+              ${getReplies(comment.id)}
+            </div>
+        </div>
+
+        <div class="line-separator"></div>
+      </div>
+      `;
+  }
+}
+function getReplies(comment_id) {
+  if (localStorage["replies"]) {
+    let all_replies = [...JSON.parse(localStorage["replies"])];
+
+    let filtered_replies = all_replies.filter(
+      (item) => item.comment_id === comment_id
+    );
+    let large_string = "";
+
+    for (const reply of filtered_replies) {
+      large_string += `
+      <div class="reply">
+      <div class="replier">
+        <label class="replier-name">${reply.name}</label>
+        <div class="separator"></div>
+        <label class="replier-time">${moment(
+          reply.date,
+          "DD/MM/YYYY, hh:mm:ss"
+        ).fromNow()}</label>
+      </div>
+      <div class="replier-body">
+        <p>
+          <label class="reply-to">@${reply.commenter}</label>
+            ${reply.body}
+          </p>
+      </div>
+      <div>
+        <a href="#" class="comment-likes">12 Likes</a>
+        <label> | </label>
+        <a href="#" class="comment-likes">Reply</a>
+      </div>
+    </div>
+      `;
+    }
+    return large_string;
+  }
+  return "";
+}
+function saveReply(comment_id, commenter) {
+  let user = JSON.parse(localStorage["current_user"]);
+
+  let newReply = {
+    id: user.email + "_reply_" + comment_id + "_" + Date.now(),
+    comment_id: comment_id,
+    name: user.name,
+    commenter: commenter,
+    body: document.commentForm.comment.value,
+    date: new Date().toLocaleString("en-GB", { timeZone: "CAT" }),
+  };
+
+  if (localStorage.getItem("replies") === null) {
+    let all_replies = [];
+    all_replies.push(newReply);
+
+    localStorage.setItem("replies", JSON.stringify(all_replies));
+
+    location.reload();
+  } else {
+    let all_replies = [...JSON.parse(localStorage["replies"])];
+
+    all_replies.push(newReply);
+    localStorage.setItem("replies", JSON.stringify(all_replies));
+    location.reload();
   }
 }
