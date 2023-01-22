@@ -19,6 +19,8 @@ const single_blog_date = document.querySelector(".blog-publish-date");
 
 const commentsContainer = document.querySelector(".all-comments");
 const commentsCounter = document.querySelector(".comments-count");
+const commentAs = document.getElementById("comment-as");
+const likeBtn = document.querySelector(".like-btn");
 let horizontalMenuActive = false;
 let auth_status = false;
 
@@ -649,7 +651,9 @@ function loadBlogs() {
       <label class="blog-date">${blog.date}</label>
       <div class="blog-reactions">
         <label><i class="fa-solid fa-comments"></i> 21</label>
-        <label><i class="fa-solid fa-thumbs-up"></i> 234</label>
+        <label><i class="fa-solid fa-thumbs-up"></i> ${
+          blog.likes ? blog.likes.length : 0
+        }</label>
       </div>
     </div>
     <div class="blue-line"></div>
@@ -664,6 +668,17 @@ function loadBlogs() {
 
 function loadSingleBlog(id) {
   let all_blogs = [...JSON.parse(localStorage["blogs"])];
+  let current_user = JSON.parse(localStorage["current_user"]);
+
+  let liked = false;
+
+  if (localStorage["current_user"]) {
+    likeBtn.style.opacity = 1;
+    likeBtn.style.cursor = "pointer";
+    commentAs.innerHTML = `Commenting as ${current_user.name}`;
+  } else {
+    location.href = "index.html";
+  }
 
   for (const blog of all_blogs) {
     if (blog.id === id.trim()) {
@@ -672,8 +687,22 @@ function loadSingleBlog(id) {
       single_blog_owner.innerHTML = blog.author;
       single_blog_body.innerHTML = blog.body;
       single_blog_date.innerHTML = `PUBLISHED ON ${blog.date}`;
+      likeBtn.addEventListener(
+        "click",
+        function () {
+          like(id);
+        },
+        false
+      );
+
+      for (const liker of blog.likes) {
+        if (liker === current_user.email) {
+          liked = !liked;
+        }
+      }
     }
   }
+  likeBtn.innerHTML = liked ? "Unlike" : "Like";
 }
 
 function cleanContactForm() {
@@ -718,6 +747,7 @@ function saveComment() {
     name: user.name,
     body: document.commentForm.comment.value,
     date: new Date().toLocaleString("en-GB", { timeZone: "CAT" }),
+    likes: 0,
   };
 
   if (localStorage.getItem("comments") === null) {
@@ -742,9 +772,6 @@ function loadComments(blog_id) {
   let all_comments = localStorage["comments"]
     ? [...JSON.parse(localStorage["comments"])].reverse()
     : [];
-  // let all_replies = localStorage["replies"]
-  //   ? [...JSON.parse(localStorage["replies"])]
-  //   : [];
 
   let filtered_comments = all_comments.filter(
     (item) => item.blog_id === blog_id
@@ -865,4 +892,33 @@ function saveReply(comment_id, commenter) {
     localStorage.setItem("replies", JSON.stringify(all_replies));
     location.reload();
   }
+}
+
+function like(blog_id) {
+  let all_blogs = [...JSON.parse(localStorage["blogs"])];
+  let current_user = JSON.parse(localStorage["current_user"]);
+  let unlike = false;
+
+  for (const blog of all_blogs) {
+    if (blog.id === blog_id) {
+      if (blog.likes) {
+        for (const liker of blog.likes) {
+          if (liker === current_user.email) {
+            let index = blog.likes.indexOf(current_user.email);
+            blog.likes.splice(index, 1);
+            unlike = true;
+            break;
+          }
+        }
+        if (!unlike) {
+          blog.likes.push(current_user.email);
+        }
+      } else {
+        blog.likes = [];
+        blog.likes.push(current_user.email);
+      }
+    }
+  }
+  localStorage.setItem("blogs", JSON.stringify(all_blogs));
+  location.reload();
 }

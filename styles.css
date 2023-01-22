@@ -1020,6 +1020,8 @@ html {
 }
 
 .like-btn {
+    opacity: 0.5;
+    cursor: not-allowed;
     text-decoration: none;
     color: white;
     background-color: #37A3B1;
