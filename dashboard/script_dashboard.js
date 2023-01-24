@@ -12,22 +12,17 @@ const errorBags = document.getElementsByClassName("error-bag");
 
 let current_user = JSON.parse(localStorage["current_user"]);
 
-document.addEventListener(
-  "DOMContentLoaded",
-  function () {
-    let path = window.location.pathname;
-    let page = path.split("/").pop();
-
-    if (page === "adminPanel.html") {
-      loadBlogTitles();
-      loadCards();
-    }
-    if (page === "messages.html") {
-      loadMessages();
-    }
-  },
-  false
-);
+if (document.readyState !== "loading") {
+  initFn();
+} else {
+  document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+      initFn();
+    },
+    false
+  );
+}
 
 document.getElementById("blog-image").addEventListener("change", (e) => {
   const file = e.target.files[0];
@@ -39,6 +34,19 @@ document.getElementById("blog-image").addEventListener("change", (e) => {
   };
   reader.readAsDataURL(file);
 });
+
+function initFn() {
+  let path = window.location.pathname;
+  let page = path.split("/").pop();
+
+  if (page === "adminPanel.html") {
+    loadBlogTitles();
+    loadCards();
+  }
+  if (page === "messages.html") {
+    loadMessages();
+  }
+}
 
 function toggleMenu(e) {
   e.preventDefault();
