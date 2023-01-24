@@ -41,6 +41,8 @@ function initFn() {
   let path = window.location.pathname;
   let page = path.split("/").pop();
 
+  console.log(page)
+
   if (page === "adminPanel.html") {
     loadBlogTitles();
     loadCards();
