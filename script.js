@@ -47,15 +47,15 @@ document.addEventListener(
       loadSingleBlog(current_blog_id);
       loadComments(current_blog_id);
       loadSimilarBlogs(current_blog_id);
+    } else {
+      loadBlogs();
     }
-    loadBlogs();
-
     if (localStorage["current_user"]) {
       let current_user = JSON.parse(localStorage["current_user"]);
       loginLinkDiv.innerHTML = `
-      <label class="greet-user">Hello, ${current_user.name}</label>
-      <a href="#" class="logoutBtn" onclick="logout(event)">Log out</a>
-    `;
+    <label class="greet-user">Hello, ${current_user.name}</label>
+    <a href="#" class="logoutBtn" onclick="logout(event)">Log out</a>
+  `;
     }
   },
   false
@@ -1041,7 +1041,9 @@ function countLikes(type, id) {
 }
 
 function countReplies(comment_id) {
-  let all_replies = [...JSON.parse(localStorage["replies"])];
+  let all_replies = localStorage["replies"]
+    ? [...JSON.parse(localStorage["replies"])]
+    : [];
   let counter = 0;
   for (const reply of all_replies) {
     if (reply.comment_id === comment_id) {
@@ -1052,8 +1054,12 @@ function countReplies(comment_id) {
   return counter;
 }
 function boldenLikeBtn(id) {
-  let all_comments = [...JSON.parse(localStorage["comments"])];
-  let all_replies = [...JSON.parse(localStorage["replies"])];
+  let all_comments = localStorage["comments"]
+    ? [...JSON.parse(localStorage["comments"])]
+    : [];
+  let all_replies = localStorage["replies"]
+    ? [...JSON.parse(localStorage["replies"])]
+    : [];
   let current_user = JSON.parse(localStorage["current_user"]);
   let classValue = "";
 
@@ -1062,7 +1068,6 @@ function boldenLikeBtn(id) {
       if (comment.likes) {
         for (const liker of comment.likes) {
           if (liker === current_user.email) {
-            console.log("comment= " + id);
             classValue = "bolden";
           }
         }
@@ -1087,7 +1092,9 @@ function boldenLikeBtn(id) {
 }
 
 function loadSimilarBlogs(id) {
-  let all_blogs = [...JSON.parse(localStorage["blogs"])];
+  let all_blogs = localStorage["blogs"]
+    ? [...JSON.parse(localStorage["blogs"])]
+    : [];
   similarBlogsContainer.innerHTML = "";
   let category = "";
   let counter = 0;
