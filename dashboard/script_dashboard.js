@@ -13,13 +13,13 @@ const errorBags = document.getElementsByClassName("error-bag");
 let current_user = JSON.parse(localStorage["current_user"]);
 
 if (document.readyState !== "loading") {
-  console.log("document ready...")
+  console.log("document ready...");
   initFn();
 } else {
   document.addEventListener(
     "DOMContentLoaded",
     function () {
-  console.log("document ready")
+      console.log("document ready");
       initFn();
     },
     false
@@ -41,9 +41,9 @@ function initFn() {
   let path = window.location.pathname;
   let page = path.split("/").pop();
 
-  console.log(page)
+  console.log(page);
 
-  if (page === "adminPanel.html") {
+  if (page === "adminPanel.html" || page === "adminpanel") {
     loadBlogTitles();
     loadCards();
   }
