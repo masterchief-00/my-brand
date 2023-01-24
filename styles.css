@@ -45,6 +45,27 @@ html {
     z-index: 10;
 }
 
+.greet-user {
+    font-size: 20px !important;
+}
+
+.logoutBtn {
+    text-decoration: none;
+    color: #171822;
+    padding: 3px;
+    border: solid 1px transparent;
+    border-radius: 5px;
+    font-weight: 700;
+    background-color: #F4326C;
+    transition: all 0.5s;
+}
+
+.logoutBtn:hover {
+    background-color: transparent;
+    color: #5DCCE4;
+    border-color: #5DCCE4;
+}
+
 .links {
     display: flex;
     flex-direction: row;
@@ -696,6 +717,13 @@ html {
     margin-right: 30px;
     width: fit-content;
     cursor: pointer;
+}
+
+.login div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
 }
 
 .login img {

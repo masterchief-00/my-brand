@@ -49,6 +49,14 @@ document.addEventListener(
       loadSimilarBlogs(current_blog_id);
     }
     loadBlogs();
+
+    if (localStorage["current_user"]) {
+      let current_user = JSON.parse(localStorage["current_user"]);
+      loginLinkDiv.innerHTML = `
+      <label class="greet-user">Hello, ${current_user.name}</label>
+      <a href="#" class="logoutBtn" onclick="logout(event)">Log out</a>
+    `;
+    }
   },
   false
 );
@@ -625,6 +633,10 @@ function saveUser() {
 
 function authenticateUser(email, password) {
   let all_users = [...JSON.parse(localStorage["users"])];
+  let current_user = localStorage["current_user"]
+    ? JSON.parse(localStorage["current_user"])
+    : {};
+
   for (const user of all_users) {
     if (user.email === email && user.password === password) {
       console.log("LOGGED IN!");
@@ -634,8 +646,11 @@ function authenticateUser(email, password) {
       localStorage.setItem("current_user", JSON.stringify(currentUser));
 
       loginLinkDiv.innerHTML = `
-        <label>Hello, ${currentUser.name}</label>
-      `;
+      <label class="greet-user">Hello, ${current_user.name}</label>
+      <a href="#" class="logoutBtn" onclick="logout(event)">Log out</a>
+    `;
+      toggleModal();
+      location.reload();
       return true;
     }
   }
@@ -1102,4 +1117,11 @@ function loadSimilarBlogs(id) {
   if (counter < 1) {
     similarBlogsContainer.innerHTML = "<label> Nothing yet, sorry!</label>";
   }
+}
+
+function logout(e) {
+  e.preventDefault();
+
+  localStorage.removeItem("current_user");
+  location.reload();
 }
