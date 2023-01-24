@@ -94,6 +94,27 @@ function validateBlogAddForm(e) {
     errors_detected++;
   }
 
+  if (!checkText(document.blogAddForm.category)) {
+    for (let element of errorBags) {
+      if (element.id === "category") {
+        element.textContent = "Invalid category!";
+        element.style.display = "flex";
+      }
+    }
+    errors_detected++;
+  }
+
+  if (document.blogAddForm.category.value.length < 5) {
+    for (let element of errorBags) {
+      if (element.id === "category") {
+        element.textContent =
+          "The category field can't be less than 5 characters!";
+        element.style.display = "flex";
+      }
+    }
+    errors_detected++;
+  }
+
   tinyMCE.triggerSave();
 
   if (document.blogAddForm.body.value.length < 17) {
@@ -340,6 +361,7 @@ function saveBlog() {
     date: document.blogAddForm.date.value,
     image: base64String,
     author: current_user.name,
+    category: document.blogAddForm.category.value,
   };
 
   if (localStorage.getItem("blogs") === null) {
@@ -488,3 +510,4 @@ function markRead(id) {
   localStorage.setItem("messages", JSON.stringify(all_messages));
   location.reload();
 }
+

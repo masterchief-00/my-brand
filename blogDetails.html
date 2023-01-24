@@ -61,7 +61,11 @@
               </div>
             </div>
             <div class="blog-main-image">
-              <img src="/images/blog-img-2.jpg" alt="blog-img" id="single-blog-image" />
+              <img
+                src="/images/blog-img-2.jpg"
+                alt="blog-img"
+                id="single-blog-image"
+              />
             </div>
             <div class="blog-main-content">
               <p>
@@ -186,6 +190,7 @@
                   </div>
                   <div class="replies">
                     <form
+                      id="replyField"
                       name="replyForm"
                       onsubmit="return(validateReplyForm(event))"
                     >
@@ -409,9 +414,9 @@
 
     <script src="../node_modules/moment/moment.js"></script>
     <script>
-        moment().format();
+      moment().format();
     </script>
-  
+
     <script src="script.js"></script>
   </body>
 </html>

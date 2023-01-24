@@ -10,6 +10,7 @@ const closeMenu = document.getElementsByClassName("close-menu");
 const horizontalMenu = document.getElementsByClassName("horizontal-menu");
 const loginLinkDiv = document.getElementById("login-link");
 const blogsContainer = document.getElementById("blogsContainer");
+const similarBlogsContainer = document.querySelector(".similar-blogs");
 
 const single_blog_title = document.querySelector(".blog-main-title");
 const single_blog_owner = document.querySelector(".blog-owner");
@@ -21,6 +22,7 @@ const commentsContainer = document.querySelector(".all-comments");
 const commentsCounter = document.querySelector(".comments-count");
 const commentAs = document.getElementById("comment-as");
 const likeBtn = document.querySelector(".like-btn");
+
 let horizontalMenuActive = false;
 let auth_status = false;
 
@@ -43,6 +45,7 @@ document.addEventListener(
       current_blog_id = params.id;
       loadSingleBlog(current_blog_id);
       loadComments(current_blog_id);
+      loadSimilarBlogs(current_blog_id);
     }
     loadBlogs();
   },
@@ -535,14 +538,15 @@ function validateReplyForm(e, comment_id, commenter) {
   e.preventDefault();
 
   let errors_detected = 0;
+  let inputField = document.getElementById(comment_id);
 
   for (let element of errorBags) {
     element.style.display = "none";
   }
 
-  if (!checkText(document.replyForm.reply)) {
+  if (!checkText(inputField)) {
     for (let element of errorBags) {
-      if (element.id === "reply") {
+      if (element.id === "reply-" + comment_id) {
         element.textContent = "Invalid reply!";
         element.style.display = "flex";
       }
@@ -551,7 +555,7 @@ function validateReplyForm(e, comment_id, commenter) {
     errors_detected++;
   }
 
-  if (document.replyForm.reply.value === "") {
+  if (inputField.value === "") {
     for (let element of errorBags) {
       if (element.id === "reply") {
         element.textContent =
@@ -565,7 +569,7 @@ function validateReplyForm(e, comment_id, commenter) {
   if (errors_detected > 0) {
     return false;
   } else {
-    saveReply(comment_id, commenter);
+    saveReply(comment_id, commenter, inputField);
     return true;
   }
 }
@@ -656,6 +660,8 @@ function loadBlogs() {
         }</label>
       </div>
     </div>
+    <label class="blog-date">${blog.category.toUpperCase()}</label>
+
     <div class="blue-line"></div>
     <p>
       ${blog.body.substring(0, 135)}...\n
@@ -694,10 +700,11 @@ function loadSingleBlog(id) {
         },
         false
       );
-
-      for (const liker of blog.likes) {
-        if (liker === current_user.email) {
-          liked = !liked;
+      if (blog.likes) {
+        for (const liker of blog.likes) {
+          if (liker === current_user.email) {
+            liked = !liked;
+          }
         }
       }
     }
@@ -803,11 +810,14 @@ function loadComments(blog_id) {
       comment.id
     )} Likes</a>
           <label> | </label>
-          <a href="#" class="comment-likes">Reply</a>
+          <a href="#" class="comment-likes">${countReplies(
+            comment.id
+          )} replies</a>
         </div>
         
         <div class="replies">
             <form
+            id="replyField"
             name="replyForm"
             onsubmit="return(validateReplyForm(event,'${comment.id}','${
       comment.name
@@ -816,8 +826,9 @@ function loadComments(blog_id) {
             <textarea
               name="reply"
               placeholder="Your reply..."
+              id="${comment.id}"
             ></textarea>
-            <label class="error-bag" id="reply"
+            <label class="error-bag" id="reply-${comment.id}"
               >ERROR: Invalid reply</label
             >
 
@@ -866,9 +877,7 @@ function getReplies(comment_id) {
         "reply",
         reply.id
       )} Likes</a>
-        <label> | </label>
-        <a href="#" class="comment-likes">Reply</a>
-      </div>
+        </div>
     </div>
       `;
     }
@@ -876,7 +885,7 @@ function getReplies(comment_id) {
   }
   return "";
 }
-function saveReply(comment_id, commenter) {
+function saveReply(comment_id, commenter, input) {
   let user = JSON.parse(localStorage["current_user"]);
 
   let newReply = {
@@ -884,7 +893,7 @@ function saveReply(comment_id, commenter) {
     comment_id: comment_id,
     name: user.name,
     commenter: commenter,
-    body: document.replyForm.reply.value,
+    body: input.value,
     date: new Date().toLocaleString("en-GB", { timeZone: "CAT" }),
     likes: [],
   };
@@ -999,6 +1008,7 @@ function countLikes(type, id) {
     for (const comment of all_comments) {
       if (comment.id === id) {
         return comment.likes.length;
+        classValue = "bolden";
       }
     }
   }
@@ -1012,17 +1022,31 @@ function countLikes(type, id) {
     }
   }
 }
+
+function countReplies(comment_id) {
+  let all_replies = [...JSON.parse(localStorage["replies"])];
+  let counter = 0;
+  for (const reply of all_replies) {
+    if (reply.comment_id === comment_id) {
+      counter++;
+    }
+  }
+
+  return counter;
+}
 function boldenLikeBtn(id) {
   let all_comments = [...JSON.parse(localStorage["comments"])];
   let all_replies = [...JSON.parse(localStorage["replies"])];
   let current_user = JSON.parse(localStorage["current_user"]);
+  let classValue = "";
 
   for (const comment of all_comments) {
     if (comment.id === id) {
       if (comment.likes) {
         for (const liker of comment.likes) {
           if (liker === current_user.email) {
-            return "bolden";
+            console.log("comment= " + id);
+            classValue = "bolden";
           }
         }
       }
@@ -1034,12 +1058,39 @@ function boldenLikeBtn(id) {
       if (reply.likes) {
         for (const liker of reply.likes) {
           if (liker === current_user.email) {
-            return "bolden";
+            console.log("reply= " + id);
+            classValue = "bolden";
           }
         }
       }
     }
   }
 
-  return "";
+  return classValue;
+}
+
+function loadSimilarBlogs(id) {
+  let all_blogs = [...JSON.parse(localStorage["blogs"])];
+  similarBlogsContainer.innerHTML = "";
+  let category = "";
+
+  for (const blog of all_blogs) {
+    if (blog.id === id) {
+      category = blog.category;
+      break;
+    }
+  }
+  for (const blog of all_blogs) {
+    if (blog.category === category && blog.id !== id) {
+      similarBlogsContainer.innerHTML += `
+      <div class="similar-topic">
+      <img src="data:image/jpg;base64,${blog.image}" alt="blog-img" />
+      <label class="title-similar-topic"
+        >${blog.title}</label
+      >
+      <a href="#" class="link-similar-topic">READ MORE</a>
+    </div>
+      `;
+    }
+  }
 }
