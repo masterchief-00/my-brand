@@ -13,11 +13,13 @@ const errorBags = document.getElementsByClassName("error-bag");
 let current_user = JSON.parse(localStorage["current_user"]);
 
 if (document.readyState !== "loading") {
+  console.log("document ready...")
   initFn();
 } else {
   document.addEventListener(
     "DOMContentLoaded",
     function () {
+  console.log("document ready")
       initFn();
     },
     false
