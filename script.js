@@ -662,11 +662,15 @@ function loadBlogs() {
   let all_blogs = localStorage["blogs"]
     ? [...JSON.parse(localStorage["blogs"])]
     : [];
-  blogsContainer.innerHTML = `
+  if (all_blogs.length < 1) {
+    blogsContainer.innerHTML = `
   <label class="nothing-yet">Sorry, no blogs uploaded yet!</label>
   <label class="nothing-yet">Sorry, no blogs uploaded yet!</label>
   <label class="nothing-yet">Sorry, no blogs uploaded yet!</label>
   `;
+  } else {
+    blogsContainer.innerHTML = "";
+  }
 
   for (const blog of all_blogs) {
     blogsContainer.innerHTML += `
