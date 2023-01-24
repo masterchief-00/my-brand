@@ -659,7 +659,9 @@ function authenticateUser(email, password) {
 }
 
 function loadBlogs() {
-  let all_blogs = [...JSON.parse(localStorage["blogs"])];
+  let all_blogs = localStorage["blogs"]
+    ? [...JSON.parse(localStorage["blogs"])]
+    : [];
   blogsContainer.innerHTML = "";
 
   for (const blog of all_blogs) {
