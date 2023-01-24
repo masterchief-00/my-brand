@@ -346,6 +346,7 @@ function saveBlog() {
 }
 
 function loadBlogTitles() {
+  console.log(localStorage["blogs"] ? localStorage["blogs"] : "NULL");
   if (localStorage["blogs"] !== null) {
     let all_blogs = [...JSON.parse(localStorage["blogs"])];
     blogsTable.innerHTML = `
@@ -438,7 +439,9 @@ function loadMessages() {
             <p>${message.body}</p>
             <div>
                 <a href="#" onclick="deleteMessage(${message.id})">Delete</a>
-                <a href="#" onclick="markRead(${message.id})" ${message.status==='READ' ? 'class="button-disabled"':""}>Mark as read</a>
+                <a href="#" onclick="markRead(${message.id})" ${
+        message.status === "READ" ? 'class="button-disabled"' : ""
+      }>Mark as read</a>
             </div>
         </div>
       </div>
