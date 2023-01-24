@@ -382,7 +382,9 @@ function saveBlog() {
 function loadBlogTitles() {
   console.log(localStorage["blogs"] ? localStorage["blogs"] : "NULL");
   if (localStorage["blogs"] !== null) {
-    let all_blogs = [...JSON.parse(localStorage["blogs"])];
+    let all_blogs = localStorage["blogs"]
+      ? [...JSON.parse(localStorage["blogs"])]
+      : [];
     blogsTable.innerHTML = `
     <tr>
       <th>#</th>
@@ -510,4 +512,3 @@ function markRead(id) {
   localStorage.setItem("messages", JSON.stringify(all_messages));
   location.reload();
 }
-
