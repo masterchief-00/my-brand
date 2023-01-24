@@ -747,7 +747,7 @@ function saveComment() {
     name: user.name,
     body: document.commentForm.comment.value,
     date: new Date().toLocaleString("en-GB", { timeZone: "CAT" }),
-    likes: 0,
+    likes: [],
   };
 
   if (localStorage.getItem("comments") === null) {
@@ -796,7 +796,12 @@ function loadComments(blog_id) {
           <p>${comment.body}</p>
         </div>
         <div>
-          <a href="#" class="comment-likes">12 Likes</a>
+          <a href="#" class="comment-likes ${boldenLikeBtn(
+            comment.id
+          )}" onclick="likeComment('${comment.id}')">${countLikes(
+      "comment",
+      comment.id
+    )} Likes</a>
           <label> | </label>
           <a href="#" class="comment-likes">Reply</a>
         </div>
@@ -855,7 +860,12 @@ function getReplies(comment_id) {
           </p>
       </div>
       <div>
-        <a href="#" class="comment-likes">12 Likes</a>
+        <a href="#" class="comment-likes ${boldenLikeBtn(
+          reply.id
+        )}" onclick="likeReply('${reply.id}')">${countLikes(
+        "reply",
+        reply.id
+      )} Likes</a>
         <label> | </label>
         <a href="#" class="comment-likes">Reply</a>
       </div>
@@ -874,8 +884,9 @@ function saveReply(comment_id, commenter) {
     comment_id: comment_id,
     name: user.name,
     commenter: commenter,
-    body: document.commentForm.comment.value,
+    body: document.replyForm.reply.value,
     date: new Date().toLocaleString("en-GB", { timeZone: "CAT" }),
+    likes: [],
   };
 
   if (localStorage.getItem("replies") === null) {
@@ -921,4 +932,114 @@ function like(blog_id) {
   }
   localStorage.setItem("blogs", JSON.stringify(all_blogs));
   location.reload();
+}
+
+function likeComment(comment_id) {
+  let all_comments = [...JSON.parse(localStorage["comments"])];
+  let current_user = JSON.parse(localStorage["current_user"]);
+  let unlike = false;
+
+  for (const comment of all_comments) {
+    if (comment.id === comment_id) {
+      if (comment.likes) {
+        for (const liker of comment.likes) {
+          if (liker === current_user.email) {
+            let index = comment.likes.indexOf(current_user.email);
+            comment.likes.splice(index, 1);
+            unlike = true;
+            break;
+          }
+        }
+        if (!unlike) {
+          comment.likes.push(current_user.email);
+        }
+      } else {
+        comment.likes = [];
+        comment.likes.push(current_user.email);
+      }
+    }
+  }
+  localStorage.setItem("comments", JSON.stringify(all_comments));
+  location.reload();
+}
+
+function likeReply(reply_id) {
+  let all_replies = [...JSON.parse(localStorage["replies"])];
+  let current_user = JSON.parse(localStorage["current_user"]);
+  let unlike = false;
+
+  for (const reply of all_replies) {
+    if (reply.id === reply_id) {
+      if (reply.likes) {
+        for (const liker of reply.likes) {
+          if (liker === current_user.email) {
+            let index = reply.likes.indexOf(current_user.email);
+            reply.likes.splice(index, 1);
+            unlike = true;
+            break;
+          }
+        }
+        if (!unlike) {
+          reply.likes.push(current_user.email);
+        }
+      } else {
+        reply.likes = [];
+        reply.likes.push(current_user.email);
+      }
+    }
+  }
+  localStorage.setItem("replies", JSON.stringify(all_replies));
+  location.reload();
+}
+
+function countLikes(type, id) {
+  if (type === "comment") {
+    let all_comments = [...JSON.parse(localStorage["comments"])];
+
+    for (const comment of all_comments) {
+      if (comment.id === id) {
+        return comment.likes.length;
+      }
+    }
+  }
+  if (type === "reply") {
+    let all_replies = [...JSON.parse(localStorage["replies"])];
+
+    for (const reply of all_replies) {
+      if (reply.id === id) {
+        return reply.likes.length;
+      }
+    }
+  }
+}
+function boldenLikeBtn(id) {
+  let all_comments = [...JSON.parse(localStorage["comments"])];
+  let all_replies = [...JSON.parse(localStorage["replies"])];
+  let current_user = JSON.parse(localStorage["current_user"]);
+
+  for (const comment of all_comments) {
+    if (comment.id === id) {
+      if (comment.likes) {
+        for (const liker of comment.likes) {
+          if (liker === current_user.email) {
+            return "bolden";
+          }
+        }
+      }
+    }
+  }
+
+  for (const reply of all_replies) {
+    if (reply.id === id) {
+      if (reply.likes) {
+        for (const liker of reply.likes) {
+          if (liker === current_user.email) {
+            return "bolden";
+          }
+        }
+      }
+    }
+  }
+
+  return "";
 }

@@ -1019,6 +1019,12 @@ html {
     margin-top: 20px;
 }
 
+.bolden {
+    font-size: 25px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
 .like-btn {
     opacity: 0.5;
     cursor: not-allowed;
