@@ -12,6 +12,7 @@ const loginLinkDiv = document.getElementById("login-link");
 const blogsContainer = document.getElementById("blogsContainer");
 const similarBlogsContainer = document.querySelector(".similar-blogs");
 
+const single_blog_category = document.querySelector(".blog-category");
 const single_blog_title = document.querySelector(".blog-main-title");
 const single_blog_owner = document.querySelector(".blog-owner");
 const single_blog_image = document.getElementById("single-blog-image");
@@ -688,6 +689,7 @@ function loadSingleBlog(id) {
 
   for (const blog of all_blogs) {
     if (blog.id === id.trim()) {
+      single_blog_category.innerHTML = blog.category.toUpperCase();
       single_blog_title.innerHTML = blog.title;
       single_blog_image.src = `data:image/jpg;base64,${blog.image}`;
       single_blog_owner.innerHTML = blog.author;
@@ -1073,6 +1075,7 @@ function loadSimilarBlogs(id) {
   let all_blogs = [...JSON.parse(localStorage["blogs"])];
   similarBlogsContainer.innerHTML = "";
   let category = "";
+  let counter = 0;
 
   for (const blog of all_blogs) {
     if (blog.id === id) {
@@ -1080,6 +1083,7 @@ function loadSimilarBlogs(id) {
       break;
     }
   }
+
   for (const blog of all_blogs) {
     if (blog.category === category && blog.id !== id) {
       similarBlogsContainer.innerHTML += `
@@ -1088,9 +1092,14 @@ function loadSimilarBlogs(id) {
       <label class="title-similar-topic"
         >${blog.title}</label
       >
-      <a href="#" class="link-similar-topic">READ MORE</a>
+      <a href="blogDetails.html?id=${blog.id}" class="link-similar-topic">READ MORE</a>
     </div>
       `;
+      counter++;
     }
+  }
+
+  if (counter < 1) {
+    similarBlogsContainer.innerHTML = "<label> Nothing yet, sorry!</label>";
   }
 }
