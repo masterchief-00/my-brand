@@ -11,6 +11,7 @@ let base64String = "";
 const errorBags = document.getElementsByClassName("error-bag");
 
 let current_user = JSON.parse(localStorage["current_user"]);
+let current_blog_id = "";
 
 if (document.readyState !== "loading") {
   console.log("document ready...");
@@ -41,14 +42,23 @@ function initFn() {
   let path = window.location.pathname;
   let page = path.split("/").pop();
 
-  console.log(page);
-
   if (page === "adminPanel.html" || page === "adminpanel") {
     loadBlogTitles();
     loadCards();
   }
-  if (page === "messages.html") {
+  if (page === "messages.html" || page === "messages") {
     loadMessages();
+  }
+  if (page === "blogUpdate.html" || page === "blogUpdate") {
+    const params = new Proxy(new URLSearchParams(window.location.search), {
+      get: (searchParams, prop) => searchParams.get(prop),
+    });
+
+    if (params.id) {
+      current_blog_id = params.id;
+
+      // loadBlog(editor);
+    }
   }
 }
 
@@ -197,6 +207,27 @@ function validateBlogUpdateForm(e) {
     errors_detected++;
   }
 
+  if (!checkText(document.blogUpdateForm.category)) {
+    for (let element of errorBags) {
+      if (element.id === "category") {
+        element.textContent = "Invalid category!";
+        element.style.display = "flex";
+      }
+    }
+    errors_detected++;
+  }
+
+  if (document.blogUpdateForm.category.value.length < 5) {
+    for (let element of errorBags) {
+      if (element.id === "category") {
+        element.textContent =
+          "The category field can't be less than 5 characters!";
+        element.style.display = "flex";
+      }
+    }
+    errors_detected++;
+  }
+
   if (document.blogUpdateForm.body.value.length < 10) {
     for (let element of errorBags) {
       if (element.id === "body") {
@@ -234,7 +265,7 @@ function validateBlogUpdateForm(e) {
   if (errors_detected > 0) {
     return false;
   } else {
-    console.log("all good");
+    updateBlog();
     return true;
   }
 }
@@ -510,5 +541,42 @@ function markRead(id) {
     }
   }
   localStorage.setItem("messages", JSON.stringify(all_messages));
+  location.reload();
+}
+
+function loadBlog(editor) {
+  let all_blogs = localStorage["blogs"]
+    ? [...JSON.parse(localStorage["blogs"])]
+    : [];
+
+  for (const blog of all_blogs) {
+    if (blog.id === current_blog_id.trim()) {
+      document.blogUpdateForm.title.value = blog.title;
+      document.blogUpdateForm.category.value = blog.category;
+
+      editor.setContent(blog.body);
+      document.blogUpdateForm.date.value = blog.date;
+    }
+  }
+}
+
+function updateBlog() {
+  let all_blogs = localStorage["blogs"]
+    ? [...JSON.parse(localStorage["blogs"])]
+    : [];
+
+  for (const blog of all_blogs) {
+    if (blog.id === current_blog_id) {
+      blog.id = slugify(document.blogUpdateForm.title.value);
+      blog.title = document.blogUpdateForm.title.value;
+      blog.body = document.blogUpdateForm.body.value;
+      blog.date = document.blogUpdateForm.date.value;
+      blog.image = base64String;
+      blog.author = current_user.name;
+      blog.category = document.blogUpdateForm.category.value;
+    }
+  }
+
+  localStorage.setItem("blogs", JSON.stringify(all_blogs));
   location.reload();
 }

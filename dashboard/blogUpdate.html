@@ -93,7 +93,17 @@
                 placeholder="Blog title"
               />
               <label class="error-bag" id="title">ERROR: Invalid title</label>
-              <textarea name="body"></textarea>
+
+              <input
+                type="text"
+                name="category"
+                placeholder="Category"
+                id="category"
+              />
+              <label class="error-bag" id="category"
+                >ERROR: Invalid category</label
+              >
+              <textarea name="body" id="update-body"></textarea>
 
               <script>
                 tinymce.init({
@@ -104,6 +114,10 @@
                     "anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount",
                   toolbar:
                     "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat",
+                  init_instance_callback: function (editor) {
+                    // editor.setContent("<p>hello</p>");
+                    loadBlog(editor)
+                  },
                 });
               </script>
 
@@ -113,7 +127,7 @@
               <div class="extra-inputs">
                 <input type="date" name="date" id="date" />
                 <label class="error-bag" id="date">ERROR: Invalid date</label>
-                <input type="file" name="image" id="image" />
+                <input type="file" name="image" id="blog-image" />
                 <label class="error-bag" id="image"
                   >ERROR: Invalid file type</label
                 >

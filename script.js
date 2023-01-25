@@ -680,7 +680,9 @@ function loadBlogs() {
     <div class="blog-tiny-details">
       <label class="blog-date">${blog.date}</label>
       <div class="blog-reactions">
-        <label><i class="fa-solid fa-comments"></i> 21</label>
+        <label><i class="fa-solid fa-comments"></i> ${countComments(
+          blog.id
+        )}</label>
         <label><i class="fa-solid fa-thumbs-up"></i> ${
           blog.likes ? blog.likes.length : 0
         }</label>
@@ -699,8 +701,12 @@ function loadBlogs() {
 }
 
 function loadSingleBlog(id) {
-  let all_blogs = [...JSON.parse(localStorage["blogs"])];
-  let current_user = JSON.parse(localStorage["current_user"]);
+  let all_blogs = localStorage["blogs"]
+    ? [...JSON.parse(localStorage["blogs"])]
+    : [];
+  let current_user = localStorage["current_user"]
+    ? JSON.parse(localStorage["current_user"])
+    : [];
 
   let liked = false;
 
@@ -1141,4 +1147,19 @@ function logout(e) {
 
   localStorage.removeItem("current_user");
   location.reload();
+}
+
+function countComments(id) {
+  let all_comments = localStorage["comments"]
+    ? [...JSON.parse(localStorage["comments"])]
+    : [];
+
+  let counter = 0;
+  for (const comment of all_comments) {
+    if (comment.blog_id === id.trim()) {
+      counter++;
+    }
+  }
+
+  return counter;
 }
