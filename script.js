@@ -33,6 +33,8 @@ let currentUser = {
   email: "",
 };
 
+let projectsContainer = document.getElementById("gallery-3d");
+
 const errorBags = document.getElementsByClassName("error-bag");
 
 document.addEventListener(
@@ -49,6 +51,7 @@ document.addEventListener(
       loadSimilarBlogs(current_blog_id);
     } else {
       loadBlogs();
+      loadProjects();
     }
     if (localStorage["current_user"]) {
       let current_user = JSON.parse(localStorage["current_user"]);
@@ -1162,4 +1165,54 @@ function countComments(id) {
   }
 
   return counter;
+}
+
+function loadProjects() {
+  let all_projects = localStorage["projects"]
+    ? JSON.parse(localStorage["projects"])
+    : [];
+
+  if (all_projects.length < 1) {
+    projectsContainer.innerHTML = "<label>Nothing yet, sorry</label>";
+  } else {
+    projectsContainer.innerHTML = "";
+  }
+
+  for (const project of all_projects) {
+    projectsContainer.innerHTML += `
+    <div class="project">
+      <div class="project-details">
+        <label class="project-title">${project.title}</label>
+        <label class="project-sub-title">${getTools(project.id)}</label>
+        <a href="projectDetails.html?id=${project.id}">LEARN MORE</a>
+      </div>
+      <img src="data:image/jpg;base64,${project.image}" alt="img1" />
+    </div>
+    `;
+  }
+}
+
+function getTools(id) {
+  let all_projects = localStorage["projects"]
+    ? [...JSON.parse(localStorage["projects"])]
+    : [];
+  let tool_string = "";
+
+  for (const project of all_projects) {
+    if (project.id === id) {
+      let tools = project.tools.trim();
+      tools = tools.split(",");
+
+      if (tools.length > 1) {
+        for (const tool of tools) {
+          tool_string += tool + "/";
+        }
+      } else {
+        tool_string = tools[0];
+      }
+    }
+  }
+  return tool_string[tool_string.length - 1] === "/"
+    ? tool_string.substring(0, tool_string.length - 1)
+    : tool_string;
 }

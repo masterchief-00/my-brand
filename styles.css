@@ -409,13 +409,10 @@ html {
     overflow: hidden;
 }
 
-.project-1 img,
-.project-2 img,
-.project-3 img,
-.project-4 img,
-.project-5 img,
-.project-6 img {
+.project img {
     height: 365px;
+    max-width: 365px;
+    object-fit: cover;
 }
 
 .project-details {
@@ -459,12 +456,7 @@ html {
     visibility: hidden;
 }
 
-.project-1:hover .project-details,
-.project-2:hover .project-details,
-.project-3:hover .project-details,
-.project-4:hover .project-details,
-.project-5:hover .project-details,
-.project-6:hover .project-details {
+.project:hover .project-details {
     visibility: visible;
 }
 
@@ -1467,12 +1459,7 @@ html {
 
     }
 
-    .project-1 img,
-    .project-2 img,
-    .project-3 img,
-    .project-4 img,
-    .project-5 img,
-    .project-6 img {
+    .project img {
         height: 580px;
     }
 
@@ -1817,12 +1804,7 @@ html {
 
     }
 
-    .project-1 img,
-    .project-2 img,
-    .project-3 img,
-    .project-4 img,
-    .project-5 img,
-    .project-6 img {
+    .project img {
         height: 300px;
     }
 

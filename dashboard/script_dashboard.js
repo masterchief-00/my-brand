@@ -356,7 +356,7 @@ function validateprojectAddForm(e) {
   if (errors_detected > 0) {
     return false;
   } else {
-    console.log("all good");
+    saveProject();
     return true;
   }
 }
@@ -580,3 +580,28 @@ function updateBlog() {
   localStorage.setItem("blogs", JSON.stringify(all_blogs));
   location.reload();
 }
+
+function saveProject() {
+  let newProject = {
+    id: slugify(document.projectAddForm.title.value),
+    title: document.projectAddForm.title.value,
+    description: document.projectAddForm.description.value,
+    image: base64String,
+    tools: document.projectAddForm.tools.value,
+  };
+  if (!localStorage["projects"]) {
+    let all_projects = [];
+
+    all_projects.push(newProject);
+    localStorage.setItem("projects", JSON.stringify(all_projects));
+  } else {
+    let all_projects = [...JSON.parse(localStorage["projects"])];
+
+    all_projects.push(newProject);
+
+    localStorage.setItem("projects", JSON.stringify(all_projects));
+  }
+
+  location.reload();
+}
+
