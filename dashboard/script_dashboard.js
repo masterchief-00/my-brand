@@ -11,23 +11,21 @@ let base64String = "";
 const errorBags = document.getElementsByClassName("error-bag");
 
 let current_user = JSON.parse(localStorage["current_user"]);
+let current_blog_id = "";
 
-document.addEventListener(
-  "DOMContentLoaded",
-  function () {
-    let path = window.location.pathname;
-    let page = path.split("/").pop();
-
-    if (page === "adminPanel.html") {
-      loadBlogTitles();
-      loadCards();
-    }
-    if (page === "messages.html") {
-      loadMessages();
-    }
-  },
-  false
-);
+if (document.readyState !== "loading") {
+  console.log("document ready...");
+  initFn();
+} else {
+  document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+      console.log("document ready");
+      initFn();
+    },
+    false
+  );
+}
 
 document.getElementById("blog-image").addEventListener("change", (e) => {
   const file = e.target.files[0];
@@ -39,6 +37,30 @@ document.getElementById("blog-image").addEventListener("change", (e) => {
   };
   reader.readAsDataURL(file);
 });
+
+function initFn() {
+  let path = window.location.pathname;
+  let page = path.split("/").pop();
+
+  if (page === "adminPanel.html" || page === "adminpanel") {
+    loadBlogTitles();
+    loadCards();
+  }
+  if (page === "messages.html" || page === "messages") {
+    loadMessages();
+  }
+  if (page === "blogUpdate.html" || page === "blogUpdate") {
+    const params = new Proxy(new URLSearchParams(window.location.search), {
+      get: (searchParams, prop) => searchParams.get(prop),
+    });
+
+    if (params.id) {
+      current_blog_id = params.id;
+
+      // loadBlog(editor);
+    }
+  }
+}
 
 function toggleMenu(e) {
   e.preventDefault();
@@ -76,6 +98,27 @@ function validateBlogAddForm(e) {
       if (element.id === "title") {
         element.textContent =
           "The title field can't be less than 10 characters!";
+        element.style.display = "flex";
+      }
+    }
+    errors_detected++;
+  }
+
+  if (!checkText(document.blogAddForm.category)) {
+    for (let element of errorBags) {
+      if (element.id === "category") {
+        element.textContent = "Invalid category!";
+        element.style.display = "flex";
+      }
+    }
+    errors_detected++;
+  }
+
+  if (document.blogAddForm.category.value.length < 5) {
+    for (let element of errorBags) {
+      if (element.id === "category") {
+        element.textContent =
+          "The category field can't be less than 5 characters!";
         element.style.display = "flex";
       }
     }
@@ -164,6 +207,27 @@ function validateBlogUpdateForm(e) {
     errors_detected++;
   }
 
+  if (!checkText(document.blogUpdateForm.category)) {
+    for (let element of errorBags) {
+      if (element.id === "category") {
+        element.textContent = "Invalid category!";
+        element.style.display = "flex";
+      }
+    }
+    errors_detected++;
+  }
+
+  if (document.blogUpdateForm.category.value.length < 5) {
+    for (let element of errorBags) {
+      if (element.id === "category") {
+        element.textContent =
+          "The category field can't be less than 5 characters!";
+        element.style.display = "flex";
+      }
+    }
+    errors_detected++;
+  }
+
   if (document.blogUpdateForm.body.value.length < 10) {
     for (let element of errorBags) {
       if (element.id === "body") {
@@ -201,7 +265,7 @@ function validateBlogUpdateForm(e) {
   if (errors_detected > 0) {
     return false;
   } else {
-    console.log("all good");
+    updateBlog();
     return true;
   }
 }
@@ -292,7 +356,7 @@ function validateprojectAddForm(e) {
   if (errors_detected > 0) {
     return false;
   } else {
-    console.log("all good");
+    saveProject();
     return true;
   }
 }
@@ -328,6 +392,7 @@ function saveBlog() {
     date: document.blogAddForm.date.value,
     image: base64String,
     author: current_user.name,
+    category: document.blogAddForm.category.value,
   };
 
   if (localStorage.getItem("blogs") === null) {
@@ -346,8 +411,11 @@ function saveBlog() {
 }
 
 function loadBlogTitles() {
+  console.log(localStorage["blogs"] ? localStorage["blogs"] : "NULL");
   if (localStorage["blogs"] !== null) {
-    let all_blogs = [...JSON.parse(localStorage["blogs"])];
+    let all_blogs = localStorage["blogs"]
+      ? [...JSON.parse(localStorage["blogs"])]
+      : [];
     blogsTable.innerHTML = `
     <tr>
       <th>#</th>
@@ -438,7 +506,9 @@ function loadMessages() {
             <p>${message.body}</p>
             <div>
                 <a href="#" onclick="deleteMessage(${message.id})">Delete</a>
-                <a href="#" onclick="markRead(${message.id})" ${message.status==='READ' ? 'class="button-disabled"':""}>Mark as read</a>
+                <a href="#" onclick="markRead(${message.id})" ${
+        message.status === "READ" ? 'class="button-disabled"' : ""
+      }>Mark as read</a>
             </div>
         </div>
       </div>
@@ -473,3 +543,65 @@ function markRead(id) {
   localStorage.setItem("messages", JSON.stringify(all_messages));
   location.reload();
 }
+
+function loadBlog(editor) {
+  let all_blogs = localStorage["blogs"]
+    ? [...JSON.parse(localStorage["blogs"])]
+    : [];
+
+  for (const blog of all_blogs) {
+    if (blog.id === current_blog_id.trim()) {
+      document.blogUpdateForm.title.value = blog.title;
+      document.blogUpdateForm.category.value = blog.category;
+
+      editor.setContent(blog.body);
+      document.blogUpdateForm.date.value = blog.date;
+    }
+  }
+}
+
+function updateBlog() {
+  let all_blogs = localStorage["blogs"]
+    ? [...JSON.parse(localStorage["blogs"])]
+    : [];
+
+  for (const blog of all_blogs) {
+    if (blog.id === current_blog_id) {
+      blog.id = slugify(document.blogUpdateForm.title.value);
+      blog.title = document.blogUpdateForm.title.value;
+      blog.body = document.blogUpdateForm.body.value;
+      blog.date = document.blogUpdateForm.date.value;
+      blog.image = base64String;
+      blog.author = current_user.name;
+      blog.category = document.blogUpdateForm.category.value;
+    }
+  }
+
+  localStorage.setItem("blogs", JSON.stringify(all_blogs));
+  location.reload();
+}
+
+function saveProject() {
+  let newProject = {
+    id: slugify(document.projectAddForm.title.value),
+    title: document.projectAddForm.title.value,
+    description: document.projectAddForm.description.value,
+    image: base64String,
+    tools: document.projectAddForm.tools.value,
+  };
+  if (!localStorage["projects"]) {
+    let all_projects = [];
+
+    all_projects.push(newProject);
+    localStorage.setItem("projects", JSON.stringify(all_projects));
+  } else {
+    let all_projects = [...JSON.parse(localStorage["projects"])];
+
+    all_projects.push(newProject);
+
+    localStorage.setItem("projects", JSON.stringify(all_projects));
+  }
+
+  location.reload();
+}
+

@@ -27,9 +27,11 @@
           <a href="index.html#blogs">BLOGS</a>
           <a href="index.html#contact">CONTACT</a>
         </div>
-        <div class="login" onclick="toggleModal()">
-          <img src="/images/login-password-svgrepo-com.png" alt="login" />
-          <label>LOGIN</label>
+        <div class="login" id="login-link">
+          <div onclick="toggleModal()">
+            <img src="/images/login-password-svgrepo-com.png" alt="login" />
+            <label>LOGIN</label>
+          </div>
         </div>
         <div class="hamburger">
           <a href="#" class="open-menu" onclick="toggleMenu(event)">
@@ -61,7 +63,11 @@
               </div>
             </div>
             <div class="blog-main-image">
-              <img src="/images/blog-img-2.jpg" alt="blog-img" id="single-blog-image" />
+              <img
+                src="/images/blog-img-2.jpg"
+                alt="blog-img"
+                id="single-blog-image"
+              />
             </div>
             <div class="blog-main-content">
               <p>
@@ -158,7 +164,7 @@
                 >
 
                 <div>
-                  <label>Commenting as John Doe</label>
+                  <label id="comment-as">Commenting as John Doe</label>
                   <button type="submit">POST</button>
                 </div>
               </form>
@@ -186,6 +192,7 @@
                   </div>
                   <div class="replies">
                     <form
+                      id="replyField"
                       name="replyForm"
                       onsubmit="return(validateReplyForm(event))"
                     >
@@ -409,9 +416,9 @@
 
     <script src="../node_modules/moment/moment.js"></script>
     <script>
-        moment().format();
+      moment().format();
     </script>
-  
+
     <script src="script.js"></script>
   </body>
 </html>

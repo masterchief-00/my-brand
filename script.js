@@ -10,7 +10,9 @@ const closeMenu = document.getElementsByClassName("close-menu");
 const horizontalMenu = document.getElementsByClassName("horizontal-menu");
 const loginLinkDiv = document.getElementById("login-link");
 const blogsContainer = document.getElementById("blogsContainer");
+const similarBlogsContainer = document.querySelector(".similar-blogs");
 
+const single_blog_category = document.querySelector(".blog-category");
 const single_blog_title = document.querySelector(".blog-main-title");
 const single_blog_owner = document.querySelector(".blog-owner");
 const single_blog_image = document.getElementById("single-blog-image");
@@ -19,6 +21,9 @@ const single_blog_date = document.querySelector(".blog-publish-date");
 
 const commentsContainer = document.querySelector(".all-comments");
 const commentsCounter = document.querySelector(".comments-count");
+const commentAs = document.getElementById("comment-as");
+const likeBtn = document.querySelector(".like-btn");
+
 let horizontalMenuActive = false;
 let auth_status = false;
 
@@ -27,6 +32,8 @@ let currentUser = {
   name: "",
   email: "",
 };
+
+let projectsContainer = document.getElementById("gallery-3d");
 
 const errorBags = document.getElementsByClassName("error-bag");
 
@@ -41,8 +48,18 @@ document.addEventListener(
       current_blog_id = params.id;
       loadSingleBlog(current_blog_id);
       loadComments(current_blog_id);
+      loadSimilarBlogs(current_blog_id);
+    } else {
+      loadBlogs();
+      loadProjects();
     }
-    loadBlogs();
+    if (localStorage["current_user"]) {
+      let current_user = JSON.parse(localStorage["current_user"]);
+      loginLinkDiv.innerHTML = `
+    <label class="greet-user">Hello, ${current_user.name}</label>
+    <a href="#" class="logoutBtn" onclick="logout(event)">Log out</a>
+  `;
+    }
   },
   false
 );
@@ -533,14 +550,15 @@ function validateReplyForm(e, comment_id, commenter) {
   e.preventDefault();
 
   let errors_detected = 0;
+  let inputField = document.getElementById(comment_id);
 
   for (let element of errorBags) {
     element.style.display = "none";
   }
 
-  if (!checkText(document.replyForm.reply)) {
+  if (!checkText(inputField)) {
     for (let element of errorBags) {
-      if (element.id === "reply") {
+      if (element.id === "reply-" + comment_id) {
         element.textContent = "Invalid reply!";
         element.style.display = "flex";
       }
@@ -549,7 +567,7 @@ function validateReplyForm(e, comment_id, commenter) {
     errors_detected++;
   }
 
-  if (document.replyForm.reply.value === "") {
+  if (inputField.value === "") {
     for (let element of errorBags) {
       if (element.id === "reply") {
         element.textContent =
@@ -563,7 +581,7 @@ function validateReplyForm(e, comment_id, commenter) {
   if (errors_detected > 0) {
     return false;
   } else {
-    saveReply(comment_id, commenter);
+    saveReply(comment_id, commenter, inputField);
     return true;
   }
 }
@@ -618,6 +636,10 @@ function saveUser() {
 
 function authenticateUser(email, password) {
   let all_users = [...JSON.parse(localStorage["users"])];
+  let current_user = localStorage["current_user"]
+    ? JSON.parse(localStorage["current_user"])
+    : {};
+
   for (const user of all_users) {
     if (user.email === email && user.password === password) {
       console.log("LOGGED IN!");
@@ -627,8 +649,11 @@ function authenticateUser(email, password) {
       localStorage.setItem("current_user", JSON.stringify(currentUser));
 
       loginLinkDiv.innerHTML = `
-        <label>Hello, ${currentUser.name}</label>
-      `;
+      <label class="greet-user">Hello, ${current_user.name}</label>
+      <a href="#" class="logoutBtn" onclick="logout(event)">Log out</a>
+    `;
+      toggleModal();
+      location.reload();
       return true;
     }
   }
@@ -637,8 +662,18 @@ function authenticateUser(email, password) {
 }
 
 function loadBlogs() {
-  let all_blogs = [...JSON.parse(localStorage["blogs"])];
-  blogsContainer.innerHTML = "";
+  let all_blogs = localStorage["blogs"]
+    ? [...JSON.parse(localStorage["blogs"])]
+    : [];
+  if (all_blogs.length < 1) {
+    blogsContainer.innerHTML = `
+  <label class="nothing-yet">Sorry, no blogs uploaded yet!</label>
+  <label class="nothing-yet">Sorry, no blogs uploaded yet!</label>
+  <label class="nothing-yet">Sorry, no blogs uploaded yet!</label>
+  `;
+  } else {
+    blogsContainer.innerHTML = "";
+  }
 
   for (const blog of all_blogs) {
     blogsContainer.innerHTML += `
@@ -648,10 +683,16 @@ function loadBlogs() {
     <div class="blog-tiny-details">
       <label class="blog-date">${blog.date}</label>
       <div class="blog-reactions">
-        <label><i class="fa-solid fa-comments"></i> 21</label>
-        <label><i class="fa-solid fa-thumbs-up"></i> 234</label>
+        <label><i class="fa-solid fa-comments"></i> ${countComments(
+          blog.id
+        )}</label>
+        <label><i class="fa-solid fa-thumbs-up"></i> ${
+          blog.likes ? blog.likes.length : 0
+        }</label>
       </div>
     </div>
+    <label class="blog-date">${blog.category.toUpperCase()}</label>
+
     <div class="blue-line"></div>
     <p>
       ${blog.body.substring(0, 135)}...\n
@@ -663,17 +704,48 @@ function loadBlogs() {
 }
 
 function loadSingleBlog(id) {
-  let all_blogs = [...JSON.parse(localStorage["blogs"])];
+  let all_blogs = localStorage["blogs"]
+    ? [...JSON.parse(localStorage["blogs"])]
+    : [];
+  let current_user = localStorage["current_user"]
+    ? JSON.parse(localStorage["current_user"])
+    : [];
+
+  let liked = false;
+
+  if (localStorage["current_user"]) {
+    likeBtn.style.opacity = 1;
+    likeBtn.style.cursor = "pointer";
+    commentAs.innerHTML = `Commenting as ${current_user.name}`;
+  } else {
+    location.href = "index.html";
+  }
 
   for (const blog of all_blogs) {
     if (blog.id === id.trim()) {
+      single_blog_category.innerHTML = blog.category.toUpperCase();
       single_blog_title.innerHTML = blog.title;
       single_blog_image.src = `data:image/jpg;base64,${blog.image}`;
       single_blog_owner.innerHTML = blog.author;
       single_blog_body.innerHTML = blog.body;
       single_blog_date.innerHTML = `PUBLISHED ON ${blog.date}`;
+      likeBtn.addEventListener(
+        "click",
+        function () {
+          like(id);
+        },
+        false
+      );
+      if (blog.likes) {
+        for (const liker of blog.likes) {
+          if (liker === current_user.email) {
+            liked = !liked;
+          }
+        }
+      }
     }
   }
+  likeBtn.innerHTML = liked ? "Unlike" : "Like";
 }
 
 function cleanContactForm() {
@@ -718,6 +790,7 @@ function saveComment() {
     name: user.name,
     body: document.commentForm.comment.value,
     date: new Date().toLocaleString("en-GB", { timeZone: "CAT" }),
+    likes: [],
   };
 
   if (localStorage.getItem("comments") === null) {
@@ -742,9 +815,6 @@ function loadComments(blog_id) {
   let all_comments = localStorage["comments"]
     ? [...JSON.parse(localStorage["comments"])].reverse()
     : [];
-  // let all_replies = localStorage["replies"]
-  //   ? [...JSON.parse(localStorage["replies"])]
-  //   : [];
 
   let filtered_comments = all_comments.filter(
     (item) => item.blog_id === blog_id
@@ -769,13 +839,21 @@ function loadComments(blog_id) {
           <p>${comment.body}</p>
         </div>
         <div>
-          <a href="#" class="comment-likes">12 Likes</a>
+          <a href="#" class="comment-likes ${boldenLikeBtn(
+            comment.id
+          )}" onclick="likeComment('${comment.id}')">${countLikes(
+      "comment",
+      comment.id
+    )} Likes</a>
           <label> | </label>
-          <a href="#" class="comment-likes">Reply</a>
+          <a href="#" class="comment-likes">${countReplies(
+            comment.id
+          )} replies</a>
         </div>
         
         <div class="replies">
             <form
+            id="replyField"
             name="replyForm"
             onsubmit="return(validateReplyForm(event,'${comment.id}','${
       comment.name
@@ -784,8 +862,9 @@ function loadComments(blog_id) {
             <textarea
               name="reply"
               placeholder="Your reply..."
+              id="${comment.id}"
             ></textarea>
-            <label class="error-bag" id="reply"
+            <label class="error-bag" id="reply-${comment.id}"
               >ERROR: Invalid reply</label
             >
 
@@ -828,10 +907,13 @@ function getReplies(comment_id) {
           </p>
       </div>
       <div>
-        <a href="#" class="comment-likes">12 Likes</a>
-        <label> | </label>
-        <a href="#" class="comment-likes">Reply</a>
-      </div>
+        <a href="#" class="comment-likes ${boldenLikeBtn(
+          reply.id
+        )}" onclick="likeReply('${reply.id}')">${countLikes(
+        "reply",
+        reply.id
+      )} Likes</a>
+        </div>
     </div>
       `;
     }
@@ -839,7 +921,7 @@ function getReplies(comment_id) {
   }
   return "";
 }
-function saveReply(comment_id, commenter) {
+function saveReply(comment_id, commenter, input) {
   let user = JSON.parse(localStorage["current_user"]);
 
   let newReply = {
@@ -847,8 +929,9 @@ function saveReply(comment_id, commenter) {
     comment_id: comment_id,
     name: user.name,
     commenter: commenter,
-    body: document.commentForm.comment.value,
+    body: input.value,
     date: new Date().toLocaleString("en-GB", { timeZone: "CAT" }),
+    likes: [],
   };
 
   if (localStorage.getItem("replies") === null) {
@@ -865,4 +948,271 @@ function saveReply(comment_id, commenter) {
     localStorage.setItem("replies", JSON.stringify(all_replies));
     location.reload();
   }
+}
+
+function like(blog_id) {
+  let all_blogs = [...JSON.parse(localStorage["blogs"])];
+  let current_user = JSON.parse(localStorage["current_user"]);
+  let unlike = false;
+
+  for (const blog of all_blogs) {
+    if (blog.id === blog_id) {
+      if (blog.likes) {
+        for (const liker of blog.likes) {
+          if (liker === current_user.email) {
+            let index = blog.likes.indexOf(current_user.email);
+            blog.likes.splice(index, 1);
+            unlike = true;
+            break;
+          }
+        }
+        if (!unlike) {
+          blog.likes.push(current_user.email);
+        }
+      } else {
+        blog.likes = [];
+        blog.likes.push(current_user.email);
+      }
+    }
+  }
+  localStorage.setItem("blogs", JSON.stringify(all_blogs));
+  location.reload();
+}
+
+function likeComment(comment_id) {
+  let all_comments = [...JSON.parse(localStorage["comments"])];
+  let current_user = JSON.parse(localStorage["current_user"]);
+  let unlike = false;
+
+  for (const comment of all_comments) {
+    if (comment.id === comment_id) {
+      if (comment.likes) {
+        for (const liker of comment.likes) {
+          if (liker === current_user.email) {
+            let index = comment.likes.indexOf(current_user.email);
+            comment.likes.splice(index, 1);
+            unlike = true;
+            break;
+          }
+        }
+        if (!unlike) {
+          comment.likes.push(current_user.email);
+        }
+      } else {
+        comment.likes = [];
+        comment.likes.push(current_user.email);
+      }
+    }
+  }
+  localStorage.setItem("comments", JSON.stringify(all_comments));
+  location.reload();
+}
+
+function likeReply(reply_id) {
+  let all_replies = [...JSON.parse(localStorage["replies"])];
+  let current_user = JSON.parse(localStorage["current_user"]);
+  let unlike = false;
+
+  for (const reply of all_replies) {
+    if (reply.id === reply_id) {
+      if (reply.likes) {
+        for (const liker of reply.likes) {
+          if (liker === current_user.email) {
+            let index = reply.likes.indexOf(current_user.email);
+            reply.likes.splice(index, 1);
+            unlike = true;
+            break;
+          }
+        }
+        if (!unlike) {
+          reply.likes.push(current_user.email);
+        }
+      } else {
+        reply.likes = [];
+        reply.likes.push(current_user.email);
+      }
+    }
+  }
+  localStorage.setItem("replies", JSON.stringify(all_replies));
+  location.reload();
+}
+
+function countLikes(type, id) {
+  if (type === "comment") {
+    let all_comments = [...JSON.parse(localStorage["comments"])];
+
+    for (const comment of all_comments) {
+      if (comment.id === id) {
+        return comment.likes.length;
+        classValue = "bolden";
+      }
+    }
+  }
+  if (type === "reply") {
+    let all_replies = [...JSON.parse(localStorage["replies"])];
+
+    for (const reply of all_replies) {
+      if (reply.id === id) {
+        return reply.likes.length;
+      }
+    }
+  }
+}
+
+function countReplies(comment_id) {
+  let all_replies = localStorage["replies"]
+    ? [...JSON.parse(localStorage["replies"])]
+    : [];
+  let counter = 0;
+  for (const reply of all_replies) {
+    if (reply.comment_id === comment_id) {
+      counter++;
+    }
+  }
+
+  return counter;
+}
+function boldenLikeBtn(id) {
+  let all_comments = localStorage["comments"]
+    ? [...JSON.parse(localStorage["comments"])]
+    : [];
+  let all_replies = localStorage["replies"]
+    ? [...JSON.parse(localStorage["replies"])]
+    : [];
+  let current_user = JSON.parse(localStorage["current_user"]);
+  let classValue = "";
+
+  for (const comment of all_comments) {
+    if (comment.id === id) {
+      if (comment.likes) {
+        for (const liker of comment.likes) {
+          if (liker === current_user.email) {
+            classValue = "bolden";
+          }
+        }
+      }
+    }
+  }
+
+  for (const reply of all_replies) {
+    if (reply.id === id) {
+      if (reply.likes) {
+        for (const liker of reply.likes) {
+          if (liker === current_user.email) {
+            console.log("reply= " + id);
+            classValue = "bolden";
+          }
+        }
+      }
+    }
+  }
+
+  return classValue;
+}
+
+function loadSimilarBlogs(id) {
+  let all_blogs = localStorage["blogs"]
+    ? [...JSON.parse(localStorage["blogs"])]
+    : [];
+  similarBlogsContainer.innerHTML = "";
+  let category = "";
+  let counter = 0;
+
+  for (const blog of all_blogs) {
+    if (blog.id === id) {
+      category = blog.category;
+      break;
+    }
+  }
+
+  for (const blog of all_blogs) {
+    if (blog.category === category && blog.id !== id) {
+      similarBlogsContainer.innerHTML += `
+      <div class="similar-topic">
+      <img src="data:image/jpg;base64,${blog.image}" alt="blog-img" />
+      <label class="title-similar-topic"
+        >${blog.title}</label
+      >
+      <a href="blogDetails.html?id=${blog.id}" class="link-similar-topic">READ MORE</a>
+    </div>
+      `;
+      counter++;
+    }
+  }
+
+  if (counter < 1) {
+    similarBlogsContainer.innerHTML = "<label> Nothing yet, sorry!</label>";
+  }
+}
+
+function logout(e) {
+  e.preventDefault();
+
+  localStorage.removeItem("current_user");
+  location.reload();
+}
+
+function countComments(id) {
+  let all_comments = localStorage["comments"]
+    ? [...JSON.parse(localStorage["comments"])]
+    : [];
+
+  let counter = 0;
+  for (const comment of all_comments) {
+    if (comment.blog_id === id.trim()) {
+      counter++;
+    }
+  }
+
+  return counter;
+}
+
+function loadProjects() {
+  let all_projects = localStorage["projects"]
+    ? JSON.parse(localStorage["projects"])
+    : [];
+
+  if (all_projects.length < 1) {
+    projectsContainer.innerHTML = "<label>Nothing yet, sorry</label>";
+  } else {
+    projectsContainer.innerHTML = "";
+  }
+
+  for (const project of all_projects) {
+    projectsContainer.innerHTML += `
+    <div class="project">
+      <div class="project-details">
+        <label class="project-title">${project.title}</label>
+        <label class="project-sub-title">${getTools(project.id)}</label>
+        <a href="projectDetails.html?id=${project.id}">LEARN MORE</a>
+      </div>
+      <img src="data:image/jpg;base64,${project.image}" alt="img1" />
+    </div>
+    `;
+  }
+}
+
+function getTools(id) {
+  let all_projects = localStorage["projects"]
+    ? [...JSON.parse(localStorage["projects"])]
+    : [];
+  let tool_string = "";
+
+  for (const project of all_projects) {
+    if (project.id === id) {
+      let tools = project.tools.trim();
+      tools = tools.split(",");
+
+      if (tools.length > 1) {
+        for (const tool of tools) {
+          tool_string += tool + "/";
+        }
+      } else {
+        tool_string = tools[0];
+      }
+    }
+  }
+  return tool_string[tool_string.length - 1] === "/"
+    ? tool_string.substring(0, tool_string.length - 1)
+    : tool_string;
 }
