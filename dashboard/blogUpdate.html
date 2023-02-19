@@ -82,6 +82,8 @@
         <div class="new-blog">
           <form
             name="blogUpdateForm"
+            method="put"
+            enctype="multipart/form-data"
             onsubmit="return(validateBlogUpdateForm(event))"
             onreset="clearBlogUpdate()"
           >
@@ -125,8 +127,6 @@
             </div>
             <div class="quick-fix1">
               <div class="extra-inputs">
-                <input type="date" name="date" id="date" />
-                <label class="error-bag" id="date">ERROR: Invalid date</label>
                 <input type="file" name="image" id="blog-image" />
                 <label class="error-bag" id="image"
                   >ERROR: Invalid file type</label

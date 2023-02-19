@@ -1,3 +1,6 @@
+// const API_URL="https://kwizera-api.onrender.com"
+const API_URL = "http://localhost:5000";
+
 const openMenu = document.getElementsByClassName("open-menu");
 const closeMenu = document.getElementsByClassName("close-menu");
 const horizontalMenu = document.getElementsByClassName("horizontal-menu");
@@ -10,8 +13,15 @@ let base64String = "";
 
 const errorBags = document.getElementsByClassName("error-bag");
 
-let current_user = JSON.parse(localStorage["current_user"]);
+let currentUser = {};
 let current_blog_id = "";
+
+if (checkCookie("user_details")) {
+  let userDetails = JSON.parse(getCookie("user_details"));
+
+  currentUser.name = userDetails.names;
+  currentUser.email = userDetails.email;
+}
 
 if (document.readyState !== "loading") {
   console.log("document ready...");
@@ -57,9 +67,36 @@ function initFn() {
     if (params.id) {
       current_blog_id = params.id;
 
-      // loadBlog(editor);
+      loadBlog(editor);
     }
   }
+}
+
+function getCookie(cname) {
+  let name = cname + "=";
+  let decodedCookie = decodeURIComponent(document.cookie);
+  let ca = decodedCookie.split(";");
+  for (let i = 0; i < ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == " ") {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+
+function checkCookie(cname) {
+  let tmp = getCookie(cname);
+
+  if (tmp === "") return false;
+
+  return true;
+}
+function delete_cookie(name) {
+  document.cookie = name + "=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;";
 }
 
 function toggleMenu(e) {
@@ -76,7 +113,7 @@ function toggleMenu(e) {
 }
 
 function validateBlogAddForm(e) {
-  // e.preventDefault();
+  e.preventDefault();
   let errors_detected = 0;
 
   for (let element of errorBags) {
@@ -145,16 +182,6 @@ function validateBlogAddForm(e) {
     for (let element of errorBags) {
       if (element.id === "image") {
         element.textContent = "Only image files are supported!";
-        element.style.display = "flex";
-      }
-    }
-    errors_detected++;
-  }
-
-  if (document.blogAddForm.date.value === "") {
-    for (let element of errorBags) {
-      if (element.id === "date") {
-        element.textContent = "Invalid date!";
         element.style.display = "flex";
       }
     }
@@ -252,16 +279,6 @@ function validateBlogUpdateForm(e) {
     errors_detected++;
   }
 
-  if (document.blogUpdateForm.date.value === "") {
-    for (let element of errorBags) {
-      if (element.id === "date") {
-        element.textContent = "Invalid date!";
-        element.style.display = "flex";
-      }
-    }
-    errors_detected++;
-  }
-
   if (errors_detected > 0) {
     return false;
   } else {
@@ -273,7 +290,6 @@ function clearBlogUpdate() {
   document.blogUpdateForm.title.value = "";
   document.blogUpdateForm.body.value = "";
   document.blogUpdateForm.image.value = "";
-  document.blogUpdateForm.date.value = "";
 }
 
 function validateprojectAddForm(e) {
@@ -385,82 +401,110 @@ function slugify(str) {
 /**-------------------------LOCALSTORAGE--------------------------- */
 
 function saveBlog() {
-  let newBlog = {
-    id: slugify(document.blogAddForm.title.value),
-    title: document.blogAddForm.title.value,
-    body: document.blogAddForm.body.value,
-    date: document.blogAddForm.date.value,
-    image: base64String,
-    author: current_user.name,
-    category: document.blogAddForm.category.value,
-  };
+  const headers = new Headers();
 
-  if (localStorage.getItem("blogs") === null) {
-    let all_blogs = [];
-    all_blogs.push(newBlog);
+  const form = document.forms.namedItem("blogAddForm");
+  const formData = new FormData(form);
 
-    localStorage.setItem("blogs", JSON.stringify(all_blogs));
-    clearBlogAdd();
-  } else {
-    let all_blogs = [...JSON.parse(localStorage["blogs"])];
-    all_blogs.push(newBlog);
+  headers.append("Accept", "application/json");
 
-    localStorage.setItem("blogs", JSON.stringify(all_blogs));
-    clearBlogAdd();
-  }
+  fetch(`${API_URL}/blogs`, {
+    method: "POST",
+    mode: "cors",
+    headers,
+    credentials: "include",
+    body: formData,
+  })
+    .then(async (response) => {
+      if (response.ok) {
+        clearBlogAdd();
+        // location.reload();
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 }
 
-function loadBlogTitles() {
-  console.log(localStorage["blogs"] ? localStorage["blogs"] : "NULL");
-  if (localStorage["blogs"] !== null) {
-    let all_blogs = localStorage["blogs"]
-      ? [...JSON.parse(localStorage["blogs"])]
-      : [];
-    blogsTable.innerHTML = `
+async function loadBlogTitles() {
+  let all_blogs = [];
+  const headers = new Headers();
+
+  headers.append("Content-Type", "application/json");
+  headers.append("Accept", "application/json");
+
+  blogsTable.innerHTML = `
     <tr>
       <th>#</th>
       <th>TITLE</th>
-      <th>DATE ADDED</th>
+      <th>ADDED</th>
       <th>ACTION</th>
     </tr>
     `;
-    let counter = 1;
-    for (const blog of all_blogs) {
-      blogsTable.innerHTML += `
+
+  fetch(`${API_URL}/blogs`, {
+    method: "GET",
+    mode: "cors",
+    headers,
+  })
+    .then(async (response) => {
+      if (response.ok) {
+        let data = await response.json();
+
+        if (data) {
+          all_blogs = [...data];
+
+          let counter = 1;
+          for (const blog of all_blogs) {
+            blogsTable.innerHTML += `
       <tr>
         <td>${counter++}</td>
         <td>${blog.title}</td>
-        <td>${blog.date}</td>
+        <td>${moment(blog.date, "YYYY-MM-DDTHH:mm:ssZ").fromNow()}</td>
         <td>
           <div>
             <a href="./blogUpdate.html?id=${
-              blog.id
+              blog._id
             }" class="update-btn">Update</a>
             <a href="#" class="delete-btn" onclick="deleteBlog('${
-              blog.id
+              blog._id
             }')">Delete</a>
           </div>
         </td>
       </tr>
       `;
-    }
-  }
+          }
+
+          blogsCard.innerHTML = all_blogs.length ? all_blogs.length : 0;
+        }
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 }
 
 function deleteBlog(id) {
-  let all_blogs = [...JSON.parse(localStorage["blogs"])];
-  let filtered_blogs = [];
-  let title = id.trim();
+  const headers = new Headers();
 
   if (window.confirm("You're about to delete this blog, proceed?")) {
-    for (const blog of all_blogs) {
-      if (blog.id === title) {
-        filtered_blogs = [...all_blogs.filter((item) => item.id !== title)];
-      }
-    }
+    headers.append("Content-Type", "application/json");
+    headers.append("Accept", "application/json");
 
-    localStorage.setItem("blogs", JSON.stringify(filtered_blogs));
-    location.reload();
+    fetch(`${API_URL}/blogs/${id}`, {
+      method: "DELETE",
+      mode: "cors",
+      credentials: "include",
+      headers,
+    })
+      .then(async (response) => {
+        if (response.ok) {
+          location.reload();
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 }
 
@@ -545,40 +589,51 @@ function markRead(id) {
 }
 
 function loadBlog(editor) {
-  let all_blogs = localStorage["blogs"]
-    ? [...JSON.parse(localStorage["blogs"])]
-    : [];
+  const headers = new Headers();
 
-  for (const blog of all_blogs) {
-    if (blog.id === current_blog_id.trim()) {
+  headers.append("Content-Type", "application/json");
+  headers.append("Accept", "application/json");
+
+  fetch(`${API_URL}/blogs/${current_blog_id}`, {
+    method: "GET",
+    mode: "cors",
+    credentials: "include",
+    headers,
+  }).then(async (response) => {
+    if (response.ok) {
+      let blog = await response.json();
+
       document.blogUpdateForm.title.value = blog.title;
-      document.blogUpdateForm.category.value = blog.category;
+      document.blogUpdateForm.category.value = blog.category ? blog.category : "Category Not set"
 
       editor.setContent(blog.body);
-      document.blogUpdateForm.date.value = blog.date;
     }
-  }
+  });
 }
 
 function updateBlog() {
-  let all_blogs = localStorage["blogs"]
-    ? [...JSON.parse(localStorage["blogs"])]
-    : [];
+  const headers = new Headers();
 
-  for (const blog of all_blogs) {
-    if (blog.id === current_blog_id) {
-      blog.id = slugify(document.blogUpdateForm.title.value);
-      blog.title = document.blogUpdateForm.title.value;
-      blog.body = document.blogUpdateForm.body.value;
-      blog.date = document.blogUpdateForm.date.value;
-      blog.image = base64String;
-      blog.author = current_user.name;
-      blog.category = document.blogUpdateForm.category.value;
-    }
-  }
+  const form = document.forms.namedItem("blogUpdateForm");
+  const formData = new FormData(form);
 
-  localStorage.setItem("blogs", JSON.stringify(all_blogs));
-  location.reload();
+  headers.append("Accept", "application/json");
+
+  fetch(`${API_URL}/blogs/${current_blog_id}`, {
+    method: "PUT",
+    mode: "cors",
+    headers,
+    credentials: "include",
+    body: formData,
+  })
+    .then(async (response) => {
+      if (response.ok) {
+        location.reload();
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 }
 
 function saveProject() {
@@ -604,4 +659,3 @@ function saveProject() {
 
   location.reload();
 }
-
