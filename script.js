@@ -1,3 +1,6 @@
+// const API_URL="https://kwizera-api.onrender.com"
+const API_URL = "http://localhost:5000";
+
 const downArrow = document.getElementById("down-arrow");
 const rightArrow = document.getElementById("right-arrow");
 const btnViewWork = document.getElementsByClassName("btn-view-work");
@@ -43,6 +46,18 @@ document.addEventListener(
     const params = new Proxy(new URLSearchParams(window.location.search), {
       get: (searchParams, prop) => searchParams.get(prop),
     });
+
+    if (checkCookie("user_details")) {
+      let userDetails = JSON.parse(getCookie("user_details"));
+
+      currentUser.name = userDetails.names;
+      currentUser.email = userDetails.email;
+
+      loginLinkDiv.innerHTML = `
+      <label class="greet-user">Hello, ${currentUser.name}</label>
+      <a href="#" class="logoutBtn" onclick="logout(event)">Log out</a>
+    `;
+    }
 
     if (params.id) {
       current_blog_id = params.id;
@@ -546,7 +561,7 @@ function validateBlogComment(e) {
   }
 }
 
-function validateReplyForm(e, comment_id, commenter) {
+function validateReplyForm(e, comment_id) {
   e.preventDefault();
 
   let errors_detected = 0;
@@ -579,9 +594,10 @@ function validateReplyForm(e, comment_id, commenter) {
   }
 
   if (errors_detected > 0) {
+    console.log("validation");
     return false;
   } else {
-    saveReply(comment_id, commenter, inputField);
+    saveReply(comment_id, inputField);
     return true;
   }
 }
@@ -600,7 +616,7 @@ function checkName(input) {
 }
 
 function checkText(input) {
-  const re = /^[A-Za-z 0-9]+$/;
+  const re = /^[A-Za-z?.!, 0-9]+$/;
 
   return re.test(input.value.trim());
 }
@@ -610,142 +626,250 @@ function clearSignupForm() {
   document.signupForm.password.value = "";
   document.signupForm.confirm_password.value = "";
 }
-/**---------------------------------LOCALSTORAGE---------------------------------- */
+/**---------------------------------LOCALSTORAGE[NOT ANYMORE HAHAHA!]---------------------------------- */
 
 function saveUser() {
-  let newUser = {
-    name: document.signupForm.name.value,
-    email: document.signupForm.email.value,
-    password: document.signupForm.password.value,
-  };
+  const headers = new Headers();
 
-  if (localStorage.getItem("users") === null) {
-    let all_users = [];
-    all_users.push(newUser);
+  headers.append("Content-Type", "application/json");
+  headers.append("Accept", "application/json");
 
-    localStorage.setItem("users", JSON.stringify(all_users));
-    clearSignupForm();
-  } else {
-    let all_users = [...JSON.parse(localStorage["users"])];
-    all_users.push(newUser);
-
-    localStorage.setItem("users", JSON.stringify(all_users));
-    clearSignupForm();
-  }
+  fetch(`${API_URL}/users/signup`, {
+    method: "POST",
+    mode: "cors",
+    headers,
+    body: JSON.stringify({
+      names: document.signupForm.name.value,
+      email: document.signupForm.email.value,
+      password: document.signupForm.password.value,
+      conf_password: document.signupForm.confirm_password.value,
+    }),
+  })
+    .then(async (response) => {
+      if (response.ok) {
+        clearSignupForm();
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 }
 
 function authenticateUser(email, password) {
-  let all_users = [...JSON.parse(localStorage["users"])];
-  let current_user = localStorage["current_user"]
-    ? JSON.parse(localStorage["current_user"])
-    : {};
+  const headers = new Headers();
 
-  for (const user of all_users) {
-    if (user.email === email && user.password === password) {
-      console.log("LOGGED IN!");
-      currentUser.name = user.name;
-      currentUser.email = user.email;
+  headers.append("Content-Type", "application/json");
+  headers.append("Accept", "application/json");
 
-      localStorage.setItem("current_user", JSON.stringify(currentUser));
+  fetch(`${API_URL}/users/login`, {
+    method: "POST",
+    mode: "cors",
+    credentials: "include",
+    headers: headers,
+    body: JSON.stringify({
+      email: email,
+      password: password,
+    }),
+  })
+    .then(async (response) => {
+      if (response.ok) {
+        let data = await response.json();
 
-      loginLinkDiv.innerHTML = `
-      <label class="greet-user">Hello, ${current_user.name}</label>
+        const userDetails = {
+          names: data.user.names,
+          email: data.user.email,
+        };
+        setCookie("user_details", JSON.stringify(userDetails), 1);
+
+        currentUser.name = data.user.names;
+        currentUser.email = data.user.email;
+
+        loginLinkDiv.innerHTML = `
+      <label class="greet-user">Hello, ${currentUser.name}</label>
       <a href="#" class="logoutBtn" onclick="logout(event)">Log out</a>
     `;
-      toggleModal();
-      location.reload();
-      return true;
-    }
-  }
-
-  return false;
+        toggleModal();
+        location.reload();
+        return true;
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      return false;
+    });
+}
+function setCookie(cname, cvalue, exdays) {
+  const d = new Date();
+  d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
+  let expires = "expires=" + d.toUTCString();
+  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 }
 
-function loadBlogs() {
-  let all_blogs = localStorage["blogs"]
-    ? [...JSON.parse(localStorage["blogs"])]
-    : [];
-  if (all_blogs.length < 1) {
-    blogsContainer.innerHTML = `
-  <label class="nothing-yet">Sorry, no blogs uploaded yet!</label>
-  <label class="nothing-yet">Sorry, no blogs uploaded yet!</label>
-  <label class="nothing-yet">Sorry, no blogs uploaded yet!</label>
-  `;
-  } else {
-    blogsContainer.innerHTML = "";
+function getCookie(cname) {
+  let name = cname + "=";
+  let decodedCookie = decodeURIComponent(document.cookie);
+  let ca = decodedCookie.split(";");
+  for (let i = 0; i < ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == " ") {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
   }
+  return "";
+}
 
-  for (const blog of all_blogs) {
-    blogsContainer.innerHTML += `
-    <div class="blog">
-    <img src="data:image/jpg;base64,${blog.image}" alt="blog" />
-    <label class="blog-title">${blog.title}</label>
-    <div class="blog-tiny-details">
-      <label class="blog-date">${blog.date}</label>
-      <div class="blog-reactions">
-        <label><i class="fa-solid fa-comments"></i> ${countComments(
-          blog.id
-        )}</label>
-        <label><i class="fa-solid fa-thumbs-up"></i> ${
-          blog.likes ? blog.likes.length : 0
-        }</label>
-      </div>
-    </div>
-    <label class="blog-date">${blog.category.toUpperCase()}</label>
+function checkCookie(cname) {
+  let tmp = getCookie(cname);
 
-    <div class="blue-line"></div>
-    <p>
-      ${blog.body.substring(0, 135)}...\n
-    </p>
-    <a href="blogDetails.html?id=${blog.id}" class="blog-full">READ MORE</a>
-  </div>
-    `;
-  }
+  if (tmp === "") return false;
+
+  return true;
+}
+function delete_cookie(name) {
+  document.cookie = name + "=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+}
+async function loadBlogs() {
+  let all_blogs = [];
+  const headers = new Headers();
+
+  headers.append("Content-Type", "application/json");
+  headers.append("Accept", "application/json");
+
+  fetch(`${API_URL}/blogs`, {
+    method: "GET",
+    mode: "cors",
+    headers,
+  })
+    .then(async (response) => {
+      let data = await response.json();
+
+      if (data) {
+        all_blogs = [...data];
+
+        if (all_blogs.length < 1) {
+          blogsContainer.innerHTML = `
+        <label class="nothing-yet">Sorry, no blogs uploaded yet!</label>
+        <label class="nothing-yet">Sorry, no blogs uploaded yet!</label>
+        <label class="nothing-yet">Sorry, no blogs uploaded yet!</label>
+        `;
+        } else {
+          blogsContainer.innerHTML = "";
+        }
+
+        for (const blog of all_blogs) {
+          blogsContainer.innerHTML += `
+          <div class="blog">
+          <img src="${blog.image}" alt="blog" />
+          <label class="blog-title">${blog.title}</label>
+          <div class="blog-tiny-details">
+            <label class="blog-date"> ${moment(
+              blog.date,
+              "YYYY-MM-DDTHH:mm:ssZ"
+            ).fromNow()}</label>
+            <div class="blog-reactions">
+              <label><i class="fa-solid fa-comments"></i> 24</label>
+              <label><i class="fa-solid fa-thumbs-up"></i> ${
+                blog.likes ? blog.likes.length : 0
+              }</label>
+            </div>
+          </div>
+          <label class="blog-date">${blog.author.toUpperCase()}</label>
+      
+          <div class="blue-line"></div>
+          <p>
+            ${blog.body.substring(0, 135)}...\n
+          </p>
+          <a href="blogDetails.html?id=${
+            blog._id
+          }" class="blog-full">READ MORE</a>
+        </div>
+          `;
+        }
+      } else {
+        console.log("Error: no blogs returned!");
+
+        blogsContainer.innerHTML = `
+        <label class="nothing-yet">Sorry, no blogs uploaded yet!</label>
+        <label class="nothing-yet">Sorry, no blogs uploaded yet!</label>
+        <label class="nothing-yet">Sorry, no blogs uploaded yet!</label>
+        `;
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+
+      blogsContainer.innerHTML = `
+        <label class="nothing-yet">Sorry, no blogs uploaded yet!</label>
+        <label class="nothing-yet">Sorry, no blogs uploaded yet!</label>
+        <label class="nothing-yet">Sorry, no blogs uploaded yet!</label>
+        `;
+    });
 }
 
 function loadSingleBlog(id) {
-  let all_blogs = localStorage["blogs"]
-    ? [...JSON.parse(localStorage["blogs"])]
-    : [];
-  let current_user = localStorage["current_user"]
-    ? JSON.parse(localStorage["current_user"])
-    : [];
+  let the_blog = {};
+  const headers = new Headers();
 
-  let liked = false;
+  headers.append("Content-Type", "application/json");
+  headers.append("Accept", "application/json");
 
-  if (localStorage["current_user"]) {
-    likeBtn.style.opacity = 1;
-    likeBtn.style.cursor = "pointer";
-    commentAs.innerHTML = `Commenting as ${current_user.name}`;
-  } else {
-    location.href = "index.html";
-  }
+  fetch(`${API_URL}/blogs/${id}`, {
+    method: "GET",
+    mode: "cors",
+    headers,
+  })
+    .then(async (response) => {
+      let data = await response.json();
 
-  for (const blog of all_blogs) {
-    if (blog.id === id.trim()) {
-      single_blog_category.innerHTML = blog.category.toUpperCase();
-      single_blog_title.innerHTML = blog.title;
-      single_blog_image.src = `data:image/jpg;base64,${blog.image}`;
-      single_blog_owner.innerHTML = blog.author;
-      single_blog_body.innerHTML = blog.body;
-      single_blog_date.innerHTML = `PUBLISHED ON ${blog.date}`;
-      likeBtn.addEventListener(
-        "click",
-        function () {
-          like(id);
-        },
-        false
-      );
-      if (blog.likes) {
-        for (const liker of blog.likes) {
-          if (liker === current_user.email) {
+      if (data) {
+        the_blog = { ...data };
+
+        single_blog_category.innerHTML = "CATEGORY";
+        single_blog_title.innerHTML = the_blog.title;
+        single_blog_image.src = the_blog.image;
+        single_blog_owner.innerHTML = the_blog.author;
+        single_blog_body.innerHTML = the_blog.body;
+        single_blog_date.innerHTML = `PUBLISHED ${moment(
+          the_blog.date,
+          "YYYY-MM-DDTHH:mm:ssZ"
+        ).fromNow()}`;
+        likeBtn.addEventListener(
+          "click",
+          function () {
+            like(id);
+          },
+          false
+        );
+
+        let liked = false;
+
+        if (currentUser.name !== "") {
+          likeBtn.style.opacity = 1;
+          likeBtn.style.cursor = "pointer";
+          commentAs.innerHTML = `Commenting as ${currentUser.name}`;
+        } else {
+          location.href = "index.html";
+        }
+
+        for (const liker of the_blog.likes) {
+          if (liker.email === currentUser.email) {
             liked = !liked;
           }
         }
+
+        likeBtn.innerHTML = liked ? "Unlike" : "Like";
       }
-    }
-  }
-  likeBtn.innerHTML = liked ? "Unlike" : "Like";
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+
+  // else {
+  //   location.href = "index.html";
+  // }
 }
 
 function cleanContactForm() {
@@ -754,360 +878,252 @@ function cleanContactForm() {
   document.contactForm.message.value = "";
 }
 function sendMessage() {
-  let message = {
-    id: Date.now(),
-    name: document.contactForm.name.value,
-    email: document.contactForm.email.value,
-    body: document.contactForm.message.value,
-    date: new Date().toLocaleString("en-GB", { timeZone: "UTC" }),
-    status: "UNREAD",
-  };
+  const headers = new Headers();
 
-  if (localStorage.getItem("messages") === null) {
-    let all_messages = [];
-    all_messages.push(message);
+  headers.append("Content-Type", "application/json");
+  headers.append("Accept", "application/json");
 
-    localStorage.setItem("messages", JSON.stringify(all_messages));
-
-    cleanContactForm();
-  } else {
-    let all_messages = [...JSON.parse(localStorage["messages"])];
-    all_messages.push(message);
-
-    localStorage.setItem("messages", JSON.stringify(all_messages));
-
-    cleanContactForm();
-  }
+  fetch(`${API_URL}/queries`, {
+    method: "POST",
+    mode: "cors",
+    headers,
+    body: JSON.stringify({
+      names: document.contactForm.name.value,
+      email: document.contactForm.email.value,
+      body: document.contactForm.message.value,
+    }),
+  })
+    .then(async (response) => {
+      if (response.ok) {
+        cleanContactForm();
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 }
 function cleanCommentForm() {
   document.commentForm.comment.value = "";
 }
 function saveComment() {
-  let user = JSON.parse(localStorage["current_user"]);
-  let newComment = {
-    id: user.email + "_" + current_blog_id + "_" + Date.now(),
-    blog_id: current_blog_id,
-    name: user.name,
-    body: document.commentForm.comment.value,
-    date: new Date().toLocaleString("en-GB", { timeZone: "CAT" }),
-    likes: [],
-  };
+  const headers = new Headers();
 
-  if (localStorage.getItem("comments") === null) {
-    let all_comments = [];
-    all_comments.push(newComment);
+  headers.append("Content-Type", "application/json");
+  headers.append("Accept", "application/json");
 
-    localStorage.setItem("comments", JSON.stringify(all_comments));
-
-    cleanCommentForm();
-    location.reload();
-  } else {
-    let all_comments = [...JSON.parse(localStorage["comments"])];
-    all_comments.push(newComment);
-
-    localStorage.setItem("comments", JSON.stringify(all_comments));
-    cleanCommentForm();
-    location.reload();
-  }
+  fetch(`${API_URL}/blogs/${current_blog_id}/comments`, {
+    method: "POST",
+    mode: "cors",
+    headers,
+    credentials: "include",
+    body: JSON.stringify({
+      comment: document.commentForm.comment.value,
+    }),
+  })
+    .then(async (response) => {
+      if (response.ok) {
+        cleanCommentForm();
+        location.reload();
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 }
 
 function loadComments(blog_id) {
-  let all_comments = localStorage["comments"]
-    ? [...JSON.parse(localStorage["comments"])].reverse()
-    : [];
+  const headers = new Headers();
+  let allComments = [];
 
-  let filtered_comments = all_comments.filter(
-    (item) => item.blog_id === blog_id
-  );
+  headers.append("Content-Type", "application/json");
+  headers.append("Accept", "application/json");
 
-  commentsContainer.innerHTML = `
-    <label class="comments-count">${filtered_comments.length} Comment(s)</label>
+  fetch(`${API_URL}/blogs/${blog_id}/comments`, {
+    method: "GET",
+    mode: "cors",
+    headers,
+    credentials: "include",
+  }).then(async (response) => {
+    if (response.ok) {
+      let data = await response.json();
+      if (data) {
+        allComments = [...data];
+
+        commentsContainer.innerHTML = `
+    <label class="comments-count">${allComments.length} Comment(s)</label>
   `;
-  commentsCounter.innerHTML = `${filtered_comments.length} COMMENT(S)`;
-  for (const comment of filtered_comments) {
-    commentsContainer.innerHTML += `
-      <div class="comment">
-        <div class="commenter">
-          <label class="commenter-name">${comment.name}</label>
-          <div class="separator"></div>
-          <label class="commenter-time">${moment(
-            comment.date,
-            "DD/MM/YYYY, hh:mm:ss"
-          ).fromNow()}</label>
-        </div>
-        <div class="comment-body">
-          <p>${comment.body}</p>
-        </div>
-        <div>
-          <a href="#" class="comment-likes ${boldenLikeBtn(
-            comment.id
-          )}" onclick="likeComment('${comment.id}')">${countLikes(
-      "comment",
-      comment.id
-    )} Likes</a>
-          <label> | </label>
-          <a href="#" class="comment-likes">${countReplies(
-            comment.id
-          )} replies</a>
-        </div>
-        
-        <div class="replies">
-            <form
-            id="replyField"
-            name="replyForm"
-            onsubmit="return(validateReplyForm(event,'${comment.id}','${
-      comment.name
-    }'))"
-            >
-            <textarea
-              name="reply"
-              placeholder="Your reply..."
-              id="${comment.id}"
-            ></textarea>
-            <label class="error-bag" id="reply-${comment.id}"
-              >ERROR: Invalid reply</label
-            >
+        commentsCounter.innerHTML = `${allComments.length} COMMENT(S)`;
 
-            <button type="submit">Reply</button>
-            </form>
-            <div class="the-replies">
-              ${getReplies(comment.id)}
+        for (const comment of allComments) {
+          let replies = "";
+          if (comment.all_replies) {
+            for (const reply of comment.all_replies) {
+              let bolden_reply = "";
+              for (const liker of reply.likes) {
+                if (liker.email === currentUser.email) {
+                  bolden_reply = "bolden";
+                }
+              }
+
+              replies += `
+            <div class="reply">
+            <div class="replier">
+              <label class="replier-name">${reply.names}</label>
+              <div class="separator"></div>
+              <label class="replier-time">${moment(
+                reply.date,
+                "YYYY-MM-DDTHH:mm:ssZ"
+              ).fromNow()}</label>
             </div>
-        </div>
+            <div class="replier-body">
+              <p>
+                <label class="reply-to">@${reply.names}</label>
+                  ${reply.comment}
+                </p>
+            </div>
+            <div>
+              <a href="#" class="comment-likes ${bolden_reply}" onclick="likeComment('${
+                reply._id
+              }')">${reply.likes.length} Likes</a>
+              </div>
+          </div>
+            `;
+            }
+          }
 
-        <div class="line-separator"></div>
-      </div>
-      `;
-  }
-}
-function getReplies(comment_id) {
-  if (localStorage["replies"]) {
-    let all_replies = [...JSON.parse(localStorage["replies"])];
+          let bolden = "";
+          for (const liker of comment.likes) {
+            if (liker.email === currentUser.email) {
+              bolden = "bolden";
+            }
+          }
+          let repliesCount = comment.all_replies
+            ? comment.all_replies.length
+            : 0;
 
-    let filtered_replies = all_replies.filter(
-      (item) => item.comment_id === comment_id
-    );
-    let large_string = "";
-
-    for (const reply of filtered_replies) {
-      large_string += `
-      <div class="reply">
-      <div class="replier">
-        <label class="replier-name">${reply.name}</label>
-        <div class="separator"></div>
-        <label class="replier-time">${moment(
-          reply.date,
-          "DD/MM/YYYY, hh:mm:ss"
-        ).fromNow()}</label>
-      </div>
-      <div class="replier-body">
-        <p>
-          <label class="reply-to">@${reply.commenter}</label>
-            ${reply.body}
-          </p>
-      </div>
-      <div>
-        <a href="#" class="comment-likes ${boldenLikeBtn(
-          reply.id
-        )}" onclick="likeReply('${reply.id}')">${countLikes(
-        "reply",
-        reply.id
-      )} Likes</a>
-        </div>
-    </div>
-      `;
+          commentsContainer.innerHTML += `
+            <div class="comment">
+              <div class="commenter">
+                <label class="commenter-name">${comment.names}</label>
+                <div class="separator"></div>
+                <label class="commenter-time">${moment(
+                  comment.date,
+                  "YYYY-MM-DDTHH:mm:ssZ"
+                ).fromNow()}</label>
+              </div>
+              <div class="comment-body">
+                <p>${comment.comment}</p>
+              </div>
+              <div>
+                <a href="#" class="comment-likes ${bolden}" onclick="likeComment('${
+            comment._id
+          }')">${comment.likes.length} Likes</a>
+                <label> | </label>
+                <a href="#" class="comment-likes">${repliesCount} replies</a>
+              </div>
+              
+              <div class="replies">
+                  <form
+                  id="replyField"
+                  name="replyForm"
+                  onsubmit="return(validateReplyForm(event,'${comment._id}'))"
+                  >
+                  <textarea
+                    name="reply"
+                    placeholder="Your reply..."
+                    id="${comment._id}"
+                  ></textarea>
+                  <label class="error-bag" id="reply-${comment._id}"
+                    >ERROR: Invalid reply</label
+                  >
+      
+                  <button type="submit">Reply</button>
+                  </form>
+                  <div class="the-replies">
+                    ${replies}
+                  </div>
+              </div>
+      
+              <div class="line-separator"></div>
+            </div>
+            `;
+        }
+      }
     }
-    return large_string;
-  }
-  return "";
+  });
 }
-function saveReply(comment_id, commenter, input) {
-  let user = JSON.parse(localStorage["current_user"]);
 
-  let newReply = {
-    id: user.email + "_reply_" + comment_id + "_" + Date.now(),
-    comment_id: comment_id,
-    name: user.name,
-    commenter: commenter,
-    body: input.value,
-    date: new Date().toLocaleString("en-GB", { timeZone: "CAT" }),
-    likes: [],
-  };
+function saveReply(comment_id, input) {
+  console.log(comment_id);
+  const headers = new Headers();
 
-  if (localStorage.getItem("replies") === null) {
-    let all_replies = [];
-    all_replies.push(newReply);
+  headers.append("Content-Type", "application/json");
+  headers.append("Accept", "application/json");
 
-    localStorage.setItem("replies", JSON.stringify(all_replies));
-
-    location.reload();
-  } else {
-    let all_replies = [...JSON.parse(localStorage["replies"])];
-
-    all_replies.push(newReply);
-    localStorage.setItem("replies", JSON.stringify(all_replies));
-    location.reload();
-  }
+  fetch(`${API_URL}/comments/${comment_id}/reply`, {
+    method: "POST",
+    mode: "cors",
+    headers,
+    credentials: "include",
+    body: JSON.stringify({
+      comment: input.value,
+    }),
+  })
+    .then(async (response) => {
+      if (response.ok) {
+        console.log(response.status);
+        location.reload();
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      location.reload();
+    });
 }
 
 function like(blog_id) {
-  let all_blogs = [...JSON.parse(localStorage["blogs"])];
-  let current_user = JSON.parse(localStorage["current_user"]);
-  let unlike = false;
+  const headers = new Headers();
 
-  for (const blog of all_blogs) {
-    if (blog.id === blog_id) {
-      if (blog.likes) {
-        for (const liker of blog.likes) {
-          if (liker === current_user.email) {
-            let index = blog.likes.indexOf(current_user.email);
-            blog.likes.splice(index, 1);
-            unlike = true;
-            break;
-          }
-        }
-        if (!unlike) {
-          blog.likes.push(current_user.email);
-        }
-      } else {
-        blog.likes = [];
-        blog.likes.push(current_user.email);
+  headers.append("Content-Type", "application/json");
+  headers.append("Accept", "application/json");
+
+  fetch(`${API_URL}/blogs/${blog_id}/likes`, {
+    method: "GET",
+    mode: "cors",
+    credentials: "include",
+    headers,
+  })
+    .then(async (response) => {
+      if (response.ok) {
+        location.reload();
       }
-    }
-  }
-  localStorage.setItem("blogs", JSON.stringify(all_blogs));
-  location.reload();
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 }
 
 function likeComment(comment_id) {
-  let all_comments = [...JSON.parse(localStorage["comments"])];
-  let current_user = JSON.parse(localStorage["current_user"]);
-  let unlike = false;
+  const headers = new Headers();
 
-  for (const comment of all_comments) {
-    if (comment.id === comment_id) {
-      if (comment.likes) {
-        for (const liker of comment.likes) {
-          if (liker === current_user.email) {
-            let index = comment.likes.indexOf(current_user.email);
-            comment.likes.splice(index, 1);
-            unlike = true;
-            break;
-          }
-        }
-        if (!unlike) {
-          comment.likes.push(current_user.email);
-        }
-      } else {
-        comment.likes = [];
-        comment.likes.push(current_user.email);
+  headers.append("Content-Type", "application/json");
+  headers.append("Accept", "application/json");
+
+  fetch(`${API_URL}/comments/${comment_id}/likes`, {
+    method: "GET",
+    mode: "cors",
+    credentials: "include",
+    headers,
+  })
+    .then(async (response) => {
+      if (response.ok) {
+        location.reload();
       }
-    }
-  }
-  localStorage.setItem("comments", JSON.stringify(all_comments));
+    })
+    .catch((err) => {
+      console.log(err);
+    });
   location.reload();
-}
-
-function likeReply(reply_id) {
-  let all_replies = [...JSON.parse(localStorage["replies"])];
-  let current_user = JSON.parse(localStorage["current_user"]);
-  let unlike = false;
-
-  for (const reply of all_replies) {
-    if (reply.id === reply_id) {
-      if (reply.likes) {
-        for (const liker of reply.likes) {
-          if (liker === current_user.email) {
-            let index = reply.likes.indexOf(current_user.email);
-            reply.likes.splice(index, 1);
-            unlike = true;
-            break;
-          }
-        }
-        if (!unlike) {
-          reply.likes.push(current_user.email);
-        }
-      } else {
-        reply.likes = [];
-        reply.likes.push(current_user.email);
-      }
-    }
-  }
-  localStorage.setItem("replies", JSON.stringify(all_replies));
-  location.reload();
-}
-
-function countLikes(type, id) {
-  if (type === "comment") {
-    let all_comments = [...JSON.parse(localStorage["comments"])];
-
-    for (const comment of all_comments) {
-      if (comment.id === id) {
-        return comment.likes.length;
-        classValue = "bolden";
-      }
-    }
-  }
-  if (type === "reply") {
-    let all_replies = [...JSON.parse(localStorage["replies"])];
-
-    for (const reply of all_replies) {
-      if (reply.id === id) {
-        return reply.likes.length;
-      }
-    }
-  }
-}
-
-function countReplies(comment_id) {
-  let all_replies = localStorage["replies"]
-    ? [...JSON.parse(localStorage["replies"])]
-    : [];
-  let counter = 0;
-  for (const reply of all_replies) {
-    if (reply.comment_id === comment_id) {
-      counter++;
-    }
-  }
-
-  return counter;
-}
-function boldenLikeBtn(id) {
-  let all_comments = localStorage["comments"]
-    ? [...JSON.parse(localStorage["comments"])]
-    : [];
-  let all_replies = localStorage["replies"]
-    ? [...JSON.parse(localStorage["replies"])]
-    : [];
-  let current_user = JSON.parse(localStorage["current_user"]);
-  let classValue = "";
-
-  for (const comment of all_comments) {
-    if (comment.id === id) {
-      if (comment.likes) {
-        for (const liker of comment.likes) {
-          if (liker === current_user.email) {
-            classValue = "bolden";
-          }
-        }
-      }
-    }
-  }
-
-  for (const reply of all_replies) {
-    if (reply.id === id) {
-      if (reply.likes) {
-        for (const liker of reply.likes) {
-          if (liker === current_user.email) {
-            console.log("reply= " + id);
-            classValue = "bolden";
-          }
-        }
-      }
-    }
-  }
-
-  return classValue;
 }
 
 function loadSimilarBlogs(id) {
@@ -1148,23 +1164,30 @@ function loadSimilarBlogs(id) {
 function logout(e) {
   e.preventDefault();
 
-  localStorage.removeItem("current_user");
-  location.reload();
-}
+  const headers = new Headers();
 
-function countComments(id) {
-  let all_comments = localStorage["comments"]
-    ? [...JSON.parse(localStorage["comments"])]
-    : [];
+  headers.append("Content-Type", "application/json");
+  headers.append("Accept", "application/json");
 
-  let counter = 0;
-  for (const comment of all_comments) {
-    if (comment.blog_id === id.trim()) {
-      counter++;
-    }
-  }
+  fetch(`${API_URL}/users/logout`, {
+    method: "GET",
+    mode: "cors",
+    credentials: "include",
+    headers,
+  })
+    .then(async (response) => {
+      if (response.ok) {
+        if (checkCookie("user_details")) {
+          delete_cookie("user_details");
+        }
 
-  return counter;
+        location.reload();
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      location.reload();
+    });
 }
 
 function loadProjects() {
