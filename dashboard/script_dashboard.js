@@ -7,6 +7,8 @@ const horizontalMenu = document.getElementsByClassName("horizontal-menu");
 const blogsTable = document.getElementById("blogs");
 const messagesCard = document.getElementById("messages-card");
 const blogsCard = document.getElementById("blogs-card");
+const projectsCard = document.getElementById("pojects-card");
+
 const messagesContainer = document.querySelector(".messages");
 
 let base64String = "";
@@ -61,7 +63,11 @@ function initFn() {
   if (page === "messages.html" || page === "messages") {
     loadMessages();
   }
-  if (page === "blogUpdate.html" || page === "blogUpdate"|| page === "blogupdate") {
+  if (
+    page === "blogUpdate.html" ||
+    page === "blogUpdate" ||
+    page === "blogupdate"
+  ) {
     const params = new Proxy(new URLSearchParams(window.location.search), {
       get: (searchParams, prop) => searchParams.get(prop),
     });
@@ -456,6 +462,7 @@ async function loadBlogTitles() {
         if (data) {
           all_blogs = [...data];
 
+          blogsCard.innerHTML = all_blogs.length;
           let counter = 1;
           for (const blog of all_blogs) {
             blogsTable.innerHTML += `
@@ -511,22 +518,57 @@ function deleteBlog(id) {
 }
 
 function loadCards() {
-  let all_blogs = localStorage["blogs"]
-    ? [...JSON.parse(localStorage["blogs"])]
-    : [];
-  let all_messages = localStorage["messages"]
-    ? [...JSON.parse(localStorage["messages"])]
-    : [];
-
   let unread_messages = 0;
-  for (const message of all_messages) {
-    if (message.status === "UNREAD") {
-      unread_messages++;
-    }
-  }
 
-  messagesCard.innerHTML = unread_messages;
-  blogsCard.innerHTML = all_blogs.length ? all_blogs.length : 0;
+  let all_messages = [];
+  const headers = new Headers();
+
+  headers.append("Content-Type", "application/json");
+  headers.append("Accept", "application/json");
+
+  fetch(`${API_URL}/queries`, {
+    method: "GET",
+    mode: "cors",
+    credentials: "include",
+    headers,
+  })
+    .then(async (response) => {
+      if (response.ok) {
+        let data = await response.json();
+
+        if (data) {
+          all_messages = [...data];
+
+          for (const message of all_messages) {
+            if (message.status === "UNREAD") {
+              unread_messages++;
+            }
+          }
+          messagesCard.innerHTML = unread_messages;
+        }
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+
+  fetch(`${API_URL}/projects`, {
+    method: "GET",
+    mode: "cors",
+    headers,
+  })
+    .then(async (response) => {
+      let data = await response.json();
+
+      if (data) {
+        let all_projects = [...data];
+
+        projectsCard.innerHTML = all_projects.length;
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 }
 
 function loadMessages() {
@@ -548,7 +590,6 @@ function loadMessages() {
 
         if (data) {
           all_messages = [...data];
-
           messagesContainer.innerHTML = "";
           for (const message of all_messages) {
             messagesContainer.innerHTML += `
@@ -568,10 +609,10 @@ function loadMessages() {
               <div class="message-body">
                   <p>${message.body}</p>
                   <div>
-                      <a href="#" onclick="deleteMessage(${
-                        message.id
-                      })">Delete</a>
-                      <a href="#" onclick="markRead(${message.id})" ${
+                      <a href="#" onclick="deleteMessage('${
+                        message._id
+                      }')">Delete</a>
+                      <a href="#" onclick="markRead('${message._id}')" ${
               message.status === "READ" ? 'class="button-disabled"' : ""
             }>Mark as read</a>
                   </div>
