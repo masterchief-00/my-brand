@@ -1,5 +1,5 @@
-// const API_URL="https://kwizera-api.onrender.com"
-const API_URL = "http://localhost:5000";
+const API_URL="https://kwizera-api.onrender.com"
+// const API_URL = "http://localhost:5000";
 
 const openMenu = document.getElementsByClassName("open-menu");
 const closeMenu = document.getElementsByClassName("close-menu");
