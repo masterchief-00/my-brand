@@ -1355,6 +1355,7 @@ html {
     height: 365px;
     max-width: 365px;
     object-fit: cover;
+    object-position: center;
 }
 
 .tools-used {
