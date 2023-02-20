@@ -1,4 +1,4 @@
-const API_URL = "https://kwizera-api.onrender.com";
+const API_URL="https://kwizera-api.onrender.com"
 // const API_URL = "http://localhost:5000";
 
 const downArrow = document.getElementById("down-arrow");
@@ -75,11 +75,11 @@ document.addEventListener(
       let path = window.location.pathname;
       let page = path.split("/").pop();
 
-      if (page === "projectDetails.html" || page === "projectDetails") {
+      if (page === "projectDetails.html" || page === "projectDetails" || page === "projectDetails") {
         loadSingleProject(params.id);
       }
 
-      if (page === "blogDetails.html" || page === "blogDetails") {
+      if (page === "blogDetails.html" || page === "blogDetails" || page === "blogdetails") {
         loadSingleBlog(current_blog_id);
         loadComments(current_blog_id);
         loadSimilarBlogs(current_blog_id);
@@ -87,7 +87,7 @@ document.addEventListener(
     } else {
       loadBlogs();
       loadProjects();
-    }
+    }  
   },
   false
 );
@@ -665,7 +665,6 @@ function saveUser() {
     })
     .catch((err) => {
       console.log(err);
-      console.log(document.signupForm.email.value);
     });
 }
 
