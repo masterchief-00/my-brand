@@ -655,7 +655,7 @@ function saveUser() {
       names: document.signupForm.name.value,
       email: document.signupForm.email.value,
       password: document.signupForm.password.value,
-      conf_password: document.signupForm.confirm_password.value,
+      // conf_password: document.signupForm.confirm_password.value,
     }),
   })
     .then(async (response) => {
