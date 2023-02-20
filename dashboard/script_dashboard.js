@@ -1,4 +1,4 @@
-const API_URL="https://kwizera-api.onrender.com"
+const API_URL = "https://kwizera-api.onrender.com";
 // const API_URL = "http://localhost:5000";
 
 const openMenu = document.getElementsByClassName("open-menu");
@@ -202,7 +202,7 @@ function clearBlogAdd() {
   document.blogAddForm.title.value = "";
   document.blogAddForm.body.value = "";
   document.blogAddForm.image.value = "";
-  document.blogAddForm.date.value = "";
+  document.blogAddForm.category.value = "";
 }
 
 function validateBlogUpdateForm(e) {
@@ -410,6 +410,7 @@ function saveBlog() {
 
   headers.append("Accept", "application/json");
 
+  console.log(form.category.value);
   fetch(`${API_URL}/blogs`, {
     method: "POST",
     mode: "cors",

@@ -1,4 +1,4 @@
-const API_URL="https://kwizera-api.onrender.com"
+const API_URL = "https://kwizera-api.onrender.com";
 // const API_URL = "http://localhost:5000";
 
 const downArrow = document.getElementById("down-arrow");
@@ -87,7 +87,7 @@ document.addEventListener(
     } else {
       loadBlogs();
       loadProjects();
-    }  
+    }
   },
   false
 );
@@ -665,6 +665,7 @@ function saveUser() {
     })
     .catch((err) => {
       console.log(err);
+      console.log(document.signupForm.email.value);
     });
 }
 
