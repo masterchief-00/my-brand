@@ -61,7 +61,7 @@ function initFn() {
   if (page === "messages.html" || page === "messages") {
     loadMessages();
   }
-  if (page === "blogUpdate.html" || page === "blogUpdate") {
+  if (page === "blogUpdate.html" || page === "blogUpdate"|| page === "blogupdate") {
     const params = new Proxy(new URLSearchParams(window.location.search), {
       get: (searchParams, prop) => searchParams.get(prop),
     });
@@ -530,64 +530,106 @@ function loadCards() {
 }
 
 function loadMessages() {
-  if (localStorage.getItem("messages") !== null) {
-    let all_messages = [...JSON.parse(localStorage["messages"])];
-    messagesContainer.innerHTML = "";
-    for (const message of all_messages) {
-      messagesContainer.innerHTML += `
-      <div class="message">
-        <div class="from">
-            <label class="name">${message.name}</label>
-            <div class="separator"></div>
-            <label>${moment(
-              message.date,
-              "DD/MM/YYYY, hh:mm:ss"
-            ).fromNow()}</label>
-            <div class="separator"></div>
-            <label>${message.email}</label>
-            <div class="separator"></div>
-            <label>${message.status}</label>
-        </div>
-        <div class="message-body">
-            <p>${message.body}</p>
-            <div>
-                <a href="#" onclick="deleteMessage(${message.id})">Delete</a>
-                <a href="#" onclick="markRead(${message.id})" ${
-        message.status === "READ" ? 'class="button-disabled"' : ""
-      }>Mark as read</a>
+  let all_messages = [];
+  const headers = new Headers();
+
+  headers.append("Content-Type", "application/json");
+  headers.append("Accept", "application/json");
+
+  fetch(`${API_URL}/queries`, {
+    method: "GET",
+    mode: "cors",
+    credentials: "include",
+    headers,
+  })
+    .then(async (response) => {
+      if (response.ok) {
+        let data = await response.json();
+
+        if (data) {
+          all_messages = [...data];
+
+          messagesContainer.innerHTML = "";
+          for (const message of all_messages) {
+            messagesContainer.innerHTML += `
+            <div class="message">
+              <div class="from">
+                  <label class="name">${message.names}</label>
+                  <div class="separator"></div>
+                  <label>${moment(
+                    message.date,
+                    "YYYY-MM-DDTHH:mm:ssZ"
+                  ).fromNow()}</label>
+                  <div class="separator"></div>
+                  <label>${message.email}</label>
+                  <div class="separator"></div>
+                  <label>${message.status}</label>
+              </div>
+              <div class="message-body">
+                  <p>${message.body}</p>
+                  <div>
+                      <a href="#" onclick="deleteMessage(${
+                        message.id
+                      })">Delete</a>
+                      <a href="#" onclick="markRead(${message.id})" ${
+              message.status === "READ" ? 'class="button-disabled"' : ""
+            }>Mark as read</a>
+                  </div>
+              </div>
             </div>
-        </div>
-      </div>
-      `;
-    }
-  }
+            `;
+          }
+        }
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 }
 function deleteMessage(id) {
-  let all_messages = [...JSON.parse(localStorage["messages"])];
-  let filtered_messages = [];
+  const headers = new Headers();
 
-  if (window.confirm("You're about to delete this blog, proceed?")) {
-    for (const message of all_messages) {
-      if (message.id === id) {
-        filtered_messages = [...all_messages.filter((item) => item.id !== id)];
-      }
-    }
+  if (window.confirm("You're about to delete this message, proceed?")) {
+    headers.append("Content-Type", "application/json");
+    headers.append("Accept", "application/json");
 
-    localStorage.setItem("messages", JSON.stringify(filtered_messages));
-    location.reload();
+    fetch(`${API_URL}/queries/${id}`, {
+      method: "DELETE",
+      mode: "cors",
+      credentials: "include",
+      headers,
+    })
+      .then(async (response) => {
+        if (response.ok) {
+          location.reload();
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 }
 
 function markRead(id) {
-  let all_messages = [...JSON.parse(localStorage["messages"])];
+  const headers = new Headers();
 
-  for (const message of all_messages) {
-    if (message.id === id) {
-      message.status = "READ";
-    }
-  }
-  localStorage.setItem("messages", JSON.stringify(all_messages));
-  location.reload();
+  headers.append("Content-Type", "application/json");
+  headers.append("Accept", "application/json");
+
+  fetch(`${API_URL}/queries/${id}/status`, {
+    method: "GET",
+    mode: "cors",
+    credentials: "include",
+    headers,
+  })
+    .then(async (response) => {
+      if (response.ok) {
+        location.reload();
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 }
 
 function loadBlog(editor) {
