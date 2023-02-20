@@ -1517,6 +1517,7 @@ html {
     #blog-body {
         width: fit-content;
         max-width: 100%;
+        padding: 30px;
     }
 
     .blog-main-title {
@@ -1535,8 +1536,8 @@ html {
         font-size: 18px;
     }
 
-    .blog-main-content p {
-        font-size: 30px;
+    .blog-main-content p span {
+        font-size: 30px !important;
     }
 
     .comment-section {
@@ -1874,7 +1875,7 @@ html {
     #blog-body {
         width: 290px;
         max-width: 100%;
-        /* margin-left: 20px; */
+        padding: 8px;
     }
 
     .blog-main-title {
@@ -1893,8 +1894,8 @@ html {
         font-size: 13px;
     }
 
-    .blog-main-content p {
-        font-size: 15px;
+    .blog-main-content p span {
+        font-size: 15px !important;
     }
 
     .comment-section {

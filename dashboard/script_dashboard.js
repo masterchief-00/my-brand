@@ -400,7 +400,7 @@ function slugify(str) {
     .replace(/[\s_-]+/g, "-")
     .replace(/^-+|-+$/g, "");
 }
-/**-------------------------LOCALSTORAGE--------------------------- */
+/**-------------------------LOCALSTORAGE[WAS]--------------------------- */
 
 function saveBlog() {
   const headers = new Headers();
@@ -410,7 +410,6 @@ function saveBlog() {
 
   headers.append("Accept", "application/json");
 
-  console.log(form.category.value);
   fetch(`${API_URL}/blogs`, {
     method: "POST",
     mode: "cors",

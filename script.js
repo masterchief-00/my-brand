@@ -1,4 +1,4 @@
-const API_URL="https://kwizera-api.onrender.com"
+const API_URL = "https://kwizera-api.onrender.com";
 // const API_URL = "http://localhost:5000";
 
 const downArrow = document.getElementById("down-arrow");
@@ -75,11 +75,19 @@ document.addEventListener(
       let path = window.location.pathname;
       let page = path.split("/").pop();
 
-      if (page === "projectDetails.html" || page === "projectDetails" || page === "projectDetails") {
+      if (
+        page === "projectDetails.html" ||
+        page === "projectDetails" ||
+        page === "projectdetails"
+      ) {
         loadSingleProject(params.id);
       }
 
-      if (page === "blogDetails.html" || page === "blogDetails" || page === "blogdetails") {
+      if (
+        page === "blogDetails.html" ||
+        page === "blogDetails" ||
+        page === "blogdetails"
+      ) {
         loadSingleBlog(current_blog_id);
         loadComments(current_blog_id);
         loadSimilarBlogs(current_blog_id);
@@ -87,7 +95,7 @@ document.addEventListener(
     } else {
       loadBlogs();
       loadProjects();
-    }  
+    }
   },
   false
 );
@@ -839,6 +847,7 @@ function loadSingleProject(id) {
       if (response.ok) {
         let data = await response.json();
 
+        console.log(data);
         if (data) {
           the_project = { ...data };
           console.log(the_project.title);
@@ -1044,7 +1053,7 @@ function loadComments(blog_id) {
                 </p>
             </div>
             <div>
-              <a href="#" class="comment-likes ${bolden_reply}" onclick="likeComment('${
+              <a href="#" class="comment-likes ${bolden_reply}" onclick="likeComment(event,'${
                 reply._id
               }')">${reply.likes.length} Likes</a>
               </div>
@@ -1077,7 +1086,7 @@ function loadComments(blog_id) {
                 <p>${comment.comment}</p>
               </div>
               <div>
-                <a href="#" class="comment-likes ${bolden}" onclick="likeComment('${
+                <a href="#" class="comment-likes ${bolden}" onclick="likeComment(event,'${
             comment._id
           }')">${comment.likes.length} Likes</a>
                 <label> | </label>
@@ -1165,7 +1174,8 @@ function like(blog_id) {
     });
 }
 
-function likeComment(comment_id) {
+function likeComment(e, comment_id) {
+  e.preventDefault();
   const headers = new Headers();
 
   headers.append("Content-Type", "application/json");
@@ -1180,12 +1190,12 @@ function likeComment(comment_id) {
     .then(async (response) => {
       if (response.ok) {
         location.reload();
+        // console.log(response.status);
       }
     })
     .catch((err) => {
       console.log(err);
     });
-  location.reload();
 }
 
 function loadSimilarBlogs(id) {
