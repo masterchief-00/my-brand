@@ -21,6 +21,8 @@ if (checkCookie("user_details")) {
 
   currentUser.name = userDetails.names;
   currentUser.email = userDetails.email;
+} else {
+  location.href = "../index.html";
 }
 
 if (document.readyState !== "loading") {
@@ -604,7 +606,9 @@ function loadBlog(editor) {
       let blog = await response.json();
 
       document.blogUpdateForm.title.value = blog.title;
-      document.blogUpdateForm.category.value = blog.category ? blog.category : "Category Not set"
+      document.blogUpdateForm.category.value = blog.category
+        ? blog.category
+        : "Category Not set";
 
       editor.setContent(blog.body);
     }
@@ -637,25 +641,26 @@ function updateBlog() {
 }
 
 function saveProject() {
-  let newProject = {
-    id: slugify(document.projectAddForm.title.value),
-    title: document.projectAddForm.title.value,
-    description: document.projectAddForm.description.value,
-    image: base64String,
-    tools: document.projectAddForm.tools.value,
-  };
-  if (!localStorage["projects"]) {
-    let all_projects = [];
+  const headers = new Headers();
 
-    all_projects.push(newProject);
-    localStorage.setItem("projects", JSON.stringify(all_projects));
-  } else {
-    let all_projects = [...JSON.parse(localStorage["projects"])];
+  const form = document.forms.namedItem("projectAddForm");
+  const formData = new FormData(form);
 
-    all_projects.push(newProject);
+  headers.append("Accept", "application/json");
 
-    localStorage.setItem("projects", JSON.stringify(all_projects));
-  }
-
-  location.reload();
+  fetch(`${API_URL}/projects`, {
+    method: "POST",
+    mode: "cors",
+    headers,
+    credentials: "include",
+    body: formData,
+  })
+    .then(async (response) => {
+      if (response.ok) {
+        location.reload();
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 }

@@ -82,7 +82,10 @@
         <label class="title-settings"> Add Project </label>
         <div class="new-project">
           <form
-          name="projectAddForm" onsubmit="return(validateprojectAddForm(event))"
+          name="projectAddForm"
+          method="post"
+          enctype="multipart/form-data"
+          onsubmit="return(validateprojectAddForm(event))"
           >
             <div class="form-elements">
               <input type="text" name="title" id="title" placeholder="Project title" />
@@ -112,7 +115,7 @@
             <div class="quick-fix1">
               <div class="extra-inputs">
                 <label class="error-bag" id="date">ERROR: Invalid date</label>
-                <input type="file" name="image" id="blog-image" />
+                <input type="file" name="image" id="blog-image" multiple/>
                 <label class="error-bag" id="image"
                   >ERROR: Invalid file type</label
                 >

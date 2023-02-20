@@ -1317,6 +1317,7 @@ html {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    /* width: 98%; */
     max-width: 100%;
     background-color: white;
     padding: 10px 60px;
@@ -1350,7 +1351,9 @@ html {
 }
 
 .project-gallery img {
-    height: 400px;
+    height: 365px;
+    max-width: 365px;
+    object-fit: cover;
 }
 
 .tools-used {

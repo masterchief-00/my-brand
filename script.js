@@ -27,6 +27,16 @@ const commentsCounter = document.querySelector(".comments-count");
 const commentAs = document.getElementById("comment-as");
 const likeBtn = document.querySelector(".like-btn");
 
+const projectDetailsTitle = document.getElementsByClassName(
+  "title-project-details"
+);
+const projectDetailsDesc = document.getElementsByClassName(
+  "project-details-desc"
+);
+const projectDetailsTools = document.getElementsByClassName("tools-used");
+const projectDetailsGallery =
+  document.getElementsByClassName("project-gallery");
+
 let horizontalMenuActive = false;
 let auth_status = false;
 
@@ -61,20 +71,23 @@ document.addEventListener(
 
     if (params.id) {
       current_blog_id = params.id;
-      loadSingleBlog(current_blog_id);
-      loadComments(current_blog_id);
-      loadSimilarBlogs(current_blog_id);
+
+      let path = window.location.pathname;
+      let page = path.split("/").pop();
+
+      if (page === "projectDetails.html" || page === "projectDetails") {
+        loadSingleProject(params.id);
+      }
+
+      if (page === "blogDetails.html" || page === "blogDetails") {
+        loadSingleBlog(current_blog_id);
+        loadComments(current_blog_id);
+        loadSimilarBlogs(current_blog_id);
+      }
     } else {
       loadBlogs();
       loadProjects();
-    }
-    if (localStorage["current_user"]) {
-      let current_user = JSON.parse(localStorage["current_user"]);
-      loginLinkDiv.innerHTML = `
-    <label class="greet-user">Hello, ${current_user.name}</label>
-    <a href="#" class="logoutBtn" onclick="logout(event)">Log out</a>
-  `;
-    }
+    }  
   },
   false
 );
@@ -809,6 +822,59 @@ async function loadBlogs() {
     });
 }
 
+function loadSingleProject(id) {
+  let the_project = {};
+
+  const headers = new Headers();
+
+  headers.append("Content-Type", "application/json");
+  headers.append("Accept", "application/json");
+
+  fetch(`${API_URL}/projects/${id}`, {
+    method: "GET",
+    mode: "cors",
+    headers,
+  })
+    .then(async (response) => {
+      if (response.ok) {
+        let data = await response.json();
+
+        if (data) {
+          the_project = { ...data };
+          console.log(the_project.title);
+          projectDetailsTitle[0].innerHTML = the_project.title;
+          projectDetailsDesc[0].innerHTML = the_project.description;
+          projectDetailsTools[0].innerHTML = "";
+          projectDetailsGallery[0].innerHTML = "";
+
+          let tools = the_project.tools.trim();
+          tools = tools.replace(/\s/g, "");
+          tools = tools.split(",");
+
+          for (const tool of tools) {
+            projectDetailsTools[0].innerHTML += `
+              <label>${tool}</label>
+            `;
+          }
+
+          let images = the_project.image.trim();
+          images = images.replace(/\s/g, "");
+          images = images.split(",");
+
+          images.splice(images.length - 1, 1);
+          for (const image of images) {
+            projectDetailsGallery[0].innerHTML += `
+              <img src="${image}" alt="img" />
+            `;
+          }
+        }
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
+
 function loadSingleBlog(id) {
   let the_blog = {};
   const headers = new Headers();
@@ -827,7 +893,7 @@ function loadSingleBlog(id) {
       if (data) {
         the_blog = { ...data };
 
-        single_blog_category.innerHTML = "CATEGORY";
+        single_blog_category.innerHTML = the_blog.category;
         single_blog_title.innerHTML = the_blog.title;
         single_blog_image.src = the_blog.image;
         single_blog_owner.innerHTML = the_blog.author;
@@ -866,10 +932,6 @@ function loadSingleBlog(id) {
     .catch((err) => {
       console.log(err);
     });
-
-  // else {
-  //   location.href = "index.html";
-  // }
 }
 
 function cleanContactForm() {
@@ -1127,38 +1189,52 @@ function likeComment(comment_id) {
 }
 
 function loadSimilarBlogs(id) {
-  let all_blogs = localStorage["blogs"]
-    ? [...JSON.parse(localStorage["blogs"])]
-    : [];
-  similarBlogsContainer.innerHTML = "";
-  let category = "";
   let counter = 0;
 
-  for (const blog of all_blogs) {
-    if (blog.id === id) {
-      category = blog.category;
-      break;
-    }
-  }
+  let all_blogs = [];
+  const headers = new Headers();
 
-  for (const blog of all_blogs) {
-    if (blog.category === category && blog.id !== id) {
-      similarBlogsContainer.innerHTML += `
-      <div class="similar-topic">
-      <img src="data:image/jpg;base64,${blog.image}" alt="blog-img" />
-      <label class="title-similar-topic"
-        >${blog.title}</label
-      >
-      <a href="blogDetails.html?id=${blog.id}" class="link-similar-topic">READ MORE</a>
-    </div>
-      `;
-      counter++;
-    }
-  }
+  headers.append("Content-Type", "application/json");
+  headers.append("Accept", "application/json");
 
-  if (counter < 1) {
-    similarBlogsContainer.innerHTML = "<label> Nothing yet, sorry!</label>";
-  }
+  fetch(`${API_URL}/blogs/${id}/similar`, {
+    method: "GET",
+    mode: "cors",
+    headers,
+  })
+    .then(async (response) => {
+      if (response.ok) {
+        let data = await response.json();
+
+        if (data) {
+          all_blogs = [...data];
+          similarBlogsContainer.innerHTML = "";
+          for (const blog of all_blogs) {
+            if (blog._id !== id) {
+              similarBlogsContainer.innerHTML += `
+            <div class="similar-topic">
+            <img src="${blog.image}" alt="blog-img" />
+            <label class="title-similar-topic"
+              >${blog.title}</label
+            >
+            <a href="blogDetails.html?id=${blog._id}" class="link-similar-topic">READ MORE</a>
+          </div>
+            `;
+              counter++;
+            }
+          }
+
+          if (counter < 1) {
+            similarBlogsContainer.innerHTML =
+              "<label> Nothing yet, sorry!</label>";
+          }
+        }
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      similarBlogsContainer.innerHTML = "<label> Nothing yet, sorry!</label>";
+    });
 }
 
 function logout(e) {
@@ -1191,51 +1267,67 @@ function logout(e) {
 }
 
 function loadProjects() {
-  let all_projects = localStorage["projects"]
-    ? JSON.parse(localStorage["projects"])
-    : [];
+  let all_projects = [];
+  const headers = new Headers();
 
-  if (all_projects.length < 1) {
-    projectsContainer.innerHTML = "<label>Nothing yet, sorry</label>";
-  } else {
-    projectsContainer.innerHTML = "";
-  }
+  headers.append("Content-Type", "application/json");
+  headers.append("Accept", "application/json");
 
-  for (const project of all_projects) {
-    projectsContainer.innerHTML += `
-    <div class="project">
-      <div class="project-details">
-        <label class="project-title">${project.title}</label>
-        <label class="project-sub-title">${getTools(project.id)}</label>
-        <a href="projectDetails.html?id=${project.id}">LEARN MORE</a>
-      </div>
-      <img src="data:image/jpg;base64,${project.image}" alt="img1" />
-    </div>
-    `;
-  }
-}
+  fetch(`${API_URL}/projects`, {
+    method: "GET",
+    mode: "cors",
+    headers,
+  })
+    .then(async (response) => {
+      let data = await response.json();
 
-function getTools(id) {
-  let all_projects = localStorage["projects"]
-    ? [...JSON.parse(localStorage["projects"])]
-    : [];
-  let tool_string = "";
+      if (data) {
+        all_projects = [...data];
 
-  for (const project of all_projects) {
-    if (project.id === id) {
-      let tools = project.tools.trim();
-      tools = tools.split(",");
-
-      if (tools.length > 1) {
-        for (const tool of tools) {
-          tool_string += tool + "/";
+        if (all_projects.length < 1) {
+          projectsContainer.innerHTML = "<label>Nothing yet, sorry</label>";
+        } else {
+          projectsContainer.innerHTML = "";
         }
-      } else {
-        tool_string = tools[0];
+
+        for (const project of all_projects) {
+          let tool_string = "";
+          let project_tools = "";
+
+          let tools = project.tools.trim();
+          tools = tools.replace(/\s/g, "");
+          tools = tools.split(",");
+
+          if (tools.length > 1) {
+            for (const tool of tools) {
+              tool_string += tool + "/";
+            }
+          } else {
+            tool_string = tools[0];
+          }
+
+          project_tools =
+            tool_string[tool_string.length - 1] === "/"
+              ? tool_string.substring(0, tool_string.length - 1)
+              : tool_string;
+
+          project_images = project.image;
+          project_images = project_images.split(",");
+
+          projectsContainer.innerHTML += `
+        <div class="project">
+          <div class="project-details">
+            <label class="project-title">${project.title}</label>
+            <label class="project-sub-title">${project_tools}</label>
+            <a href="projectDetails.html?id=${project._id}">LEARN MORE</a>
+          </div>
+          <img src="${project_images[0]}" alt="img1" />
+        </div>
+        `;
+        }
       }
-    }
-  }
-  return tool_string[tool_string.length - 1] === "/"
-    ? tool_string.substring(0, tool_string.length - 1)
-    : tool_string;
+    })
+    .catch((err) => {
+      projectsContainer.innerHTML = "<label>Nothing yet, sorry</label>";
+    });
 }
