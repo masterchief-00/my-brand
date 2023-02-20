@@ -847,7 +847,6 @@ function loadSingleProject(id) {
       if (response.ok) {
         let data = await response.json();
 
-        console.log(data);
         if (data) {
           the_project = { ...data };
           console.log(the_project.title);
