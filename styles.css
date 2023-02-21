@@ -630,11 +630,10 @@ html {
 }
 
 .blogs-content {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    row-gap: 0rem;
-    column-gap: 0rem;
-    margin-top: 80px;
+    display:flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 .nothing-yet {
