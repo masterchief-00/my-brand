@@ -1,5 +1,5 @@
-// const API_URL = "https://kwizera-api.onrender.com";
-const API_URL = "http://localhost:5000";
+const API_URL = "https://kwizera-api.onrender.com";
+// const API_URL = "http://localhost:5000";
 
 const openMenu = document.getElementsByClassName("open-menu");
 const closeMenu = document.getElementsByClassName("close-menu");
@@ -24,7 +24,7 @@ if (checkCookie("user_details")) {
   let userDetails = JSON.parse(getCookie("user_details"));
 
   if (userDetails.role !== "admin") location.href = "../index.html";
-  
+
   currentUser.name = userDetails.names;
   currentUser.email = userDetails.email;
   currentUser.role = userDetails.role;
