@@ -12,6 +12,7 @@ const projectsCard = document.getElementById("pojects-card");
 const messagesContainer = document.querySelector(".messages");
 
 const submitBlog = document.getElementById("form-button-blog");
+const submitProject = document.getElementById("form-button-project");
 
 let base64String = "";
 
@@ -765,6 +766,10 @@ function saveProject() {
 
   headers.append("Accept", "application/json");
 
+  submitProject.disabled = true;
+  submitProject.style.opacity = 0.3;
+  submitProject.style.cursor = "not-allowed";
+
   fetch(`${API_URL}/projects`, {
     method: "POST",
     mode: "cors",
@@ -774,11 +779,18 @@ function saveProject() {
   })
     .then(async (response) => {
       if (response.ok) {
+        submitProject.disabled = false;
+        submitProject.style.opacity = 1;
+        submitProject.style.cursor = "pointer";
+
         location.reload();
       }
     })
     .catch((err) => {
       console.log(err);
+      submitProject.disabled = false;
+      submitProject.style.opacity = 1;
+      submitProject.style.cursor = "pointer";
     });
 }
 
