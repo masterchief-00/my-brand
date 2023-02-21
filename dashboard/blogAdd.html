@@ -40,7 +40,7 @@
           <a href="blogAdd.html" class="active">Blogs</a>
           <a href="settings.html">Projects</a>
           <a href="messages.html">Messages</a>
-          <a href="../index.html">Log out</a>
+          <a href="#" onclick="logout(event)">Log out</a>
         </div>
       </div>
       <!----------------------------------------------------------------->
@@ -73,7 +73,7 @@
           </div>
           <div class="logout-tab">
             <img src="/images/exit-logout-svgrepo-com.png" alt="img" />
-            <a href="../index.html">Log out</a>
+            <a href="#" onclick="logout(event)">Log out</a>
           </div>
         </div>
       </div>
@@ -129,7 +129,7 @@
                 >
               </div>
               <div class="buttons-div">
-                <button type="submit">ADD BLOG</button>
+                <button id="form-button-blog" type="submit">ADD BLOG</button>
                 <button type="reset">CLEAR</button>
               </div>
             </div>

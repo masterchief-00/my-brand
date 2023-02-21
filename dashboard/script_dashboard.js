@@ -1,5 +1,5 @@
-const API_URL = "https://kwizera-api.onrender.com";
-// const API_URL = "http://localhost:5000";
+// const API_URL = "https://kwizera-api.onrender.com";
+const API_URL = "http://localhost:5000";
 
 const openMenu = document.getElementsByClassName("open-menu");
 const closeMenu = document.getElementsByClassName("close-menu");
@@ -11,6 +11,8 @@ const projectsCard = document.getElementById("pojects-card");
 
 const messagesContainer = document.querySelector(".messages");
 
+const submitBlog = document.getElementById("form-button-blog");
+
 let base64String = "";
 
 const errorBags = document.getElementsByClassName("error-bag");
@@ -21,8 +23,11 @@ let current_blog_id = "";
 if (checkCookie("user_details")) {
   let userDetails = JSON.parse(getCookie("user_details"));
 
+  if (userDetails.role !== "admin") location.href = "../index.html";
+  
   currentUser.name = userDetails.names;
   currentUser.email = userDetails.email;
+  currentUser.role = userDetails.role;
 } else {
   location.href = "../index.html";
 }
@@ -75,7 +80,7 @@ function initFn() {
     if (params.id) {
       current_blog_id = params.id;
 
-      loadBlog(editor);
+      loadBlog(tinyMCE.get("update-body"));
     }
   }
 }
@@ -416,6 +421,10 @@ function saveBlog() {
 
   headers.append("Accept", "application/json");
 
+  submitBlog.disabled = true;
+  submitBlog.style.opacity = 0.3;
+  submitBlog.style.cursor = "not-allowed";
+
   fetch(`${API_URL}/blogs`, {
     method: "POST",
     mode: "cors",
@@ -426,11 +435,18 @@ function saveBlog() {
     .then(async (response) => {
       if (response.ok) {
         clearBlogAdd();
+        submitBlog.disabled = false;
+        submitBlog.style.opacity = 1;
+        submitBlog.style.cursor = "pointer";
         // location.reload();
       }
     })
     .catch((err) => {
       console.log(err);
+
+      submitBlog.disabled = false;
+      submitBlog.style.opacity = 1;
+      submitBlog.style.cursor = "pointer";
     });
 }
 
@@ -684,18 +700,23 @@ function loadBlog(editor) {
     mode: "cors",
     credentials: "include",
     headers,
-  }).then(async (response) => {
-    if (response.ok) {
-      let blog = await response.json();
+  })
+    .then(async (response) => {
+      if (response.ok) {
+        let blog = await response.json();
 
-      document.blogUpdateForm.title.value = blog.title;
-      document.blogUpdateForm.category.value = blog.category
-        ? blog.category
-        : "Category Not set";
+        document.blogUpdateForm.title.value = blog.title;
+        document.blogUpdateForm.category.value = blog.category
+          ? blog.category
+          : "Category Not set";
 
-      editor.setContent(blog.body);
-    }
-  });
+        console.log(editor);
+        tinyMCE.get("update-body").setContent(blog.body);
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 }
 
 function updateBlog() {
@@ -706,6 +727,10 @@ function updateBlog() {
 
   headers.append("Accept", "application/json");
 
+  submitBlog.disabled = true;
+  submitBlog.style.opacity = 0.3;
+  submitBlog.style.cursor = "not-allowed";
+
   fetch(`${API_URL}/blogs/${current_blog_id}`, {
     method: "PUT",
     mode: "cors",
@@ -715,11 +740,20 @@ function updateBlog() {
   })
     .then(async (response) => {
       if (response.ok) {
+        submitBlog.disabled = false;
+        submitBlog.style.opacity = 1;
+        submitBlog.style.cursor = "pointer";
+
         location.reload();
       }
     })
     .catch((err) => {
       console.log(err);
+      submitBlog.disabled = false;
+      submitBlog.style.opacity = 1;
+      submitBlog.style.cursor = "pointer";
+
+      console.log();
     });
 }
 
@@ -745,5 +779,33 @@ function saveProject() {
     })
     .catch((err) => {
       console.log(err);
+    });
+}
+
+function logout(e) {
+  e.preventDefault();
+
+  const headers = new Headers();
+
+  headers.append("Content-Type", "application/json");
+  headers.append("Accept", "application/json");
+
+  fetch(`${API_URL}/users/logout`, {
+    method: "GET",
+    mode: "cors",
+    credentials: "include",
+    headers,
+  })
+    .then(async (response) => {
+      if (response.ok) {
+        if (checkCookie("user_details")) {
+          delete_cookie("user_details");
+          location.reload();
+        }
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      location.reload();
     });
 }

@@ -1,5 +1,5 @@
-const API_URL = "https://kwizera-api.onrender.com";
-// const API_URL = "http://localhost:5000";
+// const API_URL = "https://kwizera-api.onrender.com";
+const API_URL = "http://localhost:5000";
 
 const downArrow = document.getElementById("down-arrow");
 const rightArrow = document.getElementById("right-arrow");
@@ -44,11 +44,20 @@ let current_blog_id = "";
 let currentUser = {
   name: "",
   email: "",
+  role: "",
 };
 
 let projectsContainer = document.getElementById("gallery-3d");
 
 const errorBags = document.getElementsByClassName("error-bag");
+
+const submitContact = document.getElementById("contact-submit");
+const submitButtonLogin = document.getElementById("form-button-login");
+const submitButtonSignup = document.getElementById("form-button-signup");
+
+const logoutBtn = document.getElementsByClassName("logoutBtn");
+
+const submitComment = document.getElementById("form-button-comment");
 
 document.addEventListener(
   "DOMContentLoaded",
@@ -60,12 +69,15 @@ document.addEventListener(
     if (checkCookie("user_details")) {
       let userDetails = JSON.parse(getCookie("user_details"));
 
-      currentUser.name = userDetails.names;
-      currentUser.email = userDetails.email;
+      let dashboardBtn = "";
+      if (userDetails.role === "admin") {
+        dashboardBtn = `<a href="./dashboard/adminPanel.html" class="toDashboard">Dashboard</a>`;
+      }
 
       loginLinkDiv.innerHTML = `
-      <label class="greet-user">Hello, ${currentUser.name}</label>
+      <label class="greet-user">Hello, ${userDetails.names}</label>
       <a href="#" class="logoutBtn" onclick="logout(event)">Log out</a>
+      ${dashboardBtn}
     `;
     }
 
@@ -655,6 +667,10 @@ function saveUser() {
   headers.append("Content-Type", "application/json");
   headers.append("Accept", "application/json");
 
+  submitButtonSignup.disabled = true;
+  submitButtonSignup.style.opacity = 0.3;
+  submitButtonSignup.style.cursor = "not-allowed";
+
   fetch(`${API_URL}/users/signup`, {
     method: "POST",
     mode: "cors",
@@ -669,10 +685,16 @@ function saveUser() {
     .then(async (response) => {
       if (response.ok) {
         clearSignupForm();
+        submitButtonSignup.disabled = false;
+        submitButtonSignup.style.opacity = 1;
+        submitButtonSignup.style.cursor = "pointer";
       }
     })
     .catch((err) => {
       console.log(err);
+      submitButtonSignup.disabled = false;
+      submitButtonSignup.style.opacity = 1;
+      submitButtonSignup.style.cursor = "pointer";
     });
 }
 
@@ -681,6 +703,10 @@ function authenticateUser(email, password) {
 
   headers.append("Content-Type", "application/json");
   headers.append("Accept", "application/json");
+
+  submitButtonLogin.disabled = true;
+  submitButtonLogin.style.opacity = 0.3;
+  submitButtonLogin.style.cursor = "not-allowed";
 
   fetch(`${API_URL}/users/login`, {
     method: "POST",
@@ -699,16 +725,28 @@ function authenticateUser(email, password) {
         const userDetails = {
           names: data.user.names,
           email: data.user.email,
+          role: data.user.role,
         };
         setCookie("user_details", JSON.stringify(userDetails), 1);
 
         currentUser.name = data.user.names;
         currentUser.email = data.user.email;
+        currentUser.role = data.user.role;
+
+        let dashboardBtn = "";
+        if (currentUser.role === "admin") {
+          dashboardBtn = `<a href="./dashboard/adminPanel.html" class="toDashboard">Dashboard</a>`;
+        }
 
         loginLinkDiv.innerHTML = `
       <label class="greet-user">Hello, ${currentUser.name}</label>
       <a href="#" class="logoutBtn" onclick="logout(event)">Log out</a>
+      ${dashboardBtn}
     `;
+        submitButtonLogin.disabled = false;
+        submitButtonLogin.style.opacity = 1;
+        submitButtonLogin.style.cursor = "pointer";
+
         toggleModal();
         location.reload();
         return true;
@@ -716,6 +754,11 @@ function authenticateUser(email, password) {
     })
     .catch((err) => {
       console.log(err);
+
+      submitButtonLogin.disabled = false;
+      submitButtonLogin.style.opacity = 1;
+      submitButtonLogin.style.cursor = "pointer";
+
       return false;
     });
 }
@@ -953,6 +996,9 @@ function sendMessage() {
   headers.append("Content-Type", "application/json");
   headers.append("Accept", "application/json");
 
+  submitContact.disabled = true;
+  submitContact.style.opacity = 0.3;
+  submitContact.style.cursor = "not-allowed";
   fetch(`${API_URL}/queries`, {
     method: "POST",
     mode: "cors",
@@ -966,10 +1012,16 @@ function sendMessage() {
     .then(async (response) => {
       if (response.ok) {
         cleanContactForm();
+        submitContact.disabled = false;
+        submitContact.style.opacity = 1;
+        submitContact.style.cursor = "pointer";
       }
     })
     .catch((err) => {
       console.log(err);
+      submitContact.disabled = false;
+      submitContact.style.opacity = 1;
+      submitContact.style.cursor = "pointer";
     });
 }
 function cleanCommentForm() {
@@ -980,6 +1032,10 @@ function saveComment() {
 
   headers.append("Content-Type", "application/json");
   headers.append("Accept", "application/json");
+
+  submitComment.disabled = true;
+  submitComment.style.opacity = 0.3;
+  submitComment.style.cursor = "not-allowed";
 
   fetch(`${API_URL}/blogs/${current_blog_id}/comments`, {
     method: "POST",
@@ -993,11 +1049,19 @@ function saveComment() {
     .then(async (response) => {
       if (response.ok) {
         cleanCommentForm();
+
+        submitComment.disabled = false;
+        submitComment.style.opacity = 1;
+        submitComment.style.cursor = "pointer";
         location.reload();
       }
     })
     .catch((err) => {
       console.log(err);
+
+      submitComment.disabled = false;
+      submitComment.style.opacity = 1;
+      submitComment.style.cursor = "pointer";
     });
 }
 
@@ -1047,7 +1111,7 @@ function loadComments(blog_id) {
             </div>
             <div class="replier-body">
               <p>
-                <label class="reply-to">@${reply.names}</label>
+                <label class="reply-to">@${comment.names}</label>
                   ${reply.comment}
                 </p>
             </div>
@@ -1107,7 +1171,7 @@ function loadComments(blog_id) {
                     >ERROR: Invalid reply</label
                   >
       
-                  <button type="submit">Reply</button>
+                  <button id="form-button-reply" type="submit">Reply</button>
                   </form>
                   <div class="the-replies">
                     ${replies}
@@ -1124,11 +1188,15 @@ function loadComments(blog_id) {
 }
 
 function saveReply(comment_id, input) {
-  console.log(comment_id);
   const headers = new Headers();
+  const submitReply = document.getElementById("form-button-reply");
 
   headers.append("Content-Type", "application/json");
   headers.append("Accept", "application/json");
+
+  submitReply.disabled = true;
+  submitReply.style.opacity = 0.3;
+  submitReply.style.cursor = "not-allowed";
 
   fetch(`${API_URL}/comments/${comment_id}/reply`, {
     method: "POST",
@@ -1141,12 +1209,18 @@ function saveReply(comment_id, input) {
   })
     .then(async (response) => {
       if (response.ok) {
-        console.log(response.status);
+        submitReply.disabled = false;
+        submitReply.style.opacity = 1;
+        submitReply.style.cursor = "pointer";
         location.reload();
       }
     })
     .catch((err) => {
       console.log(err);
+
+      submitReply.disabled = false;
+      submitReply.style.opacity = 1;
+      submitReply.style.cursor = "pointer";
       location.reload();
     });
 }
@@ -1254,6 +1328,10 @@ function logout(e) {
   headers.append("Content-Type", "application/json");
   headers.append("Accept", "application/json");
 
+  logoutBtn[0].disabled = true;
+  logoutBtn[0].style.opacity = 0.3;
+  logoutBtn[0].style.cursor = "not-allowed";
+
   fetch(`${API_URL}/users/logout`, {
     method: "GET",
     mode: "cors",
@@ -1266,11 +1344,19 @@ function logout(e) {
           delete_cookie("user_details");
         }
 
+        logoutBtn[0].disabled = false;
+        logoutBtn[0].style.opacity = 1;
+        logoutBtn[0].style.cursor = "pointer";
         location.reload();
       }
     })
     .catch((err) => {
       console.log(err);
+
+      logoutBtn[0].disabled = false;
+      logoutBtn[0].style.opacity = 1;
+      logoutBtn[0].style.cursor = "pointer";
+
       location.reload();
     });
 }
