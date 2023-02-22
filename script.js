@@ -74,6 +74,12 @@ document.addEventListener(
         dashboardBtn = `<a href="./dashboard/adminPanel.html" class="toDashboard">Dashboard</a>`;
       }
 
+      currentUser.name = userDetails.names;
+      currentUser.email = userDetails.email;
+      currentUser.role = userDetails.role;
+
+      auth_status = true;
+
       loginLinkDiv.innerHTML = `
       <label class="greet-user">Hello, ${userDetails.names}</label>
       <a href="#" class="logoutBtn" onclick="logout(event)">Log out</a>
@@ -824,6 +830,7 @@ async function loadBlogs() {
         }
 
         for (const blog of all_blogs) {
+          console.log(blog.body.substring(0, 135));
           blogsContainer.innerHTML += `
           <div class="blog">
           <img src="${blog.image}" alt="blog" />
@@ -956,14 +963,14 @@ function loadSingleBlog(id) {
         likeBtn.addEventListener(
           "click",
           function () {
-            like(id);
+            like(event, id);
           },
           false
         );
 
         let liked = false;
 
-        if (currentUser.name !== "") {
+        if (checkCookie("user_details")) {
           likeBtn.style.opacity = 1;
           likeBtn.style.cursor = "pointer";
           commentAs.innerHTML = `Commenting as ${currentUser.name}`;
@@ -1225,7 +1232,8 @@ function saveReply(comment_id, input) {
     });
 }
 
-function like(blog_id) {
+function like(e, blog_id) {
+  e.preventDefault();
   const headers = new Headers();
 
   headers.append("Content-Type", "application/json");
@@ -1342,6 +1350,7 @@ function logout(e) {
       if (response.ok) {
         if (checkCookie("user_details")) {
           delete_cookie("user_details");
+          auth_status = false;
         }
 
         logoutBtn[0].disabled = false;
