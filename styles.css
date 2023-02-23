@@ -60,8 +60,25 @@ html {
     transition: all 0.5s;
 }
 
+.toDashboard {
+    text-decoration: none;
+    color: #171822;
+    padding: 3px;
+    border: solid 1px transparent;
+    border-radius: 5px;
+    font-weight: 700;
+    background-color: #37A3B1;
+    transition: all 0.5s;
+}
+
 .logoutBtn:hover {
     background-color: transparent;
+    color: #5DCCE4;
+    border-color: #5DCCE4;
+}
+
+.toDashboard:hover {
+    background-color: #171822;
     color: #5DCCE4;
     border-color: #5DCCE4;
 }
@@ -413,6 +430,7 @@ html {
     height: 365px;
     max-width: 365px;
     object-fit: cover;
+    object-position: center top;
 }
 
 .project-details {
@@ -612,11 +630,10 @@ html {
 }
 
 .blogs-content {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    row-gap: 0rem;
-    column-gap: 0rem;
-    margin-top: 80px;
+    display:flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 .nothing-yet {
@@ -1317,6 +1334,7 @@ html {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    /* width: 98%; */
     max-width: 100%;
     background-color: white;
     padding: 10px 60px;
@@ -1350,7 +1368,10 @@ html {
 }
 
 .project-gallery img {
-    height: 400px;
+    height: 365px;
+    max-width: 365px;
+    object-fit: cover;
+    object-position: center;
 }
 
 .tools-used {
@@ -1514,6 +1535,7 @@ html {
     #blog-body {
         width: fit-content;
         max-width: 100%;
+        padding: 30px;
     }
 
     .blog-main-title {
@@ -1532,8 +1554,8 @@ html {
         font-size: 18px;
     }
 
-    .blog-main-content p {
-        font-size: 30px;
+    .blog-main-content p span {
+        font-size: 30px !important;
     }
 
     .comment-section {
@@ -1871,7 +1893,7 @@ html {
     #blog-body {
         width: 290px;
         max-width: 100%;
-        /* margin-left: 20px; */
+        padding: 8px;
     }
 
     .blog-main-title {
@@ -1890,8 +1912,8 @@ html {
         font-size: 13px;
     }
 
-    .blog-main-content p {
-        font-size: 15px;
+    .blog-main-content p span {
+        font-size: 15px !important;
     }
 
     .comment-section {

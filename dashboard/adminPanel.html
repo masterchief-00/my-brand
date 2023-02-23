@@ -36,7 +36,7 @@
           <a href="blogAdd.html">Blogs</a>
           <a href="settings.html">Projects</a>
           <a href="messages.html">Messages</a>
-          <a href="../index.html">Log out</a>
+          <a href="#" onclick="logout(event)">Log out</a>
         </div>
       </div>
       <!----------------------------------------------------------------->
@@ -69,7 +69,7 @@
           </div>
           <div class="logout-tab">
             <img src="/images/exit-logout-svgrepo-com.png" alt="img" />
-            <a href="../index.html">Log out</a>
+            <a href="#" onclick="logout(event)">Log out</a>
           </div>
         </div>
       </div>
@@ -86,7 +86,7 @@
           <div class="card">
             <img src="/images/blog-svgrepo-com.png" alt="img" />
             <div>
-              <label class="count">22</label>
+              <label class="count" id="pojects-card">22</label>
               <label class="title-card">Projects</label>
             </div>
           </div>
@@ -111,7 +111,7 @@
             <tr>
               <th>#</th>
               <th>TITLE</th>
-              <th>DATE ADDED</th>
+              <th>ADDED</th>
               <th>ACTION</th>
             </tr>
             
@@ -119,6 +119,11 @@
         </div>
       </div>
     </div>
+
+    <script src="../node_modules/moment/moment.js"></script>
+    <script>
+      moment().format();
+    </script>
 
     <script src="/dashboard/script_dashboard.js"></script>
   </body>

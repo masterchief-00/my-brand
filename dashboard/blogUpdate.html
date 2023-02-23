@@ -40,7 +40,7 @@
           <a href="blogAdd.html" class="active">Blogs</a>
           <a href="settings.html">Projects</a>
           <a href="messages.html">Messages</a>
-          <a href="../index.html">Log out</a>
+          <a href="#" onclick="logout(event)">Log out</a>
         </div>
       </div>
       <!----------------------------------------------------------------->
@@ -73,7 +73,7 @@
           </div>
           <div class="logout-tab">
             <img src="/images/exit-logout-svgrepo-com.png" alt="img" />
-            <a href="../index.html">Log out</a>
+            <a href="#" onclick="logout(event)">Log out</a>
           </div>
         </div>
       </div>
@@ -82,6 +82,8 @@
         <div class="new-blog">
           <form
             name="blogUpdateForm"
+            method="put"
+            enctype="multipart/form-data"
             onsubmit="return(validateBlogUpdateForm(event))"
             onreset="clearBlogUpdate()"
           >
@@ -125,15 +127,13 @@
             </div>
             <div class="quick-fix1">
               <div class="extra-inputs">
-                <input type="date" name="date" id="date" />
-                <label class="error-bag" id="date">ERROR: Invalid date</label>
                 <input type="file" name="image" id="blog-image" />
                 <label class="error-bag" id="image"
                   >ERROR: Invalid file type</label
                 >
               </div>
               <div class="buttons-div">
-                <button type="submit">UPDATE BLOG</button>
+                <button id="form-button-blog" type="submit">UPDATE BLOG</button>
                 <button type="reset">CLEAR</button>
               </div>
             </div>
