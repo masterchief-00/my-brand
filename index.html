@@ -264,9 +264,7 @@
           <div class="line-blogs"></div>
         </div>
         <div class="blogs-content" id="blogsContainer">
-          <label class="nothing-yet">Sorry, no blogs uploaded yet!</label>
-          <label class="nothing-yet">Sorry, no blogs uploaded yet!</label>
-          <label class="nothing-yet">Sorry, no blogs uploaded yet!</label>
+          <label style="margin-top: 20px">loading...</label>
         </div>
       </section>
       <!----------------------------------------------------------------->
@@ -350,9 +348,7 @@
               >
               <div>
                 <button id="form-button-login" type="submit">Login</button>
-                <button type="button" onclick="toggleModal()">
-                  Cancel
-                </button>
+                <button type="button" onclick="toggleModal()">Cancel</button>
               </div>
             </form>
             <div>
@@ -400,9 +396,7 @@
 
               <div>
                 <button id="form-button-signup" type="submit">Signup</button>
-                <button type="button" onclick="toggleModal()">
-                  Cancel
-                </button>
+                <button type="button" onclick="toggleModal()">Cancel</button>
               </div>
             </form>
             <div>
@@ -419,6 +413,13 @@
     <script>
       moment().format();
     </script>
+
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script
+      src="./components/Blogs.js"
+      type="text/babel"
+      data-type="module"
+    ></script>
     <script src="script.js"></script>
     <script src="bg-script.js"></script>
   </body>

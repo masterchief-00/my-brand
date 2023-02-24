@@ -111,7 +111,7 @@ document.addEventListener(
         loadSimilarBlogs(current_blog_id);
       }
     } else {
-      loadBlogs();
+      // loadBlogs();
       loadProjects();
     }
   },
